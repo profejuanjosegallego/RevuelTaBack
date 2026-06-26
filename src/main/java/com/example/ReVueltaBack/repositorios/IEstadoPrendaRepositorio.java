@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.UUID;
 
-public interface EstadoPrendaRepository extends JpaRepository<EstadoPrenda, UUID> {
+public interface IEstadoPrendaRepositorio extends JpaRepository<EstadoPrenda, UUID> {
 
     List<EstadoPrenda> findByNombreContainingIgnoreCase(String nombre);
 
