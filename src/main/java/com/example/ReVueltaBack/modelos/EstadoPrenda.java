@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack;
+package com.example.ReVueltaBack.modelos;
 
 import java.util.UUID;
 import jakarta.persistence.Column;
