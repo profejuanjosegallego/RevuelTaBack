@@ -16,17 +16,17 @@ public class Categorias {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, unique = false, length = 50)
     private String nombre;
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, unique = false, length = 500)
     private String descripcion;
-    @Column(name = "slug")
+    @Column(name = "slug", nullable = false, unique = false, length = 50)
     private String slug;
-    @Column(name = "icono")
+    @Column(name = "icono", nullable = false, unique = false, length = 50)
     private String icono;
-    @Column(name = "activa")
+    @Column(name = "activa", nullable = false, unique = false)
     private Boolean activa;
-    @Column(name = "orden")
+    @Column(name = "orden", nullable = false, unique = false)
     private Integer orden;
 
     public UUID getId() {
