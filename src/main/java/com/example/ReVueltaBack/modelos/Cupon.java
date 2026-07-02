@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cupones")
-public class cupones {
+public class Cupon {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
