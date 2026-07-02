@@ -3,6 +3,8 @@ package com.example.ReVueltaBack.modelos;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "trueques")
-public class trueques {
+public class Trueque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,16 +41,19 @@ public class trueques {
     @Column(name = "aceptado")
     private Boolean aceptado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_prenda_ofrecida")
-    private Prendas id_prenda_ofrecida;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_id_prenda_ofrecida")
+    @JsonBackReference("prenda-ofrecida")
+    private Prenda id_prenda_ofrecida;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_prenda_deseada")
-    private Prendas id_prenda_deseada;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_id_prenda_deseada")
+    @JsonBackReference("prenda-deseada")
+    private Prenda id_prenda_deseada;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_proponente")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_id_proponente")
+    @JsonBackReference("proponente")
     private Usuario id_proponente;
 
     public UUID getId() {
@@ -93,16 +98,16 @@ public class trueques {
     public void setAceptado(Boolean aceptado) {
         this.aceptado = aceptado;
     }
-    public Prendas getId_prenda_ofrecida() {
+    public Prenda getId_prenda_ofrecida() {
         return id_prenda_ofrecida;
     }
-    public void setId_prenda_ofrecida(Prendas id_prenda_ofrecida) {
+    public void setId_prenda_ofrecida(Prenda id_prenda_ofrecida) {
         this.id_prenda_ofrecida = id_prenda_ofrecida;
     }
-    public Prendas getId_prenda_deseada() {
+    public Prenda getId_prenda_deseada() {
         return id_prenda_deseada;
     }
-    public void setId_prenda_deseada(Prendas id_prenda_deseada) {
+    public void setId_prenda_deseada(Prenda  id_prenda_deseada) {
         this.id_prenda_deseada = id_prenda_deseada;
     }
     public Usuario getId_proponente() {
