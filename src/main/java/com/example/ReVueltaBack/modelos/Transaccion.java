@@ -88,7 +88,13 @@ public class Transaccion {
     public void setComprobante(String comprobante) {
         this.comprobante = comprobante;
     }
-
+    public Pedido getPedido() {
+        return pedido;
+    }
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+    
 
 
 }
