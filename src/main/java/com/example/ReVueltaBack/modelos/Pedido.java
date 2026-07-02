@@ -3,16 +3,20 @@ package com.example.ReVueltaBack.modelos;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedidos")
-public class Pedidos {
+public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +39,17 @@ public class Pedidos {
 
     @Column(name = "notas", nullable = true, unique = false)
     private String notas;
+
+
+    //creando una relacion con la tabla usuario 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id")
+    @JsonBackReference("usuario_pedido")
+    private Usuario usuario;
+
+
+
+    // getters y setters
 
     public UUID getId() {
         return id;
