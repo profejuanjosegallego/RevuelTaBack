@@ -5,14 +5,17 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "calificaciones")
-public class calificacion {
+public class Calificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,12 @@ public class calificacion {
 
     @Column(name = "peso", nullable = false)
     private Integer peso;
+
+
+    // Creando relacion con la tabla Reseñas
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reseñas_id")
+    private Reseñas reseñas;
 
     public UUID getId() {
         return id;
