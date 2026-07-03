@@ -30,37 +30,87 @@ public class DetallePedido {
     @Column
     private LocalDate fecha;
 
-    @ManyToOne
-    private Pedido id_pedido;
+    //  Relación con Pedido
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pedido", nullable = false)
+    private Pedido pedidos;
 
-    @ManyToOne
-    private Prendas id_prenda;
+    //  Relación con Prenda
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_prenda")
+    private Prenda prenda;
 
-    // Getters y Setters
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+    // - GETTERS Y SETTERS -
 
-    public Integer getCantidad() { return cantidad; }
-    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
+    public UUID getId() {
+        return id;
+    }
 
-    public Double getPrecio_unitario() { return precio_unitario; }
-    public void setPrecio_unitario(Double precio_unitario) { this.precio_unitario = precio_unitario; }
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
-    public Double getSubtotal() { return subtotal; }
-    public void setSubtotal(Double subtotal) { this.subtotal = subtotal; }
+    public Integer getCantidad() {
+        return cantidad;
+    }
 
-    public Double getDescuento() { return descuento; }
-    public void setDescuento(Double descuento) { this.descuento = descuento; }
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
 
-    public String getEstado_item() { return estado_item; }
-    public void setEstado_item(String estado_item) { this.estado_item = estado_item; }
+    public Double getPrecio_unitario() {
+        return precio_unitario;
+    }
 
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public void setPrecio_unitario(Double precio_unitario) {
+        this.precio_unitario = precio_unitario;
+    }
 
-    public Pedido getId_pedido() { return id_pedido; }
-    public void setId_pedido(Pedido id_pedido) { this.id_pedido = id_pedido; }
+    public Double getSubtotal() {
+        return subtotal;
+    }
 
-    public Prendas getId_prenda() { return id_prenda; }
-    public void setId_prenda(Prendas id_prenda) { this.id_prenda = id_prenda; }
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public String getEstado_item() {
+        return estado_item;
+    }
+
+    public void setEstado_item(String estado_item) {
+        this.estado_item = estado_item;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public Pedido getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Pedido pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public Prenda getPrenda() {
+        return prenda;
+    }
+
+    public void setPrenda(Prenda prenda) {
+        this.prenda = prenda;
+    }
 }
