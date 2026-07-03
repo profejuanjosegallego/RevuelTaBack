@@ -3,11 +3,16 @@ package com.example.ReVueltaBack.modelos;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,6 +40,11 @@ public class Cupon {
 
     @Column(name = "fecha_expiracion", nullable = false)
     private LocalDateTime fecha_expiracion;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_id_campana")
+    @JsonBackReference("campana_cupon")
+    private Campana campana;
 
     public UUID getId() {
         return id;
@@ -92,5 +102,12 @@ public class Cupon {
         this.fecha_expiracion = fecha_expiracion;
     }
 
-    
+    public Campana getCampana() {
+        return campana;
+    }
+
+    public void setCampana(Campana campana) {
+        this.campana = campana;
+    }
+
 }
