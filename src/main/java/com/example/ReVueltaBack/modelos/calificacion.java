@@ -43,7 +43,7 @@ public class Calificacion {
     // Creando relacion con la tabla Reseñas
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reseñas_id")
-    private Reseñas reseñas;
+    private Reseña reseñas;
 
     public UUID getId() {
         return id;
