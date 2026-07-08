@@ -44,17 +44,9 @@ public class Trueque {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_id_prenda_ofrecida")
     @JsonBackReference("prenda-ofrecida")
-    private Prenda id_prenda_ofrecida;
+    private Prenda prenda;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_id_prenda_deseada")
-    @JsonBackReference("prenda-deseada")
-    private Prenda id_prenda_deseada;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_id_proponente")
-    @JsonBackReference("proponente")
-    private Usuario id_proponente;
+   
 
     public UUID getId() {
         return id;
@@ -98,23 +90,12 @@ public class Trueque {
     public void setAceptado(Boolean aceptado) {
         this.aceptado = aceptado;
     }
-    public Prenda getId_prenda_ofrecida() {
-        return id_prenda_ofrecida;
+    public Prenda getPrenda() {
+        return prenda;
     }
-    public void setId_prenda_ofrecida(Prenda id_prenda_ofrecida) {
-        this.id_prenda_ofrecida = id_prenda_ofrecida;
+    public void setPrenda(Prenda prenda) {
+        this.prenda = prenda;
     }
-    public Prenda getId_prenda_deseada() {
-        return id_prenda_deseada;
-    }
-    public void setId_prenda_deseada(Prenda  id_prenda_deseada) {
-        this.id_prenda_deseada = id_prenda_deseada;
-    }
-    public Usuario getId_proponente() {
-        return id_proponente;
-    }
-    public void setId_proponente(Usuario id_proponente) {
-        this.id_proponente = id_proponente;
-    }
+    
 
 }
