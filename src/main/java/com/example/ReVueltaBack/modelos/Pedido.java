@@ -1,6 +1,7 @@
 package com.example.ReVueltaBack.modelos;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,6 +49,23 @@ public class Pedido {
     @JoinColumn(name = "usuario_id")
     @JsonBackReference("usuario_pedido")
     private Usuario usuario;
+    // pedido tiene que hacer relacion de uno a muchos con detalle pedido
+    @JsonBackReference("pedido_detallePedido")
+    @OneToMany(mappedBy = "pedido")
+    private List<DetallePedido> detallePedidos;
+
+    // relacion de uno a muchos con envio
+    
+    @OneToMany(mappedBy = "pedido")
+    @JsonBackReference("pedido_envio")
+    private List<Envio> envios;
+
+    // relacion de muchos a uno con transaccion
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "transaccion_id")
+    @JsonBackReference("transaccion_pedido")
+    private Transaccion transaccion;
 
 
 
