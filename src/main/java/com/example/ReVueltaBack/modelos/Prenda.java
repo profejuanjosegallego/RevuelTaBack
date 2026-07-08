@@ -1,9 +1,12 @@
 package com.example.ReVueltaBack.modelos;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,7 +51,39 @@ public class Prenda {
     @JsonBackReference("usuario_prenda")
     private Usuario usuario;
 
+    //Relacion tabla DetallePedido
+    @OneToMany(mappedBy = "prenda")
+    @JsonManagedReference("prenda_detallePedido")
+    private List<DetallePedido> detallePedidos = new ArrayList<>();
 
+    public List<DetallePedido> getDetallePedidos() {
+        return detallePedidos;
+    }
+    public void setDetallePedidos(List<DetallePedido> detallePedidos) {
+        this.detallePedidos = detallePedidos;
+    }
+    // Relación tabla Reporte
+    @OneToMany(mappedBy = "prenda")
+    @JsonManagedReference("prenda_reporte")
+    private List<Reporte> reportes = new ArrayList<>();
+
+    public List<Reporte> getReportes() {
+        return reportes;
+    }
+    public void setReportes(List<Reporte> reportes) {
+        this.reportes = reportes;
+    }
+    // Relación tabla Trueque
+    @OneToMany(mappedBy = "prenda")
+    @JsonManagedReference("prenda_trueque")
+    private List<Trueque> trueques = new ArrayList<>();
+
+    public List<Trueque> getTrueques() {
+        return trueques;
+    }
+    public void setTrueques(List<Trueque> trueques) {
+        this.trueques = trueques;
+    }
     public Usuario getUsuario() {
         return usuario;
     }
