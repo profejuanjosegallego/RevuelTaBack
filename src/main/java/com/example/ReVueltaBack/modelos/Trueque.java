@@ -46,15 +46,7 @@ public class Trueque {
     @JsonBackReference("prenda-ofrecida")
     private Prenda id_prenda_ofrecida;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_id_prenda_deseada")
-    @JsonBackReference("prenda-deseada")
-    private Prenda id_prenda_deseada;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_id_proponente")
-    @JsonBackReference("proponente")
-    private Usuario id_proponente;
+   
 
     public UUID getId() {
         return id;
