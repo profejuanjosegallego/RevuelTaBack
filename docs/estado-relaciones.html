@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReVuelta · Estado de las relaciones JPA</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --card2:#273449; --txt:#e2e8f0; --muted:#94a3b8;
+    --ok:#22c55e; --okbg:#052e16; --warn:#f59e0b; --warnbg:#3a2a06; --err:#ef4444; --errbg:#3f1414;
+    --line:#334155; --accent:#38bdf8; --mono:#f1f5f9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+  header{padding:32px 24px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#111c33,#0f172a)}
+  h1{margin:0 0 6px;font-size:26px}
+  h2{margin:36px 0 14px;font-size:19px;border-left:4px solid var(--accent);padding-left:10px}
+  .sub{color:var(--muted);font-size:14px}
+  main{max-width:1080px;margin:0 auto;padding:0 24px 60px}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:22px 0 4px}
+  .kpi{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .kpi .n{font-size:32px;font-weight:700}
+  .kpi.ok .n{color:var(--ok)} .kpi.warn .n{color:var(--warn)} .kpi.err .n{color:var(--err)}
+  .kpi .l{color:var(--muted);font-size:13px;margin-top:2px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px;background:var(--card);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--card2);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  tr:last-child td{border-bottom:none}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0b1222;color:var(--mono);padding:1px 6px;border-radius:5px;font-size:.92em}
+  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+  .b-ok{background:var(--okbg);color:var(--ok);border:1px solid #14532d}
+  .b-warn{background:var(--warnbg);color:var(--warn);border:1px solid #78500a}
+  .b-err{background:var(--errbg);color:var(--err);border:1px solid #7f1d1d}
+  .wrap{overflow-x:auto}
+  pre{background:#0b1222;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13px}
+  pre code{background:none;padding:0}
+  .arrow{color:var(--accent);font-weight:700}
+  .note{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--muted)}
+  .tag{color:var(--muted);font-size:12px}
+  ul.compact{margin:4px 0 0;padding-left:18px}
+  ul.compact li{margin:2px 0}
+  a{color:var(--accent)}
+  .foot{margin-top:40px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🧵 ReVuelta · Estado de las relaciones bidireccionales</h1>
+  <div class="sub">Backend 2 · Revisión automática de los modelos JPA en <code>modelos/</code> · Generado el 07/07/2026</div>
+</header>
+<main>
+
+  <div class="cards">
+    <div class="kpi ok"><div class="n">1</div><div class="l">Relaciones COMPLETAS<br>(lado A + lado B)</div></div>
+    <div class="kpi warn"><div class="n">13</div><div class="l">Falta el lado B<br>(solo existe @ManyToOne)</div></div>
+    <div class="kpi err"><div class="n">4</div><div class="l">Alertas graves<br>(no compila / duplicados)</div></div>
+    <div class="kpi"><div class="n">7</div><div class="l">Modelos que deben<br>recibir el lado B</div></div>
+  </div>
+  <p class="note">💡 <b>Cómo leerlo:</b> en una relación bidireccional, el lado <b>A</b> (dueño) es el <code>@ManyToOne</code> con <code>@JoinColumn</code>. El lado <b>B</b> (inverso) es el <code>@OneToMany(mappedBy=&quot;...&quot;)</code> en la entidad del otro estudiante. Hoy casi todos hicieron el lado A; falta que el compañero dueño de la otra tabla agregue el <code>@OneToMany</code>.</p>
+
+  <h2>✅ Relaciones completas</h2>
+  <div class="wrap">
+  <table>
+    <tr><th>Lado A (@ManyToOne)</th><th>Lado B (@OneToMany)</th><th>Nombre / mappedBy</th><th>Estado</th></tr>
+    <tr>
+      <td><code>Cupon.campana</code></td>
+      <td><code>Campana.cupones</code></td>
+      <td><code>mappedBy="campana"</code><br><span class="tag">JsonRef: campana_cupon</span></td>
+      <td><span class="badge b-ok">COMPLETA</span></td>
+    </tr>
+  </table>
+  </div>
+
+  <h2>🟠 Relaciones incompletas — falta el lado B (inverso)</h2>
+  <p class="sub">Cada fila tiene el <code>@ManyToOne</code> hecho, pero la entidad destino todavía no declara su <code>@OneToMany</code>.</p>
+  <div class="wrap">
+  <table>
+    <tr><th>#</th><th>Lado A existente (@ManyToOne)</th><th class="arrow">→</th><th>Entidad que debe agregar el lado B</th><th>Estado</th></tr>
+    <tr><td>1</td><td><code>DetallePedido.pedidos</code> <span class="tag">(id_pedido)</span></td><td class="arrow">→</td><td><code>Pedido</code> · falta <code>List&lt;DetallePedido&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>2</td><td><code>DetallePedido.prenda</code> <span class="tag">(id_prenda)</span></td><td class="arrow">→</td><td><code>Prenda</code> · falta <code>List&lt;DetallePedido&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>3</td><td><code>Envio.pedido</code> <span class="tag">(pedido_envio)</span></td><td class="arrow">→</td><td><code>Pedido</code> · falta <code>List&lt;Envio&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>4</td><td><code>Envio.transportista</code> <span class="tag">(transportista_envio)</span></td><td class="arrow">→</td><td><code>Transportista</code> · falta <code>List&lt;Envio&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>5</td><td><code>Envio.puntos_de_acopio</code></td><td class="arrow">→</td><td><code>puntosdeacopio</code> · falta <code>List&lt;Envio&gt;</code> <span class="tag">(+ ver alerta C)</span></td><td><span class="badge b-err">FALTA + ERROR</span></td></tr>
+    <tr><td>6</td><td><code>Pedido.usuario</code> <span class="tag">(usuario_pedido)</span></td><td class="arrow">→</td><td><code>Usuario</code> · falta <code>List&lt;Pedido&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>7</td><td><code>Prenda.usuario</code> <span class="tag">(usuario_prenda)</span></td><td class="arrow">→</td><td><code>Usuario</code> · falta <code>List&lt;Prenda&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>8</td><td><code>SeguimientoEnvio.envio</code></td><td class="arrow">→</td><td><code>Envio</code> · falta <code>List&lt;SeguimientoEnvio&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>9</td><td><code>Transaccion.pedido</code></td><td class="arrow">→</td><td><code>Pedido</code> · falta <code>List&lt;Transaccion&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>10</td><td><code>Trueque.id_prenda_ofrecida</code></td><td class="arrow">→</td><td><code>Prenda</code> · falta <code>List&lt;Trueque&gt;</code> (ofrecidas)</td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>11</td><td><code>Trueque.id_prenda_deseada</code></td><td class="arrow">→</td><td><code>Prenda</code> · falta <code>List&lt;Trueque&gt;</code> (deseadas)</td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>12</td><td><code>Trueque.id_proponente</code></td><td class="arrow">→</td><td><code>Usuario</code> · falta <code>List&lt;Trueque&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+    <tr><td>13</td><td><code>Calificacion.reseñas</code></td><td class="arrow">→</td><td><code>Reseñas</code> · falta <code>List&lt;Calificacion&gt;</code></td><td><span class="badge b-warn">FALTA LADO B</span></td></tr>
+  </table>
+  </div>
+
+  <h2>👥 Qué debe agregar cada modelo (tarea por estudiante)</h2>
+  <p class="sub">El estudiante dueño de cada entidad de esta lista debe añadir el/los <code>@OneToMany</code> que le faltan para cerrar la bidireccionalidad.</p>
+  <div class="wrap">
+  <table>
+    <tr><th>Entidad (estudiante)</th><th>Colecciones que faltan</th></tr>
+    <tr><td><code>Pedido</code></td><td><ul class="compact">
+      <li><code>List&lt;DetallePedido&gt;</code> — <code>mappedBy="pedidos"</code></li>
+      <li><code>List&lt;Envio&gt;</code> — <code>mappedBy="pedido"</code></li>
+      <li><code>List&lt;Transaccion&gt;</code> — <code>mappedBy="pedido"</code></li></ul></td></tr>
+    <tr><td><code>Prenda</code></td><td><ul class="compact">
+      <li><code>List&lt;DetallePedido&gt;</code> — <code>mappedBy="prenda"</code></li>
+      <li><code>List&lt;Trueque&gt;</code> ofrecidas — <code>mappedBy="id_prenda_ofrecida"</code></li>
+      <li><code>List&lt;Trueque&gt;</code> deseadas — <code>mappedBy="id_prenda_deseada"</code></li></ul></td></tr>
+    <tr><td><code>Usuario</code></td><td><ul class="compact">
+      <li><code>List&lt;Pedido&gt;</code> — <code>mappedBy="usuario"</code></li>
+      <li><code>List&lt;Prenda&gt;</code> — <code>mappedBy="usuario"</code></li>
+      <li><code>List&lt;Trueque&gt;</code> — <code>mappedBy="id_proponente"</code></li></ul></td></tr>
+    <tr><td><code>Envio</code></td><td><code>List&lt;SeguimientoEnvio&gt;</code> — <code>mappedBy="envio"</code></td></tr>
+    <tr><td><code>Transportista</code></td><td><code>List&lt;Envio&gt;</code> — <code>mappedBy="transportista"</code></td></tr>
+    <tr><td><code>puntosdeacopio</code></td><td><code>List&lt;Envio&gt;</code> — <code>mappedBy="puntos_de_acopio"</code></td></tr>
+    <tr><td><code>Reseñas</code></td><td><code>List&lt;Calificacion&gt;</code> — <code>mappedBy="reseñas"</code></td></tr>
+  </table>
+  </div>
+
+  <h2>📌 Plantilla para agregar el lado B</h2>
+  <p class="sub">Ejemplo con <code>Usuario</code> ⇄ <code>Pedido</code>. El lado A (en <code>Pedido</code>) ya existe; solo falta esto en <code>Usuario</code>:</p>
+  <pre><code>// ── En Usuario.java (lado B / inverso) ──
+@OneToMany(mappedBy = "usuario")          // "usuario" = nombre del campo @ManyToOne en Pedido
+@JsonManagedReference("usuario_pedido")   // debe coincidir con el @JsonBackReference del lado A
+private List&lt;Pedido&gt; pedidos = new ArrayList&lt;&gt;();
+
+// ...y sus getter/setter
+
+// ── Recuerda (lado A, ya hecho en Pedido.java) ──
+@ManyToOne(fetch = FetchType.LAZY, optional = false)
+@JoinColumn(name = "usuario_id")
+@JsonBackReference("usuario_pedido")
+private Usuario usuario;</code></pre>
+  <p class="note">🔑 Reglas de oro: <b>1)</b> el <code>mappedBy</code> apunta al <b>nombre del atributo</b> Java del lado A (no a la columna). <b>2)</b> el <code>@JoinColumn</code> va SOLO en el lado A. <b>3)</b> usa el mismo string en <code>@JsonManagedReference</code> (lado B) y <code>@JsonBackReference</code> (lado A) para evitar recursión infinita al serializar JSON.</p>
+
+  <h2>🚨 Alertas graves (impiden compilar o arrancar)</h2>
+  <div class="wrap">
+  <table>
+    <tr><th>Id</th><th>Problema</th><th>Detalle</th></tr>
+    <tr><td>A</td><td><b>Dos clases de prenda</b></td><td><code>Prenda</code> (entidad real) y <code>Prendas</code> (clase <b>vacía, sin <code>@Entity</code></b>). <code>ImagenesPrendas</code> y <code>trueques</code> apuntan a <code>Prendas</code> → JPA fallará. Deben apuntar a <code>Prenda</code> y borrar <code>Prendas</code>.</td></tr>
+    <tr><td>B</td><td><b>Dos clases de trueque</b></td><td><code>Trueque</code> y <code>trueques</code> mapean ambas a <code>@Table(name="trueques")</code> → tabla duplicada. Dejar solo <code>Trueque</code> y eliminar <code>trueques.java</code>.</td></tr>
+    <tr><td>C</td><td><b>Nombre de clase no coincide</b></td><td><code>Envio</code> declara <code>PuntosDeAcopio puntos_de_acopio</code>, pero la clase se llama <code>puntosdeacopio</code>. No compila hasta unificar el nombre (idealmente renombrar la clase a <code>PuntosDeAcopio</code>).</td></tr>
+    <tr><td>D</td><td><b>Relación puesta como columna</b></td><td>En <code>Reporte</code>: <code>@Column private Usuario usuario;</code> — un <code>Usuario</code> no es una columna simple. Debe ser <code>@ManyToOne</code> + <code>@JoinColumn</code>.</td></tr>
+  </table>
+  </div>
+  <p class="note">✏️ <b>Sugerencia de convención:</b> las clases <code>calificacion</code>, <code>puntosdeacopio</code> y <code>trueques</code> están en minúscula. En Java las clases van en <code>PascalCase</code> (<code>Calificacion</code>, <code>PuntosDeAcopio</code>, <code>Trueque</code>). Buen momento para enseñarlo.</p>
+
+  <div class="foot">
+    Revisión basada en los 24 archivos de <code>src/main/java/com/example/ReVueltaBack/modelos/</code>.
+    Relaciones detectadas por anotaciones <code>@ManyToOne</code> / <code>@OneToMany</code>. Vuelve a generar este reporte cuando los estudiantes agreguen sus lados B.
+  </div>
+
+</main>
+</body>
+</html>
