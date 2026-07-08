@@ -33,7 +33,7 @@ public class SeguimientoEnvio {
     private String ubicacion;
 
     @Column(name = "fecha_hora")
-    private LocalDateTime fecha_hora;
+    private LocalDateTime fechaHora;
 
     @Column(name = "latitud")
     private Double latitud;
@@ -80,11 +80,11 @@ public class SeguimientoEnvio {
     }
 
     public LocalDateTime getFecha_hora() {
-        return fecha_hora;
+        return fechaHora;
     }
 
     public void setFecha_hora(LocalDateTime fecha_hora) {
-        this.fecha_hora = fecha_hora;
+        this.fechaHora = fecha_hora;
     }
 
     public Double getLatitud() {
