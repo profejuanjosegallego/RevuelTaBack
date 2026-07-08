@@ -3,6 +3,9 @@ package com.example.ReVueltaBack.modelos;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -51,10 +54,12 @@ public class Reporte {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_prenda", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private Prenda prenda;
 
 }
