@@ -1,12 +1,17 @@
 package com.example.ReVueltaBack.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +33,11 @@ public class Transportista {
     private String zona_cobertura;
     @Column(name = "disponoble", nullable = false, unique = false)
     private Boolean disponible;
+
+    @OneToMany (mappedBy = "transportista")
+    @JsonManagedReference
+    private List <Envio> envios = new ArrayList<>(); 
+    
     public UUID getId() {
         return id;
     }
