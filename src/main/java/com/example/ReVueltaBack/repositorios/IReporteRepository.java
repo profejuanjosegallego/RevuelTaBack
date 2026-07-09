@@ -28,4 +28,16 @@ public interface IReporteRepository extends JpaRepository<Reporte, UUID> {
     @Query("SELECT r FROM Reporte r WHERE r.usuario.id = :usuarioId")
     List<Reporte> buscarPorUsuarioId(@Param("usuarioId") UUID usuarioId);
 
+    @Query("SELECT r FROM Reporte r WHERE r.prenda.id = :prendaId")
+    List<Reporte> buscarPorPrenda(@Param("prendaId") UUID prendaId);
+
+    @Query("SELECT r FROM Reporte r WHERE r.estado = :estado")
+    List<Reporte> buscarPorEstado(@Param("estado") String estado);
+
+    @Query("SELECT r FROM Reporte r WHERE r.resuelto = :resuelto")
+    List<Reporte> buscarPorResuelto(@Param("resuelto") Boolean resuelto);
+
+    @Query("SELECT r FROM Reporte r ORDER BY r.fecha DESC")
+    List<Reporte> orderPorFechaDesc();
+
 }
