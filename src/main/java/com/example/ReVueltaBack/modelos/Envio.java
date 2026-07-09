@@ -64,7 +64,7 @@ public class Envio {
     @JsonBackReference("punto_acopio_envio")
     private PuntoAcopio puntoAcopio;
 
-    //Creando una relación con la tabla Seguimiento envío
+    //Creando una relación con la tabla Seguimiento envío lll
     @OneToMany(mappedBy = "envio")
     @JsonManagedReference("envio_seguimiento")
     private List<SeguimientoEnvio> seguimientoEnvio = new ArrayList<>();
