@@ -1,9 +1,12 @@
 package com.example.ReVueltaBack.modelos;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,7 +28,7 @@ public class Envio {
     private UUID id;
 
     @Column(unique = true)
-    private String codigo_guia;
+    private String codigoGuia;
 
     @Column()
     private String estado;
@@ -33,10 +37,10 @@ public class Envio {
     private Double costo;
 
     @Column()
-    private LocalDate fecha_despacho;
+    private LocalDate fechaDespacho;
 
     @Column()
-    private Double peso_kg;
+    private Double pesoKg;
 
     public UUID getId() {
         return id;
@@ -56,20 +60,25 @@ public class Envio {
 
     //Creando una relación con la tabla puntos de acopio
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_id_puntos_de_acopio")
-    @JsonBackReference("puntos_de_acopio_envio")
-    private PuntosDeAcopio puntos_de_acopio;
+    @JoinColumn(name = "fk_id_puntoAcopio")
+    @JsonBackReference("punto_acopio_envio")
+    private PuntoAcopio puntoAcopio;
+
+    //Creando una relación con la tabla Seguimiento envío
+    @OneToMany(mappedBy = "envio")
+    @JsonManagedReference("envio_seguimiento")
+    private List<SeguimientoEnvio> seguimientoEnvio = new ArrayList<>();
 
     public void setId(UUID id) {
         this.id = id;
     }
 
     public String getCodigo_guia() {
-        return codigo_guia;
+        return codigoGuia;
     }
 
-    public void setCodigo_guia(String codigo_guia) {
-        this.codigo_guia = codigo_guia;
+    public void setCodigo_guia(String codigoGuia) {
+        this.codigoGuia = codigoGuia;
     }
 
     public String getEstado() {
@@ -89,19 +98,19 @@ public class Envio {
     }
 
     public LocalDate getFecha_despacho() {
-        return fecha_despacho;
+        return fechaDespacho;
     }
 
-    public void setFecha_despacho(LocalDate fecha_despacho) {
-        this.fecha_despacho = fecha_despacho;
+    public void setFecha_despacho(LocalDate fechaDespacho) {
+        this.fechaDespacho = fechaDespacho;
     }
 
-    public Double getPeso_kg() {
-        return peso_kg;
+    public Double getPesKg() {
+        return pesoKg;
     }
 
-    public void setPeso_kg(Double peso_kg) {
-        this.peso_kg = peso_kg;
+    public void setPeso_kg(Double pesoKg) {
+        this.pesoKg = pesoKg;
     }
 
     public Pedido getPedido() {
@@ -120,12 +129,12 @@ public class Envio {
         this.transportista = transportista;
     }
 
-    public PuntosDeAcopio getPuntos_de_acopio() {
-        return puntos_de_acopio;
+    public PuntoAcopio getPuntos_de_acopio() {
+        return puntoAcopio;
     }
 
-    public void setPuntos_de_acopio(PuntosDeAcopio puntos_de_acopio) {
-        this.puntos_de_acopio = puntos_de_acopio;
+    public void setPuntos_de_acopio(PuntoAcopio puntoAcopio) {
+        this.puntoAcopio = puntoAcopio;
     }
 
     
