@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.example.ReVueltaBack.modelos.Pedido;
 import com.example.ReVueltaBack.modelos.Transaccion;
 
 @Repository
@@ -19,6 +20,14 @@ public interface ITransaccionRepositorio extends JpaRepository<Transaccion,UUID>
     @Query("SELECT t FROM Transaccion t " +
        "WHERE LOWER(u.tipo) = LOWER(:tipo)")
     List<Transaccion> buscarPorTipo (String tipo);
+
+    List<Transaccion> findfindByPedido (Pedido pedido);
+
+    List<Transaccion> findfindByEstado (String estado);
+
+    List<Transaccion> findAllByOrderByFechasDesc ();
+
+    List<Transaccion> findByMontoGreaterThanEqual (Double montoMinimo);
 
 
 }
