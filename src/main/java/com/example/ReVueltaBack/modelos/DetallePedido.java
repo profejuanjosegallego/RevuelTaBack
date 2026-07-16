@@ -30,10 +30,11 @@ public class DetallePedido {
     @Column
     private LocalDate fecha;
 
-    //  Relación con Pedido
+    //  Relación con Pedido (el atributo se llama "pedido" para que calce con
+    //  el mappedBy = "pedido" del @OneToMany de Pedido).
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido", nullable = false)
-    private Pedido pedidos;
+    private Pedido pedido;
 
     //  Relación con Prenda
     @ManyToOne(fetch = FetchType.LAZY)
@@ -98,12 +99,12 @@ public class DetallePedido {
         this.fecha = fecha;
     }
 
-    public Pedido getPedidos() {
-        return pedidos;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setPedidos(Pedido pedidos) {
-        this.pedidos = pedidos;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
     public Prenda getPrenda() {

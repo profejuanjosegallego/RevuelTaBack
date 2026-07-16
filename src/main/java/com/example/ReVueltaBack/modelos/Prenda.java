@@ -45,11 +45,21 @@ public class Prenda {
     @Column(name = "disponible")
     private boolean disponible;
 
-    //Relacione tabla ususario
+    //Relacione tabla ususario (vendedor). Seed: id_vendedor -> usuarios.
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_id_usuario")
     @JsonBackReference("usuario_prenda")
     private Usuario usuario;
+
+    //Relacion tabla categorias. Seed: id_categoria -> categorias.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
+
+    //Relacion tabla estados_prenda. Seed: id_estado -> estados_prenda.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_estado")
+    private EstadoPrenda estado;
 
     //Relacion tabla DetallePedido
     @OneToMany(mappedBy = "prenda")
@@ -89,6 +99,18 @@ public class Prenda {
     }
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    public Categoria getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    public EstadoPrenda getEstado() {
+        return estado;
+    }
+    public void setEstado(EstadoPrenda estado) {
+        this.estado = estado;
     }
     public UUID getId() {
         return id;
