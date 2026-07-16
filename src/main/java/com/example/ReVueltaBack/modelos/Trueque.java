@@ -42,11 +42,19 @@ public class Trueque {
     private Boolean aceptado;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_id_prenda_ofrecida")
+    @JoinColumn(name = "id_prenda_ofrecida")
     @JsonBackReference("prenda-ofrecida")
     private Prenda prenda;
 
-   
+    // Segunda prenda de la relacion (la deseada). Seed: id_prenda_deseada -> prendas.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_prenda_deseada")
+    private Prenda prendaDeseada;
+
+    // Quien propone el trueque. Seed: id_proponente -> usuarios.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_proponente")
+    private Usuario proponente;
 
     public UUID getId() {
         return id;
@@ -96,6 +104,17 @@ public class Trueque {
     public void setPrenda(Prenda prenda) {
         this.prenda = prenda;
     }
-    
+    public Prenda getPrendaDeseada() {
+        return prendaDeseada;
+    }
+    public void setPrendaDeseada(Prenda prendaDeseada) {
+        this.prendaDeseada = prendaDeseada;
+    }
+    public Usuario getProponente() {
+        return proponente;
+    }
+    public void setProponente(Usuario proponente) {
+        this.proponente = proponente;
+    }
 
 }
