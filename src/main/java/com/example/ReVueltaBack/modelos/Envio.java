@@ -39,6 +39,10 @@ public class Envio {
     @Column()
     private LocalDate fechaDespacho;
 
+    // Seed: envios tiene fecha_entrega_estimada (faltaba).
+    @Column(name = "fecha_entrega_estimada")
+    private LocalDate fechaEntregaEstimada;
+
     @Column()
     private Double pesoKg;
 
@@ -103,6 +107,14 @@ public class Envio {
 
     public void setFecha_despacho(LocalDate fechaDespacho) {
         this.fechaDespacho = fechaDespacho;
+    }
+
+    public LocalDate getFecha_entrega_estimada() {
+        return fechaEntregaEstimada;
+    }
+
+    public void setFecha_entrega_estimada(LocalDate fechaEntregaEstimada) {
+        this.fechaEntregaEstimada = fechaEntregaEstimada;
     }
 
     public Double getPesKg() {
