@@ -29,5 +29,7 @@ public interface ITransaccionRepositorio extends JpaRepository<Transaccion,UUID>
 
     List<Transaccion> findByMontoGreaterThanEqual (Double montoMinimo);
 
+    // pusheo de cambios en interfaz transaccion
+
 
 }
