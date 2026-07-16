@@ -59,7 +59,7 @@ public class Reporte {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_prenda", referencedColumnName = "id", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference
     private Prenda prenda;
 
 }
