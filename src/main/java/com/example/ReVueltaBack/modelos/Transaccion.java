@@ -23,19 +23,20 @@ public class Transaccion {
     @GeneratedValue (strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column (name = "tipo", nullable = false, unique = true, length = 50)
+    @Column (name = "tipo", nullable = false, length = 50)
     private String tipo;
 
-    @Column (name = "monto", nullable = false, unique = true, length = 50)
+    @Column (name = "monto", nullable = false)
     private Double monto;
 
-    @Column (name = "estado", nullable = false, unique = true, length = 50)
+    @Column (name = "estado", nullable = false, length = 50)
     private String estado;
 
+    // referencia_pago SÍ es unica (identifica el pago): unico caso legitimo de unique aqui.
     @Column (name = "referencia_pago", nullable = false, unique = true, length = 30)
     private String referencia_pago;
 
-    @Column (name = "fecha", nullable = false, unique = true, length = 10)
+    @Column (name = "fecha", nullable = false)
     private LocalDate fecha;
 
     @Column ()

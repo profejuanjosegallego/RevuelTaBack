@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Table(name =  "recompensas")
 public class Recompensa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "nombre", nullable = false, length = 100)

@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "fecha", nullable = false, unique = false)
@@ -60,12 +60,11 @@ public class Pedido {
     @JsonBackReference("pedido_envio")
     private List<Envio> envios;
 
-    // relacion de muchos a uno con transaccion
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "transaccion_id")
-    @JsonBackReference("transaccion_pedido")
-    private Transaccion transaccion;
+    // La relacion con Transaccion la DUEÑA es Transaccion (transacciones.id_pedido).
+    // Aqui solo mapeamos la vuelta (inverso), sin una segunda FK en pedidos.
+    @OneToMany(mappedBy = "pedido")
+    @JsonBackReference("pedido_transaccion")
+    private List<Transaccion> transacciones;
 
 
 
