@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.ReVueltaBack.modelos.Categoria;
 
 @Component
-public class ValidacionUsuarioImpl implements IValidacionCategoria {
+public class ValidacionCategoriaImpl implements IValidacionCategoria {
 
     private static final Pattern PATRON_SLUG = Pattern.compile("^[a-z0-9]+(-[a-z0-9]+)*$");
     private static final int DESCRIPCION_MIN_LONGITUD = 3;
