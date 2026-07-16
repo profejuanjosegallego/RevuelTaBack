@@ -17,7 +17,9 @@ public interface ImagenesPrendaRepository extends JpaRepository<ImagenesPrenda, 
     long countByPrendaId(UUID prendaId);
     List<ImagenesPrenda> findByFormato(String formato);
 
-    List<ImagenesPrenda> findByFecha_subidaGreaterThanEqual(java.time.LocalDate fecha);
+    // Con @Query evitamos que Spring Data parta "fecha_subida" en fecha.subida.
+    @Query("SELECT ip FROM ImagenesPrenda ip WHERE ip.fecha_subida >= :fecha")
+    List<ImagenesPrenda> buscarDesdeFechaSubida(@Param("fecha") java.time.LocalDate fecha);
 
     @Query("SELECT ip FROM ImagenesPrenda ip " +
            "WHERE ip.prenda.id = :prendaId " +
