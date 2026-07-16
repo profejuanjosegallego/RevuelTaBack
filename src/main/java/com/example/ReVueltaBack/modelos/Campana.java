@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "Campanas")
+@Table(name = "campañas")
 public class Campana {
 
 
@@ -25,22 +25,22 @@ public class Campana {
     private UUID id;
 
 
-    @Column(name= "nombre campaña", nullable= false, unique = false, length= 50)
+    @Column(name = "nombre_campana", nullable = false, length = 50)
     private String nombre_campana;
 
-    @Column(name= "descripcion_campana", nullable= false, unique = false, length= 50)
+    @Column(name = "descripcion_campana", nullable = false, length = 50)
     private String descripcion_campana;
 
-    @Column(name= "fecha_inicio", nullable= false, unique = false, length= 50)
+    @Column(name = "fecha_inicio", nullable = false)
     private LocalDateTime fecha_inicio;
 
-    @Column(name= "fecha_final", nullable= false, unique = false, length= 50)
+    @Column(name = "fecha_final", nullable = false)
     private LocalDateTime fecha_final;
 
-    @Column(name= "descuento_pct", nullable= false, unique = false, length= 50)
+    @Column(name = "descuento_pct", nullable = false)
     private Double descuento_pct;
 
-    @Column(name= "activa", nullable= false, unique = false, length= 50)
+    @Column(name = "activa", nullable = false)
     private Boolean activa;
 
     @OneToMany(mappedBy = "campana")

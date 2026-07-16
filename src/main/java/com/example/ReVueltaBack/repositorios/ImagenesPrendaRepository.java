@@ -1,6 +1,6 @@
 package com.example.ReVueltaBack.repositorios;
 
-import com.example.ReVueltaBack.modelos.ImagenesPrendas;
+import com.example.ReVueltaBack.modelos.ImagenesPrenda;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,21 +11,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ImagenesPrendaRepository extends JpaRepository<ImagenesPrendas, UUID> {
+public interface ImagenesPrendaRepository extends JpaRepository<ImagenesPrenda, UUID> {
 
-    List<ImagenesPrendas> findByPrendasIdOrderByOrdenAsc(UUID prendaId);
-    long countByPrendasId(UUID prendaId);
-    List<ImagenesPrendas> findByFormato(String formato);
+    List<ImagenesPrenda> findByPrendaIdOrderByOrdenAsc(UUID prendaId);
+    long countByPrendaId(UUID prendaId);
+    List<ImagenesPrenda> findByFormato(String formato);
 
-    List<ImagenesPrendas> findByFecha_subidaGreaterThanEqual(java.time.LocalDate fecha);
-    @Query("SELECT ip FROM ImagenesPrendas ip " +
-           "WHERE ip.prendas.id = :prendaId " +
+    List<ImagenesPrenda> findByFecha_subidaGreaterThanEqual(java.time.LocalDate fecha);
+
+    @Query("SELECT ip FROM ImagenesPrenda ip " +
+           "WHERE ip.prenda.id = :prendaId " +
            "AND ip.es_Principal = true")
-    Optional<ImagenesPrendas> obtenerImagenPrincipal(@Param("prendaId") UUID prendaId);
+    Optional<ImagenesPrenda> obtenerImagenPrincipal(@Param("prendaId") UUID prendaId);
 
-    @Query("SELECT ip FROM ImagenesPrendas ip " +
-           "WHERE ip.prendas.id = :prendaId " +
+    @Query("SELECT ip FROM ImagenesPrenda ip " +
+           "WHERE ip.prenda.id = :prendaId " +
            "AND ip.es_Principal = false " +
            "ORDER BY ip.orden ASC")
-    List<ImagenesPrendas> obtenerImagenesSecundarias(@Param("prendaId") UUID prendaId);
+    List<ImagenesPrenda> obtenerImagenesSecundarias(@Param("prendaId") UUID prendaId);
 }

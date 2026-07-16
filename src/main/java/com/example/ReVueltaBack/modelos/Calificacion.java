@@ -18,32 +18,32 @@ import jakarta.persistence.Table;
 public class Calificacion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "puntaje", nullable = false, length = 100, unique = true)
+    // puntaje 1..5 (la regla de rango va en la capa de validacion). Sin unique ni length: es un entero.
+    @Column(name = "puntaje", nullable = false)
     private Integer puntaje;
 
-    @Column(name = "dimension",nullable = false, length = 20)
+    @Column(name = "dimension", nullable = false, length = 20)
     private String dimension;
 
-    @Column(name = "comentario_corto",nullable = false, length = 90)
+    @Column(name = "comentario_corto", nullable = false, length = 90)
     private String comentario_corto;
 
-    @Column(name = "fecha",nullable = false, unique = true)
+    @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "verificada",nullable = false)
+    @Column(name = "verificada", nullable = false)
     private Boolean verificada;
 
     @Column(name = "peso", nullable = false)
     private Integer peso;
 
-
-    // Creando relacion con la tabla Reseñas
+    // Relacion con Reseña (id_reseña -> reseñas). La dueña es Calificacion.
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reseñas_id")
-    private Reseña reseñas;
+    @JoinColumn(name = "id_reseña")
+    private Reseña reseña;
 
     public UUID getId() {
         return id;
@@ -101,4 +101,11 @@ public class Calificacion {
         this.peso = peso;
     }
 
+    public Reseña getReseña() {
+        return reseña;
+    }
+
+    public void setReseña(Reseña reseña) {
+        this.reseña = reseña;
+    }
 }
