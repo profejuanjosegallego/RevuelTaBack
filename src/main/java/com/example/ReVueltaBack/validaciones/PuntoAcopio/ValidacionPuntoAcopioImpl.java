@@ -8,7 +8,6 @@ import com.example.ReVueltaBack.modelos.PuntoAcopio;
 @Component
 public class ValidacionPuntoAcopioImpl implements IValidacionPuntoAcopio {
 
-    // Longitud de direccion
     private static final int LONGITUD_MINIMA_DIRECCION = 3;
     private static final int LONGITUD_MAXIMA_DIRECCION = 255;
 
