@@ -18,14 +18,14 @@ public interface ITransaccionRepositorio extends JpaRepository<Transaccion,UUID>
 
     // Consultas personalizadas con JPQL (Todas HABILITADAS)
     @Query("SELECT t FROM Transaccion t " +
-       "WHERE LOWER(u.tipo) = LOWER(:tipo)")
+       "WHERE LOWER(t.tipo) = LOWER(:tipo)")
     List<Transaccion> buscarPorTipo (String tipo);
 
-    List<Transaccion> findfindByPedido (Pedido pedido);
+    List<Transaccion> findByPedido (Pedido pedido);
 
-    List<Transaccion> findfindByEstado (String estado);
+    List<Transaccion> findByEstado (String estado);
 
-    List<Transaccion> findAllByOrderByFechasDesc ();
+    List<Transaccion> findAllByOrderByFechaDesc ();
 
     List<Transaccion> findByMontoGreaterThanEqual (Double montoMinimo);
 
