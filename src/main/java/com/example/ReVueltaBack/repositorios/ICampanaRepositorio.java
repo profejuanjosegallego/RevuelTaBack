@@ -29,18 +29,19 @@ public interface ICampanaRepositorio extends JpaRepository<Campana, UUID> {
     List<Campana> buscarPorNombre_Campana(String nombre_campana);
 
     @Query("SELECT c FROM Campana c WHERE c.fecha_inicio = :fecha_inicio")
-    List<Campana> buscarPorFecha_inicio(@Param("fecha_inicio") LocalDateTime fecha_inicio); 
+    List<Campana> buscarPorFecha_inicio(@Param("fecha_inicio") LocalDateTime fecha_inicio);
 
-    @Query("SELECT c FROM Campana c WHERE c.fecha_inicio = :fecha_final")
-    List<Campana> buscarPorFecha_final(@Param("fecha_inicio") LocalDateTime fecha_final);
+    @Query("SELECT c FROM Campana c WHERE c.fecha_final = :fecha_final")
+    List<Campana> buscarPorFecha_final(@Param("fecha_final") LocalDateTime fecha_final);
 
-    @Query("SELECT c FROM Campana c " +
-    "WHERE LOWER(c.descuento_pct) = LOWER(:descuento_pct)")
-    List<Campana> buscarPorDescuento_pct(String descuento_pct);
+    @Query("SELECT c FROM Campana c WHERE c.descuento_pct = :descuento_pct")
+    List<Campana> buscarPorDescuento_pct(@Param("descuento_pct") Double descuento_pct);
 
-    @Query("SELECT c FROM Campana c " +
-    "WHERE LOWER(c.activa) = LOWER(:activa)")
-    List<Campana> buscarPorActiva(String activa);
+    @Query("SELECT c FROM Campana c WHERE c.activa = :activa")
+    List<Campana> buscarPorActiva(@Param("activa") Boolean activa);
+
+    @Query("SELECT c FROM Campana c WHERE c.activa = true")
+    List<Campana> buscarActivas();
 
 
 }
