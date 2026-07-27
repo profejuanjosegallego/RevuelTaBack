@@ -8,7 +8,7 @@ public interface IValidacionPedido {
 
     void validarNotasLongitud(String notas);
 
-    void validarTotalPositivo(double total);
+    void validarTotalPositivo(Double total);
 
     void validarPedido(Pedido pedido);
 
