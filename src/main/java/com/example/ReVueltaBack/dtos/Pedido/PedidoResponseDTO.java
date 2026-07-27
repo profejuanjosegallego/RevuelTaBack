@@ -1,10 +1,11 @@
 package com.example.ReVueltaBack.dtos.Pedido;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public record PedidoResponseDTO(
-    LocalDateTime fecha,
+    UUID id,
+    LocalDate fecha,
     String estado,
     Double total,
     String metodoPago,
@@ -13,3 +14,4 @@ public record PedidoResponseDTO(
     UUID idComprador) {
 
 }
+`
