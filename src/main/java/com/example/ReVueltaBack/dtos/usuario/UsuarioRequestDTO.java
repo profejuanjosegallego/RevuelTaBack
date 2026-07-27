@@ -1,5 +1,10 @@
-package com.example.ReVueltaBack.dtos.usuario;
+package com.example.ReVueltaBack.dtos.Usuario;
 
-public class UsuarioRequestDTO {
+public record UsuarioRequestDTO( 
+    
+    String nombre,
+    String correo,
+    String contraseña,
+    String rol
 
-}
+) {}
