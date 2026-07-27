@@ -25,6 +25,5 @@ public record UsuarioRequestDTO(
         usuario.setFecha_registro(LocalDateTime.now());
         return usuario;
 
-
     }
 }
