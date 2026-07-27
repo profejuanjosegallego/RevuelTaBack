@@ -86,7 +86,13 @@ public class ImagenPrenda {
     public void setFecha_subida(LocalDate fecha_subida) {
         this.fecha_subida = fecha_subida;
     }
-    
+    public Prenda getPrenda() {
+        return prenda;
+    }
+
+    public void setPrenda(Prenda prenda) {
+        this.prenda = prenda;
+    }
 
 
 }
