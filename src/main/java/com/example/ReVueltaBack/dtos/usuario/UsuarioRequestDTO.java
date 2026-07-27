@@ -1,6 +1,5 @@
 package com.example.ReVueltaBack.dtos.Usuario;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.example.ReVueltaBack.modelos.Usuario;
