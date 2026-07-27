@@ -21,7 +21,7 @@ public record PrendaResponseDTO(
     UUID idVendedor
     
 ) {
-    public PrendaResponseDTO fromEntity(Prenda prenda, EstadoPrenda estadoPrenda, Categoria categoria, Usuario vendedor ){
+    public PrendaResponseDTO fromEntity(Prenda prenda, EstadoPrenda estadoPrenda, Categoria categoria, Usuario usuario ){
         return new PrendaResponseDTO(
             prenda.getId(),
             prenda.getTitulo(),
@@ -32,7 +32,7 @@ public record PrendaResponseDTO(
             prenda.isDisponible(),
             estadoPrenda.getId(),
             categoria.getId(),
-            vendedor.getId() 
+            usuario.getId() 
         );
     }
 }

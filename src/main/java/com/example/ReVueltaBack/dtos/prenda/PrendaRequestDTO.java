@@ -27,8 +27,8 @@ public record PrendaRequestDTO(
         categoria.setId(idCategoria);
         EstadoPrenda estadoPrenda = new EstadoPrenda();
         estadoPrenda.setId(idEstado);
-        Usuario venderdor = new Usuario();
-        venderdor.setId(idVendedor);
+        Usuario usuario = new Usuario();
+        usuario.setId(idVendedor);
 
         prenda.setTitulo(titulo);
         prenda.setDescripcion(descripcion);
@@ -38,7 +38,7 @@ public record PrendaRequestDTO(
         prenda.setDisponible(disponible);
         prenda.setCategoria(categoria);
         prenda.setEstado(estadoPrenda);
-        prenda.setUsuario(venderdor);
+        prenda.setUsuario(usuario);
         return prenda;
     }
 
