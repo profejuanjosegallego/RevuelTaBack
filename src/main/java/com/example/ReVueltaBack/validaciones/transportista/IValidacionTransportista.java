@@ -9,3 +9,4 @@ public interface IValidacionTransportista {
     void validarPlacaFormato(String placa);
     void validarTransportista(Transportista transportista);
 }
+

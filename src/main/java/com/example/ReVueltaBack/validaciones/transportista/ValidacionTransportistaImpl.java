@@ -22,6 +22,7 @@ public class ValidacionTransportistaImpl implements IValidacionTransportista {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre del transportista es obligatorio");
         }
     }
+    
 
     @Override
     public void validarZonaCoberturaLongitud(String zonaCobertura) {
