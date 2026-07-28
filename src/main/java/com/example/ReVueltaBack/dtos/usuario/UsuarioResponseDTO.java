@@ -16,7 +16,7 @@ public record UsuarioResponseDTO(
     LocalDateTime fechaRegistro
 ) {
 
-    public UsuarioResponseDTO fromEntity(Usuario usuario){
+    public static UsuarioResponseDTO fromEntity(Usuario usuario){
 
 
         return new UsuarioResponseDTO(
