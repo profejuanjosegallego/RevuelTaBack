@@ -18,7 +18,9 @@ public record ReportesResponseDTO(
 ) {
     
     public static ReportesResponseDTO fromEntity(Reporte reporte) {
+        
         return new ReportesResponseDTO(
+        
             reporte.getId(),
             reporte.getMotivo(),
             reporte.getDescripcion(),
@@ -28,7 +30,9 @@ public record ReportesResponseDTO(
             reporte.getResuelto(),
             reporte.getUsuario().getId(),
             reporte.getPrenda().getId()
+        
         );
+    
     }
 
 }
