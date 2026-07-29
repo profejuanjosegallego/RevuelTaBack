@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface ICategoriasRepositorio extends JpaRepository<Categoria,UUID> {
 
     //consultas personalizadas con jpa (solo lectura)
-    List<Categoria> findByNombreContainigIgnoreCase(String nombre);
+    List<Categoria> findByNombreContainingIgnoreCase(String nombre);
 
     List<Categoria> findByDescripcion(String descripcion);
 
