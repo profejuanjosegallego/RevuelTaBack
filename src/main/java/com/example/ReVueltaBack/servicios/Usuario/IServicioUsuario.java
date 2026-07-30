@@ -13,5 +13,7 @@ public interface IServicioUsuario {
     UsuarioResponseDTO buscarPorId(UUID id);
     UsuarioResponseDTO actualizar(UUID id, UsuarioRequestDTO datos);
     void eliminar(UUID id);
+    UsuarioResponseDTO buscarPorCorreo(String correo);
+
 
 }
