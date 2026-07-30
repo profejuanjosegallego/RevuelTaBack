@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "imagenes_prenda")
-public class ImagenesPrenda {
+public class ImagenPrenda {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
