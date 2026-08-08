@@ -44,7 +44,6 @@ public record EnvioRequestDTO(
         envio.setTransportista(transportista);
         envio.setPuntos_de_acopio(puntoAcopio);
         
-
         return envio;
         
     }
