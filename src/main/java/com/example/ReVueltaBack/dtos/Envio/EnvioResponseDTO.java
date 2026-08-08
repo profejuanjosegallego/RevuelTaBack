@@ -34,9 +34,9 @@ public record EnvioResponseDTO(
         envio.getFecha_entrega_estimada(),
         envio.getPesKg(),
 
-        envio.getPedido(),
-        envio.getTransportista(),
-        envio.getPuntos_de_acopio()
+        pedido.getId(),
+        transportista.getId(),
+        puntoAcopio.getId()
         );
         
     }
