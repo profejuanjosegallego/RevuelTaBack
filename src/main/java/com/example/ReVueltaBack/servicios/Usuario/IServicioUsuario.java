@@ -3,8 +3,8 @@ package com.example.ReVueltaBack.servicios.Usuario;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.ReVueltaBack.dtos.Usuario.UsuarioRequestDTO;
-import com.example.ReVueltaBack.dtos.Usuario.UsuarioResponseDTO;
+import com.example.ReVueltaBack.dtos.usuario.UsuarioRequestDTO;
+import com.example.ReVueltaBack.dtos.usuario.UsuarioResponseDTO;
 
 public interface IServicioUsuario {
 

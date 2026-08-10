@@ -1,6 +1,6 @@
 package com.example.ReVueltaBack.modelos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -46,7 +46,7 @@ public class Reporte {
     private String prioridad;
 
     @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 
     @Column(name = "resuelto", nullable = false)
     private Boolean resuelto;
