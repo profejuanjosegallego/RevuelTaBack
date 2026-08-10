@@ -17,8 +17,12 @@ import com.example.ReVueltaBack.dtos.Campana.CampanaRequestDTO;
 import com.example.ReVueltaBack.dtos.Campana.CampanaResponseDTO;
 import com.example.ReVueltaBack.servicios.Campana.IServicioCampana;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/campanas")
+@Tag(name = "Campañas", description = "Gestión de campañas de descuento (CRUD)")
 public class CampanaControlador {
 
     private final IServicioCampana servicioCampana;
@@ -28,32 +32,38 @@ public class CampanaControlador {
     }
 
     @PostMapping
+    @Operation(summary = "Crear campaña", description = "Registra una nueva campaña de descuento")
     public ResponseEntity<CampanaResponseDTO> registrar(@RequestBody CampanaRequestDTO datos) {
         CampanaResponseDTO campanaCreada = servicioCampana.registrar(datos);
         return ResponseEntity.ok(campanaCreada);
     }
 
     @GetMapping
+    @Operation(summary = "Listar campañas", description = "Devuelve todas las campañas registradas")
     public ResponseEntity<List<CampanaResponseDTO>> listar() {
         return ResponseEntity.ok(servicioCampana.listar());
     }
 
     @GetMapping("/activas")
+    @Operation(summary = "Listar campañas activas", description = "Devuelve solo las campañas marcadas como activas")
     public ResponseEntity<List<CampanaResponseDTO>> listarActivas() {
         return ResponseEntity.ok(servicioCampana.listarActivas());
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar campaña por id")
     public ResponseEntity<CampanaResponseDTO> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(servicioCampana.buscarPorId(id));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar campaña")
     public ResponseEntity<CampanaResponseDTO> actualizar(@RequestBody CampanaRequestDTO datos, @PathVariable UUID id) {
         return ResponseEntity.ok(servicioCampana.actualizar(id, datos));
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar campaña")
     public ResponseEntity<Void> eliminar(@PathVariable UUID id) {
         servicioCampana.eliminar(id);
         return ResponseEntity.noContent().build();
