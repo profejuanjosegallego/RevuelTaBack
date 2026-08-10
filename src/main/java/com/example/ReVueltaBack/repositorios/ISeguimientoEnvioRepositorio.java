@@ -14,13 +14,9 @@ import com.example.ReVueltaBack.modelos.SeguimientoEnvio;
 @Repository
 public interface ISeguimientoEnvioRepositorio extends JpaRepository<SeguimientoEnvio, UUID>{
 
-    //Consultar personalizadas con JPA (SOLO LECTURA)
-
     List<SeguimientoEnvio> findByEnvio(Envio envio);
     List<SeguimientoEnvio> findByEstado(String estado);
     List<SeguimientoEnvio> findAllByOrderByFechaHoraDesc();
-
-    //Consultas personalizadas con JPQL
     
     @Query("SELECT s FROM SeguimientoEnvio s WHERE s.envio.id = :envioId")
     List<SeguimientoEnvio> buscarPorEnviosId(@Param("envioId") UUID envioId);

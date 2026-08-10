@@ -17,7 +17,7 @@ public record SeguimientoEnvioResponseDTO(
 
 ) {
 
-    public SeguimientoEnvioResponseDTO fromEntity(SeguimientoEnvio seguimientoEnvio){
+    public static SeguimientoEnvioResponseDTO fromEntity(SeguimientoEnvio seguimientoEnvio){
         
         return new SeguimientoEnvioResponseDTO(
             seguimientoEnvio.getId(),
