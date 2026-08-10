@@ -41,7 +41,6 @@ public class SeguimientoEnvio {
     @Column(name = "longitud")
     private Double longitud;
 
-    //Creando una relacion con envio
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_id_envio")
     @JsonBackReference("envio_seguimientoenvio")

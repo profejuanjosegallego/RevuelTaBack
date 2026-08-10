@@ -11,7 +11,6 @@ import com.example.ReVueltaBack.modelos.SeguimientoEnvio;
 @Component
 public class ValidacionSeguimientoEnvioImpl implements IValidacionSeguimientoEnvio{
 
-    //Longitud de ubicacion
     private static final int LONGITUD_MINIMA_UBICACION = 3;
     private static final int LONGITUD_MAXIMA_UBICACION = 255;
     private static final LocalDateTime FECHA_ACTUAL = LocalDateTime.now();
