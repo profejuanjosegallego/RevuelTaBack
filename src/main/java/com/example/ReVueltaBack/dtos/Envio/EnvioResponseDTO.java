@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.example.ReVueltaBack.modelos.Envio;
-import com.example.ReVueltaBack.modelos.Pedido;
-import com.example.ReVueltaBack.modelos.PuntoAcopio;
-import com.example.ReVueltaBack.modelos.Transportista;
+
 
 public record EnvioResponseDTO(
 
@@ -23,7 +21,7 @@ public record EnvioResponseDTO(
 
 ) {
 
-    public EnvioResponseDTO fromEntity(Envio envio, Pedido pedido, Transportista transportista, PuntoAcopio puntoAcopio){
+    public static EnvioResponseDTO fromEntity(Envio envio){
 
         return new EnvioResponseDTO(
         envio.getId(),
@@ -33,10 +31,10 @@ public record EnvioResponseDTO(
         envio.getFecha_despacho(),
         envio.getFecha_entrega_estimada(),
         envio.getPesKg(),
+        envio.getPedido().getId(),
+        envio.getTransportista().getId(),
+        envio.getPuntos_de_acopio().getId()
 
-        pedido.getId(),
-        transportista.getId(),
-        puntoAcopio.getId()
         );
         
     }
