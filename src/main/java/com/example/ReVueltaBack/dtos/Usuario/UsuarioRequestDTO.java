@@ -1,29 +1,24 @@
 package com.example.ReVueltaBack.dtos.Usuario;
 
-import java.time.LocalDateTime;
-
 import com.example.ReVueltaBack.modelos.Usuario;
 
-public record UsuarioRequestDTO( 
-    
+public record UsuarioRequestDTO(
     String nombre,
     String correo,
-    String contraseña,
-    String rol
-
+    String contrasenaHash,
+    String rol,
+    Boolean activo,
+    String colorAvatar
 ) {
 
-    public Usuario toEntity(){
-
-        Usuario usuario= new Usuario();
+    public Usuario toEntity() {
+        Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setCorreo(correo);
+        usuario.setContrasena_hash(contrasenaHash);
         usuario.setRol(rol);
-        usuario.setActivo(true);
-        usuario.setColor_avatar("#2563EB");
-        usuario.setFecha_registro(LocalDateTime.now());
+        usuario.setActivo(activo);
+        usuario.setColor_avatar(colorAvatar);
         return usuario;
-
-
     }
 }
