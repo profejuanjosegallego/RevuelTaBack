@@ -3,14 +3,16 @@ package com.example.ReVueltaBack.servicios.reporte;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.ReVueltaBack.dtos.reporte.ReportesRequestDTO;
 import com.example.ReVueltaBack.dtos.reporte.ReportesResponseDTO;
+import com.example.ReVueltaBack.modelos.Reporte;
 import com.example.ReVueltaBack.repositorios.IReporteRepository;
 import com.example.ReVueltaBack.validaciones.reporte.IReportesValidador;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -38,7 +40,7 @@ public class ReportesServicioImpl implements IReportesServicio {
     @Override
     public ReportesResponseDTO buscarPorId(UUID id) {
         
-        return ReportesResponseDTO.fromEntity(reporteRepository.findById(id).orElseThrow((() -> new EntityNotFoundException("Reporte no encontrado"))));
+        return ReportesResponseDTO.fromEntity(reporteRepository.findById(id).orElseThrow((() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Reporte no encontrado"))));
 
     }
 
@@ -46,7 +48,16 @@ public class ReportesServicioImpl implements IReportesServicio {
     public ReportesResponseDTO actualizar(UUID id, ReportesRequestDTO dto) {
         
         reportesValidador.validar(dto.toEntity());
-        return ReportesResponseDTO.fromEntity(reporteRepository.save(dto.toEntity()));
+        Reporte reporteActual = reporteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reporte no encontrado"));
+
+        reporteActual.setMotivo(dto.motivo());
+        reporteActual.setDescripcion(dto.descripcion());
+        reporteActual.setEstado(dto.estado());
+        reporteActual.setPrioridad(dto.prioridad());
+        reporteActual.setFecha(dto.fecha());
+        reporteActual.setResuelto(dto.resuelto());
+
+        return ReportesResponseDTO.fromEntity(reporteRepository.save(reporteActual));
 
     }
 

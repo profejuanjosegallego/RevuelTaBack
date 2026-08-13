@@ -50,8 +50,6 @@ public class Reseña {
     @JoinColumn(name = "id_usuario_reseñado")
     @JsonBackReference("usuario_reseña")
     private Usuario usuarioReseñado;
-
-
     
     public Usuario getAutor() {
         return autor;
