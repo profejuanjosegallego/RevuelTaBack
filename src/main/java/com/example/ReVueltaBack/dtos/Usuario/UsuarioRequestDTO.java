@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.dtos.usuario;
+package com.example.ReVueltaBack.dtos.Usuario;
 
 import com.example.ReVueltaBack.modelos.Usuario;
 

@@ -10,17 +10,17 @@ import com.example.ReVueltaBack.dtos.calificaciones.CalificacionesResponseDTO;
 import com.example.ReVueltaBack.modelos.Calificacion;
 import com.example.ReVueltaBack.modelos.Reseña;
 import com.example.ReVueltaBack.repositorios.CalificacionRepository;
-import com.example.ReVueltaBack.repositorios.ReseñaRepository;
+import com.example.ReVueltaBack.repositorios.IReseñaRepositorio;
 
 @Service
 public class CalificacionesServicio implements ICalificacionesServicio {
 
     private final CalificacionRepository calificacionRepository;
-    private final ReseñaRepository reseñaRepository;
+    private final IReseñaRepositorio reseñaRepository;
 
     public CalificacionesServicio(
             CalificacionRepository calificacionRepository,
-            ReseñaRepository reseñaRepository) {
+            IReseñaRepositorio reseñaRepository) {
         this.calificacionRepository = calificacionRepository;
         this.reseñaRepository = reseñaRepository;
     }

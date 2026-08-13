@@ -41,7 +41,7 @@ public class ReportesValidadorImpl implements IReportesValidador {
     public void validar(Reporte reportes) {
         validarMotivoObligatorio(reportes.getMotivo());
         validarDescripcionLongitud(reportes.getDescripcion());
-        validarFechaNoFutura(reportes.getFecha().toLocalDate());
+        validarFechaNoFutura(reportes.getFecha());
     }
 
 }
