@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReseñaRepository extends JpaRepository<Reseña, UUID> {
+public interface IReseñaRepositorio extends JpaRepository<Reseña, UUID> {
 
 
     List<Reseña> findByComentario(String comentario);
