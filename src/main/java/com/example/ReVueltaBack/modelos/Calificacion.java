@@ -29,7 +29,7 @@ public class Calificacion {
     private String dimension;
 
     @Column(name = "comentario_corto", nullable = false, length = 90)
-    private String comentario_corto;
+    private String comentarioCorto;
 
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
@@ -40,7 +40,6 @@ public class Calificacion {
     @Column(name = "peso", nullable = false)
     private Integer peso;
 
-    // Relacion con Reseña (id_reseña -> reseñas). La dueña es Calificacion.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reseña")
     private Reseña reseña;
@@ -70,11 +69,11 @@ public class Calificacion {
     }
 
     public String getComentario_corto() {
-        return comentario_corto;
+        return comentarioCorto;
     }
 
     public void setComentario_corto(String comentario_corto) {
-        this.comentario_corto = comentario_corto;
+        this.comentarioCorto = comentario_corto;
     }
 
     public LocalDate getFecha() {
