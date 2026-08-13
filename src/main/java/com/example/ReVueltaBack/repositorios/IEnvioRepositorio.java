@@ -21,7 +21,7 @@ public interface IEnvioRepositorio extends JpaRepository<Envio, UUID> {
 
     List<Envio> findByTransportista(Transportista transportista);
 
-    List<Envio> findByPuntoAcopio(PuntoAcopio PuntoAcopio);
+    List<Envio> findByPuntoAcopio(PuntoAcopio puntoAcopio);
 
     //Consultas personalizadas con JPA (Solo lectura)
     //Optional<Envio> findByCodigoGuiaContainingIgnoreCase(String codigoGuia);
