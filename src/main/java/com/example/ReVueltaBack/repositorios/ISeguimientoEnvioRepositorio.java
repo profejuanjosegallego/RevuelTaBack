@@ -25,4 +25,6 @@ public interface ISeguimientoEnvioRepositorio extends JpaRepository<SeguimientoE
     @Query("SELECT s FROM SeguimientoEnvio s WHERE s.envio.id = :envioId")
     List<SeguimientoEnvio> buscarPorEnviosId(@Param("envioId") UUID envioId);
 
+    @Query("SELECT s FROM SeguimientoEnvio s WHERE s.envio.id = :envioId AND s.fechaHora = (SELECT MAX(s2.fechaHora) FROM SeguimientoEnvio s2 WHERE s2.envio.id = :envioId)")
+    List<SeguimientoEnvio> buscarUltimoSeguimientoPorEnvioId(@Param("envioId") UUID envioId);
 }
