@@ -49,7 +49,7 @@ public class SeguimientoEnvioControlador {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SeguimientoEnvioResponseDTO>eliminar(@PathVariable UUID id){
+    public ResponseEntity<Void>eliminar(@PathVariable UUID id){
         servicioSeguimientoEnvio.eliminar(id);
         return ResponseEntity.noContent().build();
     }
