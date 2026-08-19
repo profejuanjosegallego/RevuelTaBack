@@ -16,7 +16,7 @@ public class ValidacionSeguimientoEnvioImpl implements IValidacionSeguimientoEnv
     private static final LocalDateTime FECHA_ACTUAL = LocalDateTime.now();
 
     @Override
-    public void validarDescriptionObligarorio(String descripcion) {
+    public void validarDescripcionObligarorio(String descripcion) {
         if (descripcion == null || descripcion.isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La descripcion es obligatoria");
         }
@@ -38,7 +38,7 @@ public class ValidacionSeguimientoEnvioImpl implements IValidacionSeguimientoEnv
 
     @Override
     public void validar(SeguimientoEnvio seguimientoEnvio) {
-        validarDescriptionObligarorio(seguimientoEnvio.getDescripcion());
+        validarDescripcionObligarorio(seguimientoEnvio.getDescripcion());
         validarFechaHoraNoFutura(seguimientoEnvio.getFecha_hora());
         validarUbicacionLongitud(seguimientoEnvio.getUbicacion());
     }
