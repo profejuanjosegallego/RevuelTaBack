@@ -6,7 +6,7 @@ import com.example.ReVueltaBack.modelos.SeguimientoEnvio;
 
 public interface IValidacionSeguimientoEnvio {
 
-    void validarDescriptionObligarorio(String descripcion);
+    void validarDescripcionObligarorio(String descripcion);
 
     void validarUbicacionLongitud(String ubicacion);
 
