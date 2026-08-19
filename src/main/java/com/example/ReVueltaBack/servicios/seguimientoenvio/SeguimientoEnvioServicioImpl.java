@@ -48,7 +48,7 @@ public class SeguimientoEnvioServicioImpl implements ISeguimientoEnvioServicio {
     public SeguimientoEnvioResponseDTO buscarPorId(UUID id) {
 
         SeguimientoEnvio seguimientoEnvio = repositorioSeguimientoEnvio.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seguimiento de envío no encontrado"));
         return SeguimientoEnvioResponseDTO.fromEntity(seguimientoEnvio);
     }
 
@@ -56,7 +56,7 @@ public class SeguimientoEnvioServicioImpl implements ISeguimientoEnvioServicio {
     public SeguimientoEnvioResponseDTO actualizar(UUID id, SeguimientoEnvioRequestDTO dto) {
 
         SeguimientoEnvio seguimientoEnvio = repositorioSeguimientoEnvio.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seguimiento de envío no encontrado"));
         seguimientoEnvio.setDescripcion(dto.descripcion());
         seguimientoEnvio.setEstado(dto.estado());
         seguimientoEnvio.setFecha_hora(dto.fechaHora());
@@ -73,7 +73,7 @@ public class SeguimientoEnvioServicioImpl implements ISeguimientoEnvioServicio {
     public void eliminar(UUID id) {
         
         if (!repositorioSeguimientoEnvio.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Uusario no encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Seguimiento de envío no encontrado");
         }
         repositorioSeguimientoEnvio.deleteById(id);
     }
