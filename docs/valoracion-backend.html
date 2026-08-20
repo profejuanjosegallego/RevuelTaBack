@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valoración RevueltaBack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#1D4ED8; --azul-osc:#1E3A8A; --azul-claro:#3B82F6; --sky:#0EA5E9; --cyan:#0891B2;
+  --slate-50:#F8FAFC; --slate-100:#F1F5F9; --slate-200:#E2E8F0; --slate-300:#CBD5E1;
+  --slate-400:#94A3B8; --slate-500:#64748B; --slate-600:#475569; --slate-700:#334155;
+  --slate-800:#1E293B; --slate-900:#0F172A;
+  --ok:#0D9488; --warn:#D97706; --bad:#DC2626;
+  --radio:14px;
+  --sombra:0 1px 2px rgba(15,23,42,.04), 0 4px 16px rgba(15,23,42,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif; color:var(--slate-700);
+  background:var(--slate-100); line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.86em}
+code{background:var(--slate-100);border:1px solid var(--slate-200);border-radius:6px;padding:1px 6px;color:var(--azul-osc)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+svg.ic{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- Encabezado ---------- */
+header{background:linear-gradient(135deg,var(--azul-osc) 0%,var(--azul) 55%,var(--sky) 100%);color:#fff;padding:56px 0 64px}
+header .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);padding:6px 14px;border-radius:999px;margin-bottom:20px}
+header h1{font-size:clamp(1.9rem,4vw,2.85rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;color:#fff}
+header p.sub{margin-top:14px;font-size:1.05rem;color:rgba(255,255,255,.88);max-width:70ch}
+header .meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 28px;font-size:.88rem;color:rgba(255,255,255,.82)}
+header .meta span{display:inline-flex;align-items:center;gap:7px}
+
+/* ---------- KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:-36px;margin-bottom:44px}
+.kpi{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radio);padding:20px;box-shadow:var(--sombra)}
+.kpi .lbl{display:flex;align-items:center;gap:8px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-500)}
+.kpi .val{font-size:2rem;font-weight:800;color:var(--slate-900);letter-spacing:-.02em;margin-top:8px;line-height:1}
+.kpi .val small{font-size:.9rem;font-weight:500;color:var(--slate-400)}
+.kpi .hint{font-size:.8rem;color:var(--slate-500);margin-top:6px}
+.kpi.rojo .val{color:var(--bad)} .kpi.ambar .val{color:var(--warn)} .kpi.verde .val{color:var(--ok)}
+
+/* ---------- Secciones ---------- */
+section{margin-bottom:52px}
+h2{display:flex;align-items:center;gap:11px;font-size:1.4rem;font-weight:700;color:var(--slate-900);letter-spacing:-.015em;margin-bottom:8px}
+h2 .ic{color:var(--azul);width:1.15em;height:1.15em}
+.lead{color:var(--slate-500);margin-bottom:22px;max-width:80ch}
+h3{font-size:1.05rem;font-weight:700;color:var(--slate-800);margin:26px 0 12px}
+
+.card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radio);box-shadow:var(--sombra)}
+
+/* ---------- Hallazgos ---------- */
+.hallazgos{display:grid;gap:14px}
+.hallazgo{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:20px;background:#fff;border:1px solid var(--slate-200);
+  border-left:4px solid var(--bad);border-radius:var(--radio);box-shadow:var(--sombra)}
+.hallazgo.arranque{border-left-color:var(--warn)}
+.hallazgo .num{width:34px;height:34px;border-radius:9px;background:#FEF2F2;color:var(--bad);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.hallazgo.arranque .num{background:#FFFBEB;color:var(--warn)}
+.hallazgo h4{font-size:1rem;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+.hallazgo p{font-size:.92rem;color:var(--slate-600)}
+.hallazgo .culpa{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.76rem;font-weight:600;
+  background:var(--slate-100);color:var(--slate-600);border:1px solid var(--slate-200);border-radius:999px;padding:3px 11px}
+
+/* ---------- Tabla matriz ---------- */
+.tabla-scroll{overflow-x:auto;border:1px solid var(--slate-200);border-radius:var(--radio);background:#fff;box-shadow:var(--sombra)}
+table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:840px}
+thead th{background:var(--slate-50);color:var(--slate-600);font-weight:600;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;
+  padding:13px 12px;text-align:left;border-bottom:1px solid var(--slate-200);white-space:nowrap}
+thead th.c{text-align:center}
+tbody td{padding:12px;border-bottom:1px solid var(--slate-100);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--slate-50)}
+td.c{text-align:center}
+.est{font-weight:600;color:var(--slate-900)}
+.tabla-nom{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--slate-500)}
+.eq{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;padding:3px 8px;border-radius:6px;color:#fff}
+.eq.cat{background:#2563EB}.eq.mkt{background:#0EA5E9}.eq.log{background:#0D9488}.eq.mer{background:#6366F1}.eq.com{background:#1E3A8A}
+.dot{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;font-weight:700;font-size:.8rem}
+.dot.si{background:#ECFDF5;color:var(--ok)}
+.dot.pa{background:#FFFBEB;color:var(--warn)}
+.dot.no{background:#FEF2F2;color:var(--bad)}
+.nota{display:inline-block;min-width:44px;padding:4px 10px;border-radius:8px;font-weight:800;font-size:.88rem;text-align:center}
+.nota.a{background:#ECFDF5;color:#047857}
+.nota.b{background:#EFF6FF;color:#1D4ED8}
+.nota.c{background:#FFFBEB;color:#B45309}
+.nota.d{background:#FEF2F2;color:#B91C1C}
+
+/* ---------- Fichas de estudiante ---------- */
+.equipo-titulo{display:flex;align-items:center;gap:12px;margin:38px 0 16px;padding-bottom:12px;border-bottom:2px solid var(--slate-200)}
+.equipo-titulo h3{margin:0;font-size:1.15rem}
+.equipo-titulo .mod{font-size:.85rem;color:var(--slate-500);margin-left:auto}
+.fichas{display:grid;gap:18px}
+.ficha{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radio);box-shadow:var(--sombra);overflow:hidden}
+.ficha-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--slate-100);background:var(--slate-50)}
+.ficha-top .nom{font-size:1.05rem;font-weight:700;color:var(--slate-900)}
+.ficha-top .tbl{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--slate-500);background:#fff;border:1px solid var(--slate-200);padding:2px 9px;border-radius:6px}
+.ficha-top .der{margin-left:auto;display:flex;align-items:center;gap:14px}
+.capas{display:flex;gap:5px}
+.capa{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;font-size:.66rem;font-weight:700;letter-spacing:.02em}
+.capa.si{background:#ECFDF5;color:#047857}
+.capa.pa{background:#FFFBEB;color:#B45309}
+.capa.no{background:#FEF2F2;color:#B91C1C}
+.ficha-body{padding:20px 22px;display:grid;gap:16px}
+.bloque{display:grid;grid-template-columns:auto 1fr;gap:12px}
+.bloque .icono{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.9rem}
+.bloque.bien .icono{background:#ECFDF5;color:var(--ok)}
+.bloque.falto .icono{background:#FEF2F2;color:var(--bad)}
+.bloque.mejora .icono{background:#EFF6FF;color:var(--azul)}
+.bloque h5{font-size:.76rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate-500);margin-bottom:6px}
+.bloque ul{list-style:none;display:grid;gap:5px}
+.bloque li{font-size:.91rem;color:var(--slate-600);padding-left:16px;position:relative}
+.bloque li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--slate-300)}
+.bloque.bien li::before{background:var(--ok)}
+.bloque.falto li::before{background:var(--bad)}
+.bloque.mejora li::before{background:var(--azul-claro)}
+
+/* ---------- Leyenda ---------- */
+.leyenda{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.83rem;color:var(--slate-500);margin-top:14px}
+.leyenda span{display:inline-flex;align-items:center;gap:7px}
+
+/* ---------- Rúbrica ---------- */
+.rubrica{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.rub{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radio);padding:18px;box-shadow:var(--sombra)}
+.rub .peso{font-size:1.6rem;font-weight:800;color:var(--azul);letter-spacing:-.02em}
+.rub h4{font-size:.95rem;font-weight:700;color:var(--slate-900);margin:4px 0 6px}
+.rub p{font-size:.86rem;color:var(--slate-500)}
+
+/* ---------- Nota final / pie ---------- */
+.aviso{display:grid;grid-template-columns:auto 1fr;gap:14px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radio);padding:18px 20px}
+.aviso .ic{color:var(--azul);width:22px;height:22px;margin-top:2px}
+.aviso p{font-size:.92rem;color:var(--slate-700)}
+footer{background:var(--slate-900);color:var(--slate-400);padding:36px 0;margin-top:60px;font-size:.87rem}
+footer strong{color:#fff;font-weight:600}
+footer .fila{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+@media (max-width:640px){
+  .ficha-top .der{margin-left:0;width:100%;justify-content:space-between}
+  .bloque{grid-template-columns:1fr}
+  .bloque .icono{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+      Backend 2 · Proyecto integrador
+    </div>
+    <h1>Valoración del backend ReVuelta</h1>
+    <p class="sub">Revisión individual de las 18 tablas del repositorio <code style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:#fff">RevuelTaBack</code>: modelo, repositorio, validación, DTO, servicio y controlador REST. Incluye qué logró cada estudiante, qué le faltó y qué debe mejorar.</p>
+    <div class="meta">
+      <span><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 17 de agosto de 2026</span>
+      <span><svg class="ic" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> 18 estudiantes · 5 equipos célula</span>
+      <span><svg class="ic" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> rama <code style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:#fff">develop</code> · 300 commits</span>
+      <span><svg class="ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> Spring Boot 4.1.0 · Java 25 · H2</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi rojo">
+      <div class="lbl"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg> Compilación</div>
+      <div class="val">85 <small>errores</small></div>
+      <div class="hint">El proyecto no compila hoy</div>
+    </div>
+    <div class="kpi ambar">
+      <div class="lbl"><svg class="ic" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg> Capas completas</div>
+      <div class="val">95 <small>/ 108</small></div>
+      <div class="hint">6 capas × 18 tablas</div>
+    </div>
+    <div class="kpi verde">
+      <div class="lbl"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Promedio del grupo</div>
+      <div class="val">3.9 <small>/ 5.0</small></div>
+      <div class="hint">15 de 18 aprueban</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg> Entidades JPA</div>
+      <div class="val">18 <small>/ 18</small></div>
+      <div class="hint">+5 duplicadas por limpiar</div>
+    </div>
+  </div>
+
+  <!-- RESUMEN -->
+  <section id="resumen">
+    <h2><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg> Diagnóstico general</h2>
+    <p class="lead">El equipo llegó lejos: las 18 entidades existen, hay 16 repositorios, 16 validadores, 15 servicios y 15 controladores REST, y la arquitectura por capas se respetó casi en todas partes (interfaz + implementación, inyección por constructor, DTOs con <code>toEntity()</code>/<code>fromEntity()</code>, errores con <code>ResponseStatusException</code>). Pero <strong>hoy el proyecto no compila</strong>, y cuando compile todavía no arrancará. Estas son las causas, verificadas ejecutando <code>mvnw compile</code> con JDK 25.</p>
+
+    <h3>Lo que impide compilar</h3>
+    <div class="hallazgos">
+
+      <div class="hallazgo">
+        <div class="num">1</div>
+        <div>
+          <h4>Lombok no se ejecuta con Java 25 — 52 de los 85 errores</h4>
+          <p>Desde JDK 23 el procesamiento de anotaciones ya no se activa solo. Como el <code>pom.xml</code> no declara el <em>annotation processor</em>, Lombok nunca genera los getters/setters de la entidad <code>Reporte</code> (<code>@Getter</code>, <code>@Setter</code>, <code>@Builder</code>) y se cae en cascada su DTO, su servicio y su validador. También afecta a <code>@RequiredArgsConstructor</code> en <code>ReportesServicioImpl</code> y <code>ReporteControlador</code>.</p>
+          <p class="culpa"><svg class="ic" viewBox="0 0 24 24"><path d="M12 16v-4M12 8h.01"/><circle cx="12" cy="12" r="10"/></svg> Configuración del proyecto, no error del estudiante</p>
+        </div>
+      </div>
+
+      <div class="hallazgo">
+        <div class="num">2</div>
+        <div>
+          <h4><code>CategoriaControlador</code> quedó copiado del de Usuario — 14 errores</h4>
+          <p>Declara el tipo <code>IservicioCategoria</code> (no existe), devuelve <code>UsuarioResponseDTO</code>, recibe <code>UsuarioRequestDTO</code>, usa la variable <code>usurioCreado</code> que nunca se declaró, y le faltan los <code>import</code> de <code>List</code> y <code>@RequestBody</code>.</p>
+        </div>
+      </div>
+
+      <div class="hallazgo">
+        <div class="num">3</div>
+        <div>
+          <h4>Imágenes de prenda: paquete y repositorio mal escritos — 8 errores</h4>
+          <p>La carpeta se llama <code>servicios/Imagenprenda</code> pero el <code>package</code> dice <code>servicios.imagenprenda</code>; el compilador lo reporta como <em>duplicate class</em>. Además el servicio importa <code>repositorios.IMagenPrenda</code>, que no existe: la interfaz se llama <code>IMagenPrendaRepositorio</code>.</p>
+        </div>
+      </div>
+
+      <div class="hallazgo">
+        <div class="num">4</div>
+        <div>
+          <h4><code>PedidosControlador</code> usa <code>@Valid</code> sin la dependencia — 4 errores</h4>
+          <p>Falta el <code>import jakarta.validation.Valid</code> y, sobre todo, la dependencia <code>spring-boot-starter-validation</code> en el <code>pom.xml</code>. Ningún DTO del proyecto usa anotaciones de Bean Validation, así que lo correcto es quitar el <code>@Valid</code>: la validación se hace en la capa de validadores, como pide la HU.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>Lo que impedirá arrancar apenas compile</h3>
+    <div class="hallazgos">
+
+      <div class="hallazgo arranque">
+        <div class="num">5</div>
+        <div>
+          <h4>Consultas JPQL rotas por concatenar sin espacio</h4>
+          <p>En <code>IEnvioRepositorio</code> y <code>ICategoriasRepositorio</code> hay cadenas como <code>"SELECT e FROM Envio e" + "WHERE ..."</code>, que producen <code>eWHERE</code>. Spring valida todas las consultas al arrancar y falla. En <code>IEnvioRepositorio</code> además hay un <code>= pedidoId</code> sin los dos puntos del parámetro.</p>
+        </div>
+      </div>
+
+      <div class="hallazgo arranque">
+        <div class="num">6</div>
+        <div>
+          <h4>Consultas que apuntan a campos que no existen</h4>
+          <p><code>IRecompensaRepositorio</code> consulta <code>r.puntosRequeridos</code> y <code>r.disponibilidad</code>, pero la entidad los llama <code>puntos_requeridos</code> y no tiene <code>disponibilidad</code>. <code>IReseñaRepositorio</code> consulta <code>FROM Reseñas r</code> (la entidad duplicada) y declara <code>findByAutor(String)</code> cuando <code>autor</code> es un <code>Usuario</code>. <code>ICategoriasRepositorio</code> tiene <code>findByNombreContainigIgnoreCase</code> con la palabra <em>Containing</em> mal escrita.</p>
+        </div>
+      </div>
+
+      <div class="hallazgo arranque">
+        <div class="num">7</div>
+        <div>
+          <h4>Cinco entidades duplicadas mapeando la misma tabla</h4>
+          <p>Conviven <code>Categoria</code>/<code>Categorias</code>, <code>Reseña</code>/<code>Reseñas</code>, <code>Cupon</code>/<code>cupones</code>, <code>PuntoAcopio</code>/<code>puntosdeacopio</code> y una clase vacía <code>Prendas</code>. Son restos de renombrados; hay que borrar las versiones viejas y dejar una sola por tabla.</p>
+        </div>
+      </div>
+
+      <div class="hallazgo arranque">
+        <div class="num">8</div>
+        <div>
+          <h4>Referencias de Jackson que no se emparejan</h4>
+          <p>Cada <code>@JsonManagedReference("x")</code> necesita un <code>@JsonBackReference("x")</code> con el <em>mismo</em> nombre al otro lado. Hoy no coinciden en 6 relaciones (<code>envio_seguimiento</code> vs <code>envio_seguimientoenvio</code>, <code>punto_de_acopio_envio</code> vs <code>punto_acopio_envio</code>, <code>prenda_trueque</code> vs <code>prenda-ofrecida</code>…), y <code>Reporte</code> y <code>Reseña</code> tienen dos back-references con el mismo nombre cada una. Todo eso revienta al serializar la respuesta JSON.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RÚBRICA -->
+  <section id="rubrica">
+    <h2><svg class="ic" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 16v5h-5"/><path d="M3 16v5h5"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg> Cómo se calificó</h2>
+    <p class="lead">Nota sobre 5.0. Se revisó únicamente lo que pedían las HU del tablero Kaizen para cada tabla, comparando contra los campos, tipos y relaciones definidos en el enunciado.</p>
+    <div class="rubrica">
+      <div class="rub">
+        <div class="peso">3.0</div>
+        <h4>Completitud de capas</h4>
+        <p>0.5 puntos por cada una de las seis: modelo, repositorio, validación, DTO, servicio y controlador.</p>
+      </div>
+      <div class="rub">
+        <div class="peso">1.5</div>
+        <h4>Corrección técnica</h4>
+        <p>Que compile, que arranque, y que los campos, tipos y relaciones coincidan con el enunciado de la HU.</p>
+      </div>
+      <div class="rub">
+        <div class="peso">0.5</div>
+        <h4>Calidad y convenciones</h4>
+        <p>Nombres, códigos HTTP correctos, comentarios útiles y documentación OpenAPI del controlador.</p>
+      </div>
+    </div>
+    <div class="leyenda">
+      <span><span class="capa si">MOD</span> capa completa y correcta</span>
+      <span><span class="capa pa">REP</span> capa entregada con fallas</span>
+      <span><span class="capa no">CTR</span> capa no entregada</span>
+    </div>
+  </section>
+
+  <!-- MATRIZ -->
+  <section id="matriz">
+    <h2><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg> Matriz de cobertura</h2>
+    <p class="lead">Una fila por estudiante. <strong>M</strong> modelo · <strong>R</strong> repositorio · <strong>V</strong> validación · <strong>D</strong> DTO · <strong>S</strong> servicio · <strong>C</strong> controlador.</p>
+    <div class="tabla-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th><th>Estudiante</th><th>Tabla</th>
+            <th class="c">M</th><th class="c">R</th><th class="c">V</th><th class="c">D</th><th class="c">S</th><th class="c">C</th>
+            <th class="c">Capas</th><th class="c">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="eq cat">CAT</span></td><td class="est">Ahumada Roldán Daniel</td><td class="tabla-nom">prendas</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.5</span></td></tr>
+
+          <tr><td><span class="eq cat">CAT</span></td><td class="est">Gil Pérez Jonatan Stiven</td><td class="tabla-nom">categorias</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot no">✕</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota c">3.5</span></td></tr>
+
+          <tr><td><span class="eq cat">CAT</span></td><td class="est">Mejía Corrales Andrés Felipe</td><td class="tabla-nom">imagenes_prenda</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot pa">!</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota c">3.7</span></td></tr>
+
+          <tr><td><span class="eq cat">CAT</span></td><td class="est">Salazar Arango John Alexander</td><td class="tabla-nom">estados_prenda</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota a">4.9</span></td></tr>
+
+          <tr><td><span class="eq mkt">MKT</span></td><td class="est">Gaviria Gómez Juan Felipe</td><td class="tabla-nom">pedidos</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot no">✕</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota c">3.9</span></td></tr>
+
+          <tr><td><span class="eq mkt">MKT</span></td><td class="est">Toro Palacio José David</td><td class="tabla-nom">detalle_pedido</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td>
+            <td class="c">1/6</td><td class="c"><span class="nota d">1.7</span></td></tr>
+
+          <tr><td><span class="eq mkt">MKT</span></td><td class="est">Valencia Tobón Jhon Deiby</td><td class="tabla-nom">transacciones</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.5</span></td></tr>
+
+          <tr><td><span class="eq mkt">MKT</span></td><td class="est">Villa Carmona Andrés Felipe</td><td class="tabla-nom">trueques</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.2</span></td></tr>
+
+          <tr><td><span class="eq log">LOG</span></td><td class="est">Chávez Acosta Ever Andrés</td><td class="tabla-nom">envios</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.5</span></td></tr>
+
+          <tr><td><span class="eq log">LOG</span></td><td class="est">Méndez Hawasly Johan David</td><td class="tabla-nom">puntos_acopio</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td>
+            <td class="c">3/6</td><td class="c"><span class="nota d">2.3</span></td></tr>
+
+          <tr><td><span class="eq log">LOG</span></td><td class="est">Ortiz Arteaga Carolina</td><td class="tabla-nom">seguimiento_envio</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.5</span></td></tr>
+
+          <tr><td><span class="eq log">LOG</span></td><td class="est">Trujillo Roldán David Alejandro</td><td class="tabla-nom">transportistas</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot no">✕</span></td>
+            <td class="c">1/6</td><td class="c"><span class="nota d">1.4</span></td></tr>
+
+          <tr><td><span class="eq mer">MER</span></td><td class="est">Alzate Grajales Alejandro</td><td class="tabla-nom">campañas</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.5</span></td></tr>
+
+          <tr><td><span class="eq mer">MER</span></td><td class="est">Aristizábal Londoño Alejandro</td><td class="tabla-nom">cupones</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota a">4.7</span></td></tr>
+
+          <tr><td><span class="eq mer">MER</span></td><td class="est">Torres Rodríguez Juan Esteban</td><td class="tabla-nom">recompensas</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.0</span></td></tr>
+
+          <tr><td><span class="eq com">COM</span></td><td class="est">Castaño Ocampo Mauricio</td><td class="tabla-nom">reseñas</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot no">✕</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.0</span></td></tr>
+
+          <tr><td><span class="eq com">COM</span></td><td class="est">Gudelo Niño Diego Alejandro</td><td class="tabla-nom">calificaciones</td>
+            <td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.4</span></td></tr>
+
+          <tr><td><span class="eq com">COM</span></td><td class="est">Zapata Barrera Juan David</td><td class="tabla-nom">reportes</td>
+            <td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot si">✓</span></td><td class="c"><span class="dot pa">!</span></td><td class="c"><span class="dot si">✓</span></td>
+            <td class="c">6/6</td><td class="c"><span class="nota b">4.4</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FICHAS -->
+  <section id="fichas">
+    <h2><svg class="ic" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Valoración individual</h2>
+    <p class="lead">Para cada estudiante: qué hizo bien, qué le faltó y qué debe mejorar antes de la sustentación.</p>
+
+    <!-- EQUIPO 1 -->
+    <div class="equipo-titulo">
+      <span class="eq cat">CAT</span><h3>Equipo 1 · Catálogo</h3>
+      <span class="mod">Catálogo e Inventario de Prendas</span>
+    </div>
+    <div class="fichas">
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Ahumada Roldán Daniel</span><span class="tbl">prendas</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.5</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Las seis capas están entregadas y la tabla más referenciada del proyecto quedó funcionando.</li>
+              <li>Modeló correctamente las tres relaciones <code>@ManyToOne</code> (categoría, estado, vendedor) y además las inversas hacia detalle de pedido, reportes y trueques.</li>
+              <li>El repositorio combina métodos derivados y <code>@Query</code> con <code>@Param</code>, tal como pide la HU.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li>Usó tipos primitivos <code>double precio</code> y <code>boolean disponible</code>. El enunciado pide <code>Double</code> y <code>Boolean</code>: al llegar un JSON sin esos campos, el <code>setPrecio(null)</code> lanza <code>NullPointerException</code>.</li>
+              <li>La llave foránea del vendedor quedó como <code>fk_id_usuario</code> en vez de <code>id_vendedor</code>.</li>
+              <li>Los tres <code>@JsonManagedReference</code> que declaró no tienen pareja al otro lado, así que la respuesta JSON falla al serializar.</li>
+              <li>Ningún <code>@Column</code> declara <code>nullable</code> ni <code>length</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li><code>actualizar()</code> no permite cambiar categoría, estado ni vendedor: solo toca los campos simples.</li>
+              <li>Falta documentar el controlador con <code>@Tag</code> y <code>@Operation</code>.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Gil Pérez Jonatan Stiven</span><span class="tbl">categorias</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa pa">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa si">SER</span><span class="capa no">CTR</span></div>
+            <span class="nota c">3.5</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>La entidad <code>Categoria</code> es correcta: los siete campos con su tipo y su <code>@Column</code> bien declarado.</li>
+              <li>El servicio está impecable: valida antes de guardar, lanza 404 con <code>ResponseStatusException</code> y copia campo por campo en <code>actualizar()</code> sin reemplazar la entidad.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El controlador no compila.</strong> Está copiado del de Usuario: tipo <code>IservicioCategoria</code>, DTOs de Usuario, variable <code>usurioCreado</code> e imports faltantes. Es la causa de 14 de los 85 errores.</li>
+              <li>El repositorio tiene dos fallas que impiden arrancar: <code>findByNombreContainigIgnoreCase</code> (falta la <em>n</em> de <em>Containing</em>) y una <code>@Query</code> concatenada sin espacio y con doble condición: <code>LIKE LOWER(:nombre) = :nombreCategoria</code>.</li>
+              <li>Quedó la entidad duplicada <code>Categorias.java</code> mapeando la misma tabla.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li><code>slug</code> debería ser <code>unique = true</code>: es justamente un identificador legible.</li>
+              <li><code>findByOrden</code> devuelve <code>Optional</code> pero <code>orden</code> no es único; si hay dos categorías con el mismo orden, revienta.</li>
+              <li>Antes de entregar, compilar. El controlador nunca se ejecutó.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Mejía Corrales Andrés Felipe</span><span class="tbl">imagenes_prenda</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa pa">DTO</span><span class="capa no">SER</span><span class="capa pa">CTR</span></div>
+            <span class="nota c">3.7</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>El repositorio es de los mejores del curso: <code>countByPrendaId</code>, <code>findByPrendaIdOrderByOrdenAsc</code> y consultas JPQL bien pensadas para la imagen principal y las secundarias.</li>
+              <li>El validador revisa URL, formato y tamaño con mensajes claros.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El servicio no compila.</strong> La carpeta es <code>servicios/Imagenprenda</code> pero el <code>package</code> dice <code>imagenprenda</code>, y se importa <code>IMagenPrenda</code> cuando la interfaz se llama <code>IMagenPrendaRepositorio</code>.</li>
+              <li><code>toEntity()</code> nunca asigna <code>fecha_subida</code>: toda imagen se guardaría con la fecha en <code>null</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>Los atributos <code>es_Principal</code> y <code>tamaño_KB</code> mezclan snake_case, mayúsculas y <em>ñ</em>. En Java se escriben <code>esPrincipal</code> y <code>tamanoKb</code>; el nombre de la columna va en <code>@Column(name = ...)</code>.</li>
+              <li>Sus DTOs son clases con getters mientras el resto del proyecto usa <code>record</code>. Unificar.</li>
+              <li>La interfaz del repositorio se llama <code>IMagenPrendaRepositorio</code> (falta la <em>I</em> de <em>Imagen</em>).</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Salazar Arango John Alexander</span><span class="tbl">estados_prenda</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota a">4.9</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li><strong>El trabajo más limpio del curso.</strong> Las seis capas completas, sin un solo error de compilación ni de arranque.</li>
+              <li>Es de los dos únicos que documentó el controlador con <code>@Tag</code> y <code>@Operation</code> en todos los endpoints.</li>
+              <li>Agregó endpoints útiles más allá del CRUD: <code>/requieren-revision</code> y <code>/buscar</code> con <code>@RequestParam</code>.</li>
+              <li>El DTO aplica valores por defecto sensatos (<code>requiereRevision</code> false, <code>activo</code> true) en vez de dejar nulos.</li>
+              <li>Nombres en camelCase correcto y <code>@Column(name=...)</code> para el mapeo. Así se hace.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>Al repositorio le falta la anotación <code>@Repository</code> (funciona igual, pero la HU la pide).</li>
+              <li>Para cerrar la HU de documentación faltan <code>@ApiResponses</code> con los códigos 200/400/404 y <code>@Schema</code> en los DTOs.</li>
+              <li><code>nombre</code> podría ser <code>unique = true</code>: no tiene sentido tener dos estados llamados igual.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- EQUIPO 2 -->
+    <div class="equipo-titulo">
+      <span class="eq mkt">MKT</span><h3>Equipo 2 · Marketplace</h3>
+      <span class="mod">Marketplace y Transacciones</span>
+    </div>
+    <div class="fichas">
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Gaviria Gómez Juan Felipe</span><span class="tbl">pedidos</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa pa">DTO</span><span class="capa pa">SER</span><span class="capa no">CTR</span></div>
+            <span class="nota c">3.9</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Modeló bien las cuatro relaciones de <code>pedidos</code>, incluida la decisión correcta de dejar a <code>Transaccion</code> como dueña de su FK.</li>
+              <li>El repositorio tiene cinco métodos derivados y dos JPQL; el servicio está bien comentado paso a paso.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El controlador no compila:</strong> usa <code>@Valid</code> sin el import ni la dependencia de validación.</li>
+              <li><code>PedidoRequestDTO.toEntity()</code> ignora la fecha que envía el cliente y siempre pone <code>LocalDate.now()</code>. Si el campo está en el DTO, hay que usarlo.</li>
+              <li>Faltan los getters y setters de <code>detallePedidos</code>, <code>envios</code> y <code>transacciones</code>.</li>
+              <li>Puso <code>@JsonBackReference</code> del lado <code>@OneToMany</code>. Ahí va <code>@JsonManagedReference</code>; el <em>back</em> va en el lado <code>@ManyToOne</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li><code>actualizar()</code> reemplaza la entidad entera en vez de copiar campo por campo, así que pierde las listas ya cargadas.</li>
+              <li>Sobra el comentario <code>// como hacer un insert con JPQL</code> en el repositorio.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Toro Palacio José David</span><span class="tbl">detalle_pedido</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa no">REP</span><span class="capa no">VAL</span><span class="capa no">DTO</span><span class="capa no">SER</span><span class="capa no">CTR</span></div>
+            <span class="nota d">1.7</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>La entidad <code>DetallePedido</code> está correcta: los siete campos con su tipo adecuado y las dos relaciones <code>@ManyToOne</code> hacia <code>Pedido</code> y <code>Prenda</code> bien configuradas con <code>FetchType.LAZY</code>.</li>
+              <li>Dejó un comentario acertado explicando por qué el atributo se llama <code>pedido</code> para calzar con el <code>mappedBy</code> del otro lado.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>Cinco de las seis capas.</strong> No hay repositorio, ni validación, ni DTOs, ni servicio, ni controlador. Su último aporte al repositorio es del 2 de julio.</li>
+              <li>Sin su capa REST, el módulo de Marketplace queda incompleto: no se puede agregar prendas a un pedido.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>Prioridad absoluta: repositorio, validación, DTO, servicio y controlador. Puede guiarse por el trabajo de <strong>estados_prenda</strong>, que es el modelo a seguir.</li>
+              <li>En la entidad, agregar <code>@Column(nullable = false)</code> a <code>cantidad</code>, <code>precio_unitario</code> y <code>subtotal</code>, y renombrarlos a camelCase.</li>
+              <li>Una validación propia de su tabla: <code>subtotal = cantidad × precio_unitario − descuento</code>.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Valencia Tobón Jhon Deiby</span><span class="tbl">transacciones</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa pa">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.5</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Las seis capas completas y compilando.</li>
+              <li>Fue el único que razonó el <code>unique</code>: lo puso solo en <code>referencia_pago</code>, y dejó escrito por qué. Ese criterio es exactamente lo que se busca.</li>
+              <li>El validador está documentado criterio por criterio contra la HU; se nota que leyó el enunciado.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li>El nombre de la referencia Jackson está mal escrito (<code>transacion_pedido</code>) y no coincide con el que declaró <code>Pedido</code>.</li>
+              <li>Falta documentar el controlador con OpenAPI.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>En <code>actualizar()</code> crea un <code>Pedido</code> vacío solo con el id. Debería buscarlo en el repositorio y devolver 404 si no existe, como hizo su compañero con los cupones.</li>
+              <li>Atributos en camelCase: <code>referenciaPago</code>, no <code>referencia_pago</code>.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Villa Carmona Andrés Felipe</span><span class="tbl">trueques</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa pa">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa pa">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.2</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li><strong>El mejor validador del curso:</strong> diez reglas, incluidas dos de negocio real (que la fecha de respuesta no sea anterior a la propuesta, y que la prenda ofrecida y la deseada no sean la misma).</li>
+              <li>Resolvió bien la parte más difícil del modelo: dos <code>@ManyToOne</code> hacia la misma tabla <code>prendas</code> con columnas distintas.</li>
+              <li>Los DTOs traen comentarios que explican por qué solo se exponen los ids de las relaciones.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li>Dos métodos del repositorio rompen el arranque: <code>findAllByOrderByFecha_propuestaDesc</code> y <code>findByFecha_propuestaBetween</code>. El guion bajo en Spring Data significa «navegar a una propiedad interna», así que busca <code>fecha.propuesta</code> y no lo encuentra.</li>
+              <li><code>validarProponenteObligatorio(Object proponente)</code> recibe <code>Object</code>: debe tipar <code>Usuario</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li><code>actualizar()</code> reemplaza la entidad completa: mejor copiar campo por campo sobre la que trajo JPA.</li>
+              <li>Sus DTOs son clases con getters; el resto del proyecto usa <code>record</code>.</li>
+              <li>Falta documentación OpenAPI en el controlador.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- EQUIPO 3 -->
+    <div class="equipo-titulo">
+      <span class="eq log">LOG</span><h3>Equipo 3 · Logística</h3>
+      <span class="mod">Logística y Distribución</span>
+    </div>
+    <div class="fichas">
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Chávez Acosta Ever Andrés</span><span class="tbl">envios</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa pa">REP</span><span class="capa pa">VAL</span><span class="capa si">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.5</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li><code>envios</code> es la tabla con más relaciones del proyecto (pedido, transportista, punto de acopio, más la inversa hacia seguimiento) y las modeló todas.</li>
+              <li>Puso <code>unique = true</code> en <code>codigo_guia</code>, que es la decisión correcta.</li>
+              <li>Detectó y agregó <code>fecha_entrega_estimada</code>, que faltaba, y lo dejó comentado.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li>Dos <code>@Query</code> concatenadas sin espacio producen <code>eWHERE</code>, y una usa <code>= pedidoId</code> sin los dos puntos. Ambas impiden que la aplicación arranque.</li>
+              <li>El validador revienta con <code>NullPointerException</code> si llegan <code>costo</code> o <code>fechaDespacho</code> en null: hay que comprobar el null antes de comparar.</li>
+              <li>El nombre de la referencia Jackson hacia seguimiento no coincide con el del otro lado.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>Los getters mezclan estilos y hay un typo: <code>getPesKg()</code> debería ser <code>getPesoKg()</code>.</li>
+              <li><code>fechaActual</code> se calcula una sola vez al crear el bean; si el servidor lleva días encendido, la fecha queda vieja. Debe calcularse dentro del método.</li>
+              <li><code>actualizar()</code> no permite reasignar el transportista ni el punto de acopio, que es justo lo que cambia en un envío real.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Méndez Hawasly Johan David</span><span class="tbl">puntos_acopio</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa no">DTO</span><span class="capa no">SER</span><span class="capa no">CTR</span></div>
+            <span class="nota d">2.3</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>La entidad tiene los siete campos con el tipo correcto y modeló la relación inversa <code>@OneToMany</code> hacia <code>Envio</code>.</li>
+              <li>El repositorio y el validador están bien hechos: constantes con nombre, mensajes claros y <code>ResponseStatusException</code> con 400.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>Las tres capas superiores:</strong> no hay DTOs, ni servicio, ni controlador. El recurso <code>/api/puntos-acopio</code> no existe.</li>
+              <li>La tabla quedó como <code>@Table(name = "PuntoAcopio")</code>; debe ser <code>puntos_acopio</code>, en minúscula y con guion bajo como pide el enunciado.</li>
+              <li>Quedó la entidad vieja <code>puntosdeacopio.java</code> sin borrar.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>El nombre de la referencia Jackson (<code>punto_de_acopio_envio</code>) no coincide con el que puso su compañero en <code>Envio</code> (<code>punto_acopio_envio</code>). Hay que acordarlo entre los dos.</li>
+              <li>Ya tiene el repositorio y el validador: le faltan tres archivos de plantilla conocida. Está a una sesión de completar la HU.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Ortiz Arteaga Carolina</span><span class="tbl">seguimiento_envio</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa pa">DTO</span><span class="capa si">SER</span><span class="capa pa">CTR</span></div>
+            <span class="nota b">4.5</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Las seis capas entregadas y compilando, con la relación hacia <code>Envio</code> correctamente configurada.</li>
+              <li>Fue de las pocas que usó <code>LocalDateTime</code> donde correspondía (<code>fecha_hora</code>) en vez de <code>LocalDate</code>.</li>
+              <li>Iteró sobre su propio trabajo: hay commits corrigiendo la conversión snake_case a camelCase y agregando <code>static</code> al <code>fromEntity</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El DTO no incluye <code>idEnvio</code>.</strong> Como la relación es obligatoria (<code>optional = false</code>), todo <code>POST /api/seguimiento-envio</code> va a fallar: no hay forma de decirle a qué envío pertenece el seguimiento.</li>
+              <li>Los mensajes de error dicen «Usuario no encontrado» y «Uusario no encontrado» (con typo) en un servicio de seguimiento de envíos: quedaron copiados de la plantilla.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li><code>eliminar()</code> declara <code>ResponseEntity&lt;SeguimientoEnvioResponseDTO&gt;</code> pero devuelve <code>noContent()</code>. El tipo correcto es <code>ResponseEntity&lt;Void&gt;</code>.</li>
+              <li>Typo en el validador: <code>validarDescriptionObligarorio</code>.</li>
+              <li>Un método útil para su tabla: obtener el último estado de un envío ordenado por fecha.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Trujillo Roldán David Alejandro</span><span class="tbl">transportistas</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa no">REP</span><span class="capa no">VAL</span><span class="capa no">DTO</span><span class="capa no">SER</span><span class="capa no">CTR</span></div>
+            <span class="nota d">1.4</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>La entidad tiene los siete campos con <code>@Column</code> declarando <code>nullable</code> y <code>length</code>, algo que muchos compañeros omitieron.</li>
+              <li>Modeló la relación inversa <code>@OneToMany</code> hacia <code>Envio</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>Cinco de las seis capas.</strong> Solo entregó el modelo. Es la entrega más incompleta del grupo.</li>
+              <li>Typo en producción: <code>@Column(name = "disponoble")</code>. La columna en la base de datos quedaría mal escrita.</li>
+              <li>Sin su capa REST, el equipo de Logística no puede asignar transportistas a un envío.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li><code>placa</code> debería ser <code>unique = true</code>: dos transportistas no pueden tener el mismo vehículo.</li>
+              <li>Atributos en camelCase: <code>tipoVehiculo</code>, <code>zonaCobertura</code>.</li>
+              <li>Su tabla no tiene relaciones salientes, así que es de las más sencillas para completar. Puede usar <code>estados_prenda</code> como plantilla y ponerse al día en una sesión.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- EQUIPO 4 -->
+    <div class="equipo-titulo">
+      <span class="eq mer">MER</span><h3>Equipo 4 · Mercadeo</h3>
+      <span class="mod">Mercadeo, Promociones y Fidelización</span>
+    </div>
+    <div class="fichas">
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Alzate Grajales Alejandro</span><span class="tbl">campañas</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.5</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Seis capas completas, compilando, y con documentación OpenAPI en el controlador.</li>
+              <li>Siete consultas en el repositorio y seis métodos de validación, incluida una regla de negocio real: que la fecha de inicio no sea posterior a la de fin.</li>
+              <li>El <code>ResponseDTO</code> expone <code>cantidadCupones</code> en vez de la lista completa: evita exponer entidades y previene recursión infinita. Buen criterio.</li>
+              <li>Agregó el endpoint <code>/activas</code> además del CRUD.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li>Renombró los campos del enunciado: <code>nombre_campana</code> y <code>descripcion_campana</code> en vez de <code>nombre</code> y <code>descripcion</code>, y <code>fecha_final</code> en vez de <code>fecha_fin</code>. Eso rompe el contrato acordado con el frontend.</li>
+              <li>Usó <code>LocalDateTime</code> donde el enunciado pide <code>LocalDate</code>: una campaña empieza un día, no a una hora.</li>
+              <li><code>descripcion</code> con <code>length = 50</code> es muy corto para una descripción.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>Varias de sus siete consultas buscan por igualdad exacta (<code>fecha_inicio = :fecha</code>), que casi nunca sirve. Más útiles: rangos y <code>LIKE</code>.</li>
+              <li>Atributos en camelCase: <code>nombreCampana</code>, <code>fechaInicio</code>.</li>
+              <li>Faltan los <code>@ApiResponses</code> para cerrar la HU de documentación.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Aristizábal Londoño Alejandro</span><span class="tbl">cupones</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota a">4.7</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li><strong>El trabajo más completo del curso en lógica de negocio.</strong> Seis capas, OpenAPI, y reglas que van más allá del CRUD.</li>
+              <li>Su servicio es el único que resuelve bien una relación obligatoria: busca la campaña por id y devuelve 404 si no existe, antes de crear el cupón. Nadie más lo hizo.</li>
+              <li>Siete validaciones encadenadas, incluida la coherencia entre <code>tipo</code> y <code>valor</code>, y que <code>usos_actuales</code> no supere a <code>usos_maximos</code>.</li>
+              <li>La consulta <code>buscarCuponesValidos()</code> combina vigencia y usos disponibles en una sola JPQL. Excelente.</li>
+              <li><code>unique = true</code> en <code>codigo</code>, que es lo correcto.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><code>valor</code> quedó como <code>String</code>. Es un monto o un porcentaje: debe ser <code>Double</code>, y así se puede comparar y sumar.</li>
+              <li>Quedó sin borrar la entidad vieja <code>cupones.java</code>, que mapea la misma tabla.</li>
+              <li><code>fecha_expiracion</code> es <code>LocalDateTime</code> donde el enunciado pide <code>LocalDate</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>La columna de la FK se llama <code>fk_id_campana</code>; el enunciado la nombra <code>id_campaña</code>.</li>
+              <li>Atributos en camelCase.</li>
+              <li>Su patrón de «resolver la relación en el servicio» debería mostrarse en clase: es exactamente lo que les falta a Transacciones, Envíos y Reseñas.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Torres Rodríguez Juan Esteban</span><span class="tbl">recompensas</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa no">REP</span><span class="capa si">VAL</span><span class="capa pa">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.0</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Entidad limpia, con <code>nullable</code> y <code>length</code> bien declarados en cada campo.</li>
+              <li>El servicio maneja correctamente los 404 con mensajes explicativos («No se puede actualizar. La recompensa con ID… no existe»).</li>
+              <li>En <code>actualizar()</code> copia campo por campo sobre la entidad existente, que es la forma correcta.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El repositorio no arranca:</strong> dos consultas apuntan a <code>r.puntosRequeridos</code> y <code>r.disponibilidad</code>, pero la entidad los llama <code>puntos_requeridos</code> y el segundo campo directamente no existe. Escribió las consultas sin verificar contra su propia entidad.</li>
+              <li><code>RecompensaRequestDTO.toEntity()</code> ignora el campo <code>activa</code> que recibe y siempre pone <code>true</code>. Es imposible crear una recompensa inactiva.</li>
+              <li>El DTO llama <code>existencias</code> a lo que la entidad llama <code>stock</code>: dos nombres para lo mismo.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>Las cinco consultas buscan por igualdad exacta. Para su tabla sería más útil «recompensas activas con stock disponible que cuesten menos de N puntos».</li>
+              <li>Falta documentación OpenAPI.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- EQUIPO 5 -->
+    <div class="equipo-titulo">
+      <span class="eq com">COM</span><h3>Equipo 5 · Comunidad</h3>
+      <span class="mod">Comunidad, Reputación y Valoraciones</span>
+    </div>
+    <div class="fichas">
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Castaño Ocampo Mauricio</span><span class="tbl">reseñas</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa no">REP</span><span class="capa si">VAL</span><span class="capa no">DTO</span><span class="capa si">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.0</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Resolvió el caso difícil de su tabla: dos <code>@ManyToOne</code> hacia <code>usuarios</code> (autor y usuario reseñado) con columnas distintas.</li>
+              <li>El servicio está bien estructurado y copia campo por campo en <code>actualizar()</code>.</li>
+              <li>Su tabla es la base de <code>calificaciones</code>, y su compañero pudo construir encima sin problema.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El DTO no asigna las relaciones.</strong> En <code>toEntity()</code> crea un <code>Usuario</code>, le pone <code>idAutor</code>, le pisa el id con <code>idUsuarioReseñado</code> y luego nunca lo asigna a la reseña. Resultado: <code>autor</code> y <code>usuarioReseñado</code> quedan en null y todo <code>POST</code> falla. Este es el error más grave de su entrega.</li>
+              <li>El repositorio no arranca: la JPQL dice <code>FROM Reseñas r</code> (la entidad duplicada, que no tiene <code>autor</code>) y declara <code>findByAutor(String)</code> cuando <code>autor</code> es un <code>Usuario</code>.</li>
+              <li>Puso dos <code>@JsonBackReference</code> con el mismo nombre <code>usuario_reseña</code> en la misma clase: Jackson no lo permite.</li>
+              <li>Quedó sin borrar la entidad duplicada <code>Reseñas.java</code>.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>La URL era <code>/api/reseñas</code>, con <em>ñ</em>, y obligaba al cliente a codificarla como <code>/api/rese%C3%B1as</code>. En REST las rutas van en ASCII: ya quedó como <code>/api/resenas</code>. Los nombres de las clases y los campos del JSON sí conservan la eñe.</li>
+              <li>Debe seguir el patrón de <strong>cupones</strong>: buscar el usuario en el repositorio y devolver 404 si no existe, en vez de crear objetos vacíos.</li>
+              <li>Probar cada endpoint con Postman antes de dar la HU por terminada. Con una sola prueba de <code>POST</code> habría visto el problema.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Gudelo Niño Diego Alejandro</span><span class="tbl">calificaciones</span>
+          <div class="der">
+            <div class="capas"><span class="capa si">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa pa">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.4</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li>Seis capas completas y compilando.</li>
+              <li>Su servicio resuelve la reseña buscándola en el repositorio antes de crear la calificación: es el camino correcto y solo dos personas lo hicieron.</li>
+              <li>Repositorio variado y bien pensado: por reseña, solo verificadas, ordenadas por fecha y filtradas por puntaje mínimo.</li>
+              <li>Comentó en la entidad por qué <code>puntaje</code> no lleva <code>unique</code> ni <code>length</code>. Ese razonamiento es justo lo que se busca.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li><strong>El servicio nunca llama al validador.</strong> Escribió <code>CalificacionesValidadorImpl</code> con cuatro reglas —incluida la de puntaje entre 1 y 5— pero no lo inyectó. Se puede guardar un puntaje de 500.</li>
+              <li>Usa <code>RuntimeException</code> en vez de <code>ResponseStatusException</code>: la API responde 500 (error del servidor) cuando debería responder 404.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>La columna <code>id_reseña</code> lleva <em>ñ</em>: en nombres de columna conviene evitarla.</li>
+              <li>El getter <code>getComentario_corto()</code> no corresponde al atributo <code>comentarioCorto</code>; debe ser <code>getComentarioCorto()</code>.</li>
+              <li>Falta documentación OpenAPI.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha-top">
+          <span class="nom">Zapata Barrera Juan David</span><span class="tbl">reportes</span>
+          <div class="der">
+            <div class="capas"><span class="capa pa">MOD</span><span class="capa si">REP</span><span class="capa si">VAL</span><span class="capa si">DTO</span><span class="capa pa">SER</span><span class="capa si">CTR</span></div>
+            <span class="nota b">4.4</span>
+          </div>
+        </div>
+        <div class="ficha-body">
+          <div class="bloque bien"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div>
+            <h5>Lo que hizo bien</h5>
+            <ul>
+              <li><strong>El repositorio más completo del curso:</strong> cinco métodos derivados y cinco JPQL, todos con sentido para su tabla.</li>
+              <li>Único que aplicó Lombok (<code>@Getter</code>, <code>@Setter</code>, <code>@Builder</code>, <code>@RequiredArgsConstructor</code>) para eliminar código repetitivo. La intención es correcta y avanzada.</li>
+              <li>Sus ramas y mensajes de commit son los más claros del repositorio: describen la HU y el porqué del cambio.</li>
+            </ul>
+          </div></div>
+          <div class="bloque falto"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div>
+            <h5>Lo que le faltó</h5>
+            <ul>
+              <li>Puso dos <code>@JsonBackReference</code> sin nombre en la misma clase (usuario y prenda). Al no tener nombre, ambos se llaman igual y Jackson falla al serializar.</li>
+              <li>La FK del reportante quedó como <code>id_usuario</code> en vez de <code>id_reportante</code>.</li>
+              <li><em>Nota:</em> los 52 errores de compilación que arrastra su código <strong>no son culpa suya</strong>. Son de la configuración del <code>pom.xml</code>, que no activa el procesador de Lombok en Java 25.</li>
+            </ul>
+          </div></div>
+          <div class="bloque mejora"><div class="icono"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div>
+            <h5>Qué puede mejorar</h5>
+            <ul>
+              <li>En <code>crear()</code> llama <code>dto.toEntity()</code> dos veces: valida un objeto y guarda otro distinto. Debe crear la entidad una sola vez.</li>
+              <li><code>eliminar()</code> hace <code>deleteById</code> sin verificar que exista: devuelve 500 en vez de 404.</li>
+              <li>Los métodos del controlador arrancan en mayúscula (<code>Crear</code>, <code>Listar</code>) y quedó uno con el nombre que genera el IDE: <code>putMethodName</code>.</li>
+            </ul>
+          </div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section id="cierre">
+    <h2><svg class="ic" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg> Qué sigue</h2>
+    <div class="aviso">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p>Nada de lo anterior es irreparable. Las cuatro causas de compilación se arreglan en pocos archivos, y los problemas de arranque son consultas y nombres. Lo que sí es estructural es la falta de acuerdo entre equipos: convenciones de nombres, nombres de columnas de llave foránea y nombres de las referencias de Jackson. Vale la pena dedicar una sesión a fijar ese contrato antes de conectar el frontend.</p>
+    </div>
+    <h3>Prioridades sugeridas</h3>
+    <div class="hallazgos">
+      <div class="hallazgo arranque"><div class="num">A</div><div>
+        <h4>Dejar el proyecto compilando y arrancando</h4>
+        <p>Activar Lombok en el <code>pom.xml</code>, arreglar <code>CategoriaControlador</code>, el paquete de imágenes de prenda, el <code>@Valid</code> de pedidos, las consultas JPQL rotas, las entidades duplicadas y las referencias de Jackson. Con eso ya se puede probar la API con todo el grupo.</p>
+      </div></div>
+      <div class="hallazgo arranque"><div class="num">B</div><div>
+        <h4>Completar las capas faltantes</h4>
+        <p>Tres estudiantes deben ponerse al día: <strong>detalle_pedido</strong> y <strong>transportistas</strong> (cinco capas cada uno) y <strong>puntos_acopio</strong> (tres capas). Son 13 archivos en total y todos tienen plantilla conocida.</p>
+      </div></div>
+      <div class="hallazgo arranque"><div class="num">C</div><div>
+        <h4>Unificar el contrato antes del frontend</h4>
+        <p>Nombres de campos en camelCase, tipos según el enunciado, columnas de FK con el nombre acordado, y documentación OpenAPI en los 18 controladores (hoy solo tres la tienen).</p>
+      </div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fila">
+      <strong>Proyecto ReVuelta</strong>
+      <span>·</span>
+      <span>Backend 2 · tercer semestre</span>
+      <span>·</span>
+      <span>Valoración elaborada por el <strong>Prof. Juan José Gallego Mesa, M.Sc.</strong></span>
+    </div>
+    <div class="fila" style="margin-top:10px;font-size:.8rem;color:var(--slate-500)">
+      <span>Revisión sobre la rama <code style="background:#1E293B;border-color:#334155;color:#94A3B8">develop</code> del repositorio RevuelTaBack · compilación verificada con Maven y JDK 25 · 17 de agosto de 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
