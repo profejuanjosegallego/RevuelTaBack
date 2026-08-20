@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,20 +51,20 @@ public class Pedido {
     @JsonBackReference("usuario_pedido")
     private Usuario usuario;
     // pedido tiene que hacer relacion de uno a muchos con detalle pedido
-    @JsonBackReference("pedido_detallePedido")
+    @JsonManagedReference("pedido_detallePedido")
     @OneToMany(mappedBy = "pedido")
     private List<DetallePedido> detallePedidos;
 
     // relacion de uno a muchos con envio
     
     @OneToMany(mappedBy = "pedido")
-    @JsonBackReference("pedido_envio")
+    @JsonManagedReference("pedido_envio")
     private List<Envio> envios;
 
     // La relacion con Transaccion la DUEÑA es Transaccion (transacciones.id_pedido).
     // Aqui solo mapeamos la vuelta (inverso), sin una segunda FK en pedidos.
     @OneToMany(mappedBy = "pedido")
-    @JsonBackReference("pedido_transaccion")
+    @JsonManagedReference("pedido_transaccion")
     private List<Transaccion> transacciones;
 
 

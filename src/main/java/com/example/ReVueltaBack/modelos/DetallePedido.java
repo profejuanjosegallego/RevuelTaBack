@@ -1,5 +1,7 @@
 package com.example.ReVueltaBack.modelos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -34,11 +36,13 @@ public class DetallePedido {
     //  el mappedBy = "pedido" del @OneToMany de Pedido).
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido", nullable = false)
+    @JsonBackReference("pedido_detallePedido")
     private Pedido pedido;
 
     //  Relación con Prenda
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_prenda")
+    @JsonBackReference("prenda_detallePedido")
     private Prenda prenda;
 
     // - GETTERS Y SETTERS -

@@ -22,9 +22,10 @@ public interface IRecompensaRepositorio extends JpaRepository<Recompensa, UUID> 
     @Query("SELECT r FROM Recompensa r WHERE LOWER(r.tipo) = LOWER(:tipo)")
     List<Recompensa> buscarPorTipo(@Param("tipo") String tipo);
 
-    @Query("SELECT r FROM Recompensa r WHERE r.puntosRequeridos = :puntosRequeridos")
-    List<Recompensa> buscarPorPuntosRequeridos(@Param("puntosRequeridos") Integer puntosRequeridos);
+    @Query("SELECT r FROM Recompensa r WHERE r.puntos_requeridos <= :puntosMaximos")
+    List<Recompensa> buscarPorPuntosRequeridos(@Param("puntosMaximos") Integer puntosMaximos);
 
-    @Query("SELECT r FROM Recompensa r WHERE r.disponibilidad = :disponibilidad")
-    List<Recompensa> buscarPorDisponibilidad(@Param("disponibilidad") Integer disponibilidad);
+    // "disponibilidad" no existe en la entidad: la existencia real se llama "stock".
+    @Query("SELECT r FROM Recompensa r WHERE r.activa = true AND r.stock > 0")
+    List<Recompensa> buscarDisponibles();
 }

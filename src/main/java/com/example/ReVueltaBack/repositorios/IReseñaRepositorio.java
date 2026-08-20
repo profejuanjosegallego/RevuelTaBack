@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.ReVueltaBack.modelos.Reseña;
+import com.example.ReVueltaBack.modelos.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,9 +22,9 @@ public interface IReseñaRepositorio extends JpaRepository<Reseña, UUID> {
     List<Reseña> findByRecomendado(Boolean recomendado);
     List<Reseña> findByEditada(Boolean editada);
     List<Reseña> findByVisible(Boolean visible);
-    List<Reseña> findByAutor(String autor);
-    List<Reseña> findByUsuarioReseñado(String usuarioReseñado);
+    List<Reseña> findByAutor(Usuario autor);
+    List<Reseña> findByUsuarioReseñado(Usuario usuarioReseñado);
 
-    @Query("SELECT r FROM Reseñas r WHERE r.autor.id = :autorId")
+    @Query("SELECT r FROM Reseña r WHERE r.autor.id = :autorId")
     List<Reseña> buscarPorUsuariosId(@Param("autorId") UUID autorId);
 }

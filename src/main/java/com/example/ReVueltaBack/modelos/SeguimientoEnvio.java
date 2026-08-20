@@ -43,7 +43,7 @@ public class SeguimientoEnvio {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_id_envio")
-    @JsonBackReference("envio_seguimientoenvio")
+    @JsonBackReference("envio_seguimiento")
     private Envio envio;
 
     public UUID getId() {

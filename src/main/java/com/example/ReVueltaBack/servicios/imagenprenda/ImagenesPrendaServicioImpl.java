@@ -10,16 +10,16 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.ReVueltaBack.dtos.imagenprenda.ImagenesPrendaRequestDTO;
 import com.example.ReVueltaBack.dtos.imagenprenda.ImagenesPrendaResponseDTO;
 import com.example.ReVueltaBack.modelos.ImagenPrenda;
-import com.example.ReVueltaBack.repositorios.IMagenPrenda;
+import com.example.ReVueltaBack.repositorios.IMagenPrendaRepositorio;
 import com.example.ReVueltaBack.validaciones.imagenprenda.IImagenesPrendaValidador;
 
 @Service
 public class ImagenesPrendaServicioImpl implements IImagenesPrendaServicio {
 
-    private final IMagenPrenda repositorio;
+    private final IMagenPrendaRepositorio repositorio;
     private final IImagenesPrendaValidador validador;
 
-    public ImagenesPrendaServicioImpl(IMagenPrenda repositorio, IImagenesPrendaValidador validador) {
+    public ImagenesPrendaServicioImpl(IMagenPrendaRepositorio repositorio, IImagenesPrendaValidador validador) {
         this.repositorio = repositorio;
         this.validador = validador;
     }

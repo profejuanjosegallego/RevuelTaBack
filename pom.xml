@@ -65,6 +65,13 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Solo el modulo de criptografia de Spring Security (BCryptPasswordEncoder).
+		     No activa la seguridad web: los endpoints siguen abiertos para poder
+		     probar la API. Lo usa el modulo Usuario para cifrar la contrasena. -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
@@ -90,6 +97,23 @@
 
 	<build>
 		<plugins>
+			<!-- Desde el JDK 23 el compilador YA NO ejecuta los procesadores de
+			     anotaciones automaticamente: hay que declararlos. Sin esto Lombok
+			     no genera los getters/setters de las clases con @Getter/@Setter
+			     y el proyecto no compila. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.46</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

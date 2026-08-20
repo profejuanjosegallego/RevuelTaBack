@@ -15,7 +15,8 @@ public class ValidacionUsuarioImpl implements IValidacionUsuario {
     //Patron de correo valido
     private static final Pattern PATRON_CORREO=Pattern.compile("^[\\w.+-]+@[\\w-]+\\.[\\w.-]+$");
 
-    //Longitud de contraseña establecida
+    //Longitud EXACTA de un hash BCrypt. Si el valor no mide 60 caracteres es
+    //porque alguien intento guardar la contraseña sin cifrar.
     private static final int LONGITUD_CONTRASEÑA=60;
 
     @Override
@@ -38,7 +39,9 @@ public class ValidacionUsuarioImpl implements IValidacionUsuario {
     @Override
     public void validarContraseñaLongitud(String contraseñaHash) {
        if(contraseñaHash==null || contraseñaHash.length() != LONGITUD_CONTRASEÑA){
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tenemos un problema en la validacion de tu contraseña");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "La contraseña no quedó cifrada correctamente: se esperaba un hash BCrypt de "
+            + LONGITUD_CONTRASEÑA + " caracteres");
 
        }
     }

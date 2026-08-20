@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface ICategoriasRepositorio extends JpaRepository<Categoria,UUID> {
 
     //consultas personalizadas con jpa (solo lectura)
-    List<Categoria> findByNombreContainigIgnoreCase(String nombre);
+    List<Categoria> findByNombreContainingIgnoreCase(String nombre);
 
     List<Categoria> findByDescripcion(String descripcion);
 
@@ -33,8 +33,7 @@ public interface ICategoriasRepositorio extends JpaRepository<Categoria,UUID> {
 
 
     //consultas personalizadas con jpql (todas habilitadas)
-    @Query("SELECT c FROM Categoria c" +
-        "WHERE LOWER(c.nombre) LIKE LOWER(:nombre) = :nombreCategoria")
+    @Query("SELECT c FROM Categoria c WHERE LOWER(c.nombre) LIKE LOWER(CONCAT('%', :nombreCategoria, '%'))")
     List<Categoria> buscarPorNombre(@Param("nombreCategoria")String nombre);
     
 }

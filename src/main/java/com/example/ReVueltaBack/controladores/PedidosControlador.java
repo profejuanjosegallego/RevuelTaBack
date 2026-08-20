@@ -21,7 +21,7 @@ public class PedidosControlador {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoResponseDTO> crear(@Valid @RequestBody PedidoRequestDTO dto) {
+    public ResponseEntity<PedidoResponseDTO> crear(@RequestBody PedidoRequestDTO dto) {
         PedidoResponseDTO nuevoPedido = servicioPedido.registrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
     }
@@ -41,7 +41,7 @@ public class PedidosControlador {
     @PutMapping("/{id}")
     public ResponseEntity<PedidoResponseDTO> actualizar(
             @PathVariable UUID id,
-            @Valid @RequestBody PedidoRequestDTO dto) {
+            @RequestBody PedidoRequestDTO dto) {
         PedidoResponseDTO pedidoActualizado = servicioPedido.actualizar(id, dto);
         return ResponseEntity.ok(pedidoActualizado);
     }

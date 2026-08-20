@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -52,22 +54,27 @@ public class Usuario {
 
     // Prenda.usuario (columna fk_id_usuario) -> prendas publicadas por el usuario.
     @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference("usuario_prenda")
     private List<Prenda> prendas = new ArrayList<>();
 
     // Pedido.usuario (columna usuario_id) -> pedidos realizados por el usuario.
     @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference("usuario_pedido")
     private List<Pedido> pedidos = new ArrayList<>();
 
     // Reseña.autor (columna id_autor) -> reseñas escritas por el usuario.
     @OneToMany(mappedBy = "autor")
+    @JsonManagedReference("usuario_reseña_autor")
     private List<Reseña> reseñas = new ArrayList<>();
 
     // Reporte.usuario (columna id_usuario) -> reportes hechos por el usuario.
     @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference("usuario_reporte")
     private List<Reporte> reportes = new ArrayList<>();
 
     // Trueque.proponente (columna id_proponente) -> trueques propuestos por el usuario.
     @OneToMany(mappedBy = "proponente")
+    @JsonManagedReference("usuario_trueque")
     private List<Trueque> trueques = new ArrayList<>();
 
     public Usuario() {

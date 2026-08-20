@@ -15,7 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PuntoAcopio")
+@Table(name = "puntos_acopio")
 public class PuntoAcopio {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -41,7 +41,7 @@ public class PuntoAcopio {
 
     // chamo relacion tabla Envio (mappedBy debe ser el nombre del atributo en Envio: "puntoAcopio")
     @OneToMany(mappedBy = "puntoAcopio", fetch = FetchType.LAZY)
-    @JsonManagedReference("punto_de_acopio_envio")
+    @JsonManagedReference("punto_acopio_envio")
     private List<Envio> envios;
 
     public UUID getId() {

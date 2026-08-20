@@ -44,7 +44,7 @@ public class Transaccion {
 
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @JoinColumn (name = "fk_id_pedido")
-    @JsonBackReference("transacion_pedido")
+    @JsonBackReference("pedido_transaccion")
     private Pedido pedido;
 
     public UUID getId() {

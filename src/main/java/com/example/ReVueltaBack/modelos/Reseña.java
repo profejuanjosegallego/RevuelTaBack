@@ -43,12 +43,12 @@ public class Reseña {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_autor")
-    @JsonBackReference("usuario_reseña")
+    @JsonBackReference("usuario_reseña_autor")
     private Usuario autor;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario_reseñado")
-    @JsonBackReference("usuario_reseña")
+    @JsonBackReference("usuario_reseña_recibida")
     private Usuario usuarioReseñado;
     
     public Usuario getAutor() {

@@ -17,19 +17,25 @@ public record ReseñaRequestDTO(
     UUID idUsuarioReseñado
 ) {
 
-    public Reseña toEntity() {
+    /**
+     * Convierte el DTO en la entidad.
+     *
+     * Son DOS usuarios distintos: quien escribe la reseña (autor) y quien la
+     * recibe (usuarioReseñado). El servicio los busca en la base de datos y los
+     * entrega aqui ya resueltos.
+     */
+    public Reseña toEntity(Usuario autor, Usuario usuarioReseñado) {
         Reseña reseña = new Reseña();
-        Usuario usuario = new Usuario();
-
-        usuario.setId(idAutor);
-        usuario.setId(idUsuarioReseñado);
 
         reseña.setComentario(comentario);
         reseña.setTitulo(titulo);
         reseña.setFecha(fecha);
         reseña.setRecomendado(recomendado);
-        reseña.setEditada(editada);
-        reseña.setVisible(visible);
+        reseña.setEditada(editada != null ? editada : Boolean.FALSE);
+        reseña.setVisible(visible != null ? visible : Boolean.TRUE);
+        reseña.setAutor(autor);
+        reseña.setUsuarioReseñado(usuarioReseñado);
+
         return reseña;
     }
 }

@@ -16,7 +16,7 @@ import com.example.ReVueltaBack.modelos.Transportista;
 
 @Repository
 public interface IEnvioRepositorio extends JpaRepository<Envio, UUID> {
-    @Query("SELECT e FROM Envio e" + "WHERE e.pedido = :pedido")
+    @Query("SELECT e FROM Envio e WHERE e.pedido = :pedido")
     List<Envio> buscarPorPedido(@Param("pedido") Pedido pedido);
 
     List<Envio> findByTransportista(Transportista transportista);
@@ -27,11 +27,11 @@ public interface IEnvioRepositorio extends JpaRepository<Envio, UUID> {
     //Optional<Envio> findByCodigoGuiaContainingIgnoreCase(String codigoGuia);
 
     //Consultas personalizadas con JPQL (Todas habilitadas)
-    @Query("SELECT e FROM Envio e " + "WHERE LOWER(e.codigoGuia) = LOWER(:codigoGuia)")
+    @Query("SELECT e FROM Envio e WHERE LOWER(e.codigoGuia) = LOWER(:codigoGuia)")
     Optional<Envio> buscarPorCodigoGuia(@Param("codigoGuia") String codigoGuia);
 
     List<Envio> findByEstado(String estado);
 
-    @Query("SELECT e FROM Envio e" + "WHERE e.pedido.id = pedidoId")
+    @Query("SELECT e FROM Envio e WHERE e.pedido.id = :pedidoId")
     List<Envio> buscarPorPedidoId (@Param("pedidoId") UUID pedidoId);
 }

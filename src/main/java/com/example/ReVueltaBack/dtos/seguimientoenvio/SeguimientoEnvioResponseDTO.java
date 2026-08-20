@@ -13,7 +13,8 @@ public record SeguimientoEnvioResponseDTO(
         String ubicacion,
         LocalDateTime fechaHora,
         Double latitud,
-        Double longitud
+        Double longitud,
+        UUID idEnvio
 
 ) {
 
@@ -26,7 +27,8 @@ public record SeguimientoEnvioResponseDTO(
             seguimientoEnvio.getUbicacion(),
             seguimientoEnvio.getFecha_hora(),
             seguimientoEnvio.getLatitud(),
-            seguimientoEnvio.getLongitud()
+            seguimientoEnvio.getLongitud(),
+            seguimientoEnvio.getEnvio() != null ? seguimientoEnvio.getEnvio().getId() : null
         );
 
     }

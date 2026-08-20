@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.ReVueltaBack.modelos.Prenda;
@@ -26,9 +27,14 @@ public interface ITruequeRepositorio extends JpaRepository<Trueque, UUID> {
 
     List<Trueque> findByAceptado(Boolean aceptado);
 
-    List<Trueque> findAllByOrderByFecha_propuestaDesc();
+    // Ojo: en Spring Data el guion bajo separa propiedades anidadas, asi que
+    // "findAllByOrderByFecha_propuestaDesc" buscaria fecha.propuesta y falla.
+    // Con @Query se nombra el atributo tal cual esta en la entidad.
+    @Query("SELECT t FROM Trueque t ORDER BY t.fecha_propuesta DESC")
+    List<Trueque> listarPorFechaPropuestaDesc();
 
-    List<Trueque> findByFecha_propuestaBetween(LocalDate desde, LocalDate hasta);
+    @Query("SELECT t FROM Trueque t WHERE t.fecha_propuesta BETWEEN :desde AND :hasta")
+    List<Trueque> buscarPorRangoFechaPropuesta(@Param("desde") LocalDate desde, @Param("hasta") LocalDate hasta);
 
     // Consultas personalizadas con JPQL
     @Query("SELECT t FROM Trueque t " +

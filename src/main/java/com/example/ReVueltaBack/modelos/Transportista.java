@@ -35,7 +35,7 @@ public class Transportista {
     private Boolean disponible;
 
     @OneToMany (mappedBy = "transportista")
-    @JsonManagedReference
+    @JsonManagedReference("transportista_envio")
     private List <Envio> envios = new ArrayList<>(); 
     
     public UUID getId() {

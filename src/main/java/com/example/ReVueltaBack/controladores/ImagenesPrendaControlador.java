@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ReVueltaBack.dtos.imagenprenda.ImagenesPrendaRequestDTO;
 import com.example.ReVueltaBack.dtos.imagenprenda.ImagenesPrendaResponseDTO;
-import com.example.ReVueltaBack.servicios.Imagenprenda.IImagenesPrendaServicio;
+import com.example.ReVueltaBack.servicios.imagenprenda.IImagenesPrendaServicio;
 
 @RestController
 @RequestMapping("/api/imagenes-prenda")

@@ -43,7 +43,7 @@ public class Trueque {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_prenda_ofrecida")
-    @JsonBackReference("prenda-ofrecida")
+    @JsonBackReference("prenda_trueque")
     private Prenda prenda;
 
     // Segunda prenda de la relacion (la deseada). Seed: id_prenda_deseada -> prendas.
@@ -54,6 +54,7 @@ public class Trueque {
     // Quien propone el trueque. Seed: id_proponente -> usuarios.
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_proponente")
+    @JsonBackReference("usuario_trueque")
     private Usuario proponente;
 
     public UUID getId() {
