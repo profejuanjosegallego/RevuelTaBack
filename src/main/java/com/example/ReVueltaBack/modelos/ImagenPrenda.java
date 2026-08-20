@@ -35,7 +35,7 @@ public class ImagenPrenda {
     private String formato;
     
     @Column(name = "tamaño_kb")
-    private Integer tamaño_KB;
+    private Integer tamano_KB;
     
     @Column(name = "fecha_subida")
     private LocalDate fecha_subida;
@@ -74,11 +74,11 @@ public class ImagenPrenda {
     public void setFormato(String formato) {
         this.formato = formato;
     }
-    public Integer getTamaño_KB() {
-        return tamaño_KB;
+    public Integer getTamano_KB() {
+        return tamano_KB;
     }
-    public void setTamaño_KB(Integer tamaño_KB) {
-        this.tamaño_KB = tamaño_KB;
+    public void setTamano_KB(Integer tamano_KB) {
+        this.tamano_KB = tamano_KB;
     }
     public LocalDate getFecha_subida() {
         return fecha_subida;

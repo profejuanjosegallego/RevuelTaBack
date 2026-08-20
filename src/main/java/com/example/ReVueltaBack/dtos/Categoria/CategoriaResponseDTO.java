@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.dtos.Categoria;
+package com.example.ReVueltaBack.dtos.categoria;
 
 import java.util.UUID;
 

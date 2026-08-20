@@ -11,7 +11,7 @@ public interface IValidacionUsuario {
     void validarCorreoFormato(String correo);
 
     //tamaño del hash contraseña
-    void validarContraseñaLongitud(String contraseñaHash);
+    void validarContrasenaLongitud(String contrasenaHash);
 
     //funcion para unificar las validaciones
     void validarUsuario(Usuario usuario);

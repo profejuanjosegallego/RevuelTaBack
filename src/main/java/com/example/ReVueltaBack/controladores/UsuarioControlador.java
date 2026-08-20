@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ReVueltaBack.dtos.Usuario.UsuarioRequestDTO;
-import com.example.ReVueltaBack.dtos.Usuario.UsuarioResponseDTO;
-import com.example.ReVueltaBack.servicios.Usuario.IServicioUsuario;
+import com.example.ReVueltaBack.dtos.usuario.UsuarioRequestDTO;
+import com.example.ReVueltaBack.dtos.usuario.UsuarioResponseDTO;
+import com.example.ReVueltaBack.servicios.usuario.IServicioUsuario;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

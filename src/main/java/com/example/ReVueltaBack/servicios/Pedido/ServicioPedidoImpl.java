@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.servicios.Pedido;
+package com.example.ReVueltaBack.servicios.pedido;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.ReVueltaBack.dtos.Pedido.PedidoRequestDTO;
-import com.example.ReVueltaBack.dtos.Pedido.PedidoResponseDTO;
+import com.example.ReVueltaBack.dtos.pedido.PedidoRequestDTO;
+import com.example.ReVueltaBack.dtos.pedido.PedidoResponseDTO;
 import com.example.ReVueltaBack.modelos.Pedido;
 import com.example.ReVueltaBack.repositorios.IPedidoRepositorio;
 import com.example.ReVueltaBack.validaciones.pedido.IValidacionPedido;

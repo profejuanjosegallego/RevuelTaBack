@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.servicios.Transaccion;
+package com.example.ReVueltaBack.servicios.transaccion;
 
 import java.util.List;
 import java.util.UUID;

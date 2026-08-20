@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.servicios.Categoria;
+package com.example.ReVueltaBack.servicios.categoria;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,19 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.ReVueltaBack.dtos.Categoria.CategoriaRequestDTO;
-import com.example.ReVueltaBack.dtos.Categoria.CategoriaResponseDTO;
+import com.example.ReVueltaBack.dtos.categoria.CategoriaRequestDTO;
+import com.example.ReVueltaBack.dtos.categoria.CategoriaResponseDTO;
 import com.example.ReVueltaBack.modelos.Categoria;
-import com.example.ReVueltaBack.repositorios.ICategoriasRepositorio;
+import com.example.ReVueltaBack.repositorios.ICategoriaRepositorio;
 import com.example.ReVueltaBack.validaciones.categoria.IValidacionCategoria;
 
 @Service
 public class ServicioCategoriaImpl implements IServicioCategoria {
 
-    private final ICategoriasRepositorio repositorioCategoria;
+    private final ICategoriaRepositorio repositorioCategoria;
     private final IValidacionCategoria validacionCategoria;
 
-    public ServicioCategoriaImpl(ICategoriasRepositorio repositorioCategoria, IValidacionCategoria validacionCategoria) {
+    public ServicioCategoriaImpl(ICategoriaRepositorio repositorioCategoria, IValidacionCategoria validacionCategoria) {
         this.repositorioCategoria = repositorioCategoria;
         this.validacionCategoria = validacionCategoria;
     }

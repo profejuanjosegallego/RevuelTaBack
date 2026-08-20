@@ -1,10 +1,10 @@
-package com.example.ReVueltaBack.servicios.Campana;
+package com.example.ReVueltaBack.servicios.campana;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.ReVueltaBack.dtos.Campana.CampanaRequestDTO;
-import com.example.ReVueltaBack.dtos.Campana.CampanaResponseDTO;
+import com.example.ReVueltaBack.dtos.campana.CampanaRequestDTO;
+import com.example.ReVueltaBack.dtos.campana.CampanaResponseDTO;
 
 public interface IServicioCampana {
 

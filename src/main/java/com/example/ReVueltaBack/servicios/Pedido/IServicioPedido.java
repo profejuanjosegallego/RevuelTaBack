@@ -1,10 +1,10 @@
-package com.example.ReVueltaBack.servicios.Pedido;
+package com.example.ReVueltaBack.servicios.pedido;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.ReVueltaBack.dtos.Pedido.PedidoRequestDTO;
-import com.example.ReVueltaBack.dtos.Pedido.PedidoResponseDTO;
+import com.example.ReVueltaBack.dtos.pedido.PedidoRequestDTO;
+import com.example.ReVueltaBack.dtos.pedido.PedidoResponseDTO;
 
 public interface IServicioPedido {
 

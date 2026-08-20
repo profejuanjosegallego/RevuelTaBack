@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.validaciones.estadoPrenda;
+package com.example.ReVueltaBack.validaciones.estadoprenda;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

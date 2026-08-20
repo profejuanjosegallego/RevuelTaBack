@@ -11,14 +11,14 @@ import com.example.ReVueltaBack.dtos.prenda.PrendaRequestDTO;
 import com.example.ReVueltaBack.dtos.prenda.PrendaResponseDTO;
 import com.example.ReVueltaBack.modelos.Prenda;
 import com.example.ReVueltaBack.repositorios.IPrendaRepositorio;
-import com.example.ReVueltaBack.validaciones.prenda.IPrendaValidador;
+import com.example.ReVueltaBack.validaciones.prenda.IValidacionPrenda;
 
 @Service
-public class ServicioPrendaImpl implements IPrendaServicio {
+public class ServicioPrendaImpl implements IServicioPrenda {
     private final IPrendaRepositorio repositorioPrenda;
-    private final IPrendaValidador validadorPrenda;
+    private final IValidacionPrenda validadorPrenda;
 
-    public ServicioPrendaImpl(IPrendaRepositorio repositorioPrenda, IPrendaValidador validadorPrenda) {
+    public ServicioPrendaImpl(IPrendaRepositorio repositorioPrenda, IValidacionPrenda validadorPrenda) {
         this.repositorioPrenda = repositorioPrenda;
         this.validadorPrenda = validadorPrenda;
     }

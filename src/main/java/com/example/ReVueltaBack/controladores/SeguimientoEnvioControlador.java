@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ReVueltaBack.dtos.seguimientoenvio.SeguimientoEnvioRequestDTO;
 import com.example.ReVueltaBack.dtos.seguimientoenvio.SeguimientoEnvioResponseDTO;
-import com.example.ReVueltaBack.servicios.seguimientoenvio.ISeguimientoEnvioServicio;
+import com.example.ReVueltaBack.servicios.seguimientoenvio.IServicioSeguimientoEnvio;
 
 @RestController
 @RequestMapping("/api/seguimiento-envio")
 public class SeguimientoEnvioControlador {
 
-    private final ISeguimientoEnvioServicio servicioSeguimientoEnvio;
+    private final IServicioSeguimientoEnvio servicioSeguimientoEnvio;
 
-    public SeguimientoEnvioControlador(ISeguimientoEnvioServicio servicioSeguimientoEnvio) {
+    public SeguimientoEnvioControlador(IServicioSeguimientoEnvio servicioSeguimientoEnvio) {
         this.servicioSeguimientoEnvio = servicioSeguimientoEnvio;
     }
 

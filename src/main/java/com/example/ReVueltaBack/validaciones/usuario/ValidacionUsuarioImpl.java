@@ -17,7 +17,7 @@ public class ValidacionUsuarioImpl implements IValidacionUsuario {
 
     //Longitud EXACTA de un hash BCrypt. Si el valor no mide 60 caracteres es
     //porque alguien intento guardar la contraseña sin cifrar.
-    private static final int LONGITUD_CONTRASEÑA=60;
+    private static final int LONGITUD_CONTRASENA=60;
 
     @Override
     public void validarNombreObligatorio(String nombre) {
@@ -37,11 +37,11 @@ public class ValidacionUsuarioImpl implements IValidacionUsuario {
     }
 
     @Override
-    public void validarContraseñaLongitud(String contraseñaHash) {
-       if(contraseñaHash==null || contraseñaHash.length() != LONGITUD_CONTRASEÑA){
+    public void validarContrasenaLongitud(String contrasenaHash) {
+       if(contrasenaHash==null || contrasenaHash.length() != LONGITUD_CONTRASENA){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "La contraseña no quedó cifrada correctamente: se esperaba un hash BCrypt de "
-            + LONGITUD_CONTRASEÑA + " caracteres");
+            + LONGITUD_CONTRASENA + " caracteres");
 
        }
     }
@@ -50,7 +50,7 @@ public class ValidacionUsuarioImpl implements IValidacionUsuario {
     public void validarUsuario(Usuario usuario) {
         validarNombreObligatorio(usuario.getNombre());
         validarCorreoFormato(usuario.getCorreo());
-        validarContraseñaLongitud(usuario.getContrasena_hash());
+        validarContrasenaLongitud(usuario.getContrasena_hash());
 
     }
 

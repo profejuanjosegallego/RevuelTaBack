@@ -62,10 +62,10 @@ public class Usuario {
     @JsonManagedReference("usuario_pedido")
     private List<Pedido> pedidos = new ArrayList<>();
 
-    // Reseña.autor (columna id_autor) -> reseñas escritas por el usuario.
+    // Resena.autor (columna id_autor) -> reseñas escritas por el usuario.
     @OneToMany(mappedBy = "autor")
     @JsonManagedReference("usuario_reseña_autor")
-    private List<Reseña> reseñas = new ArrayList<>();
+    private List<Resena> resenas = new ArrayList<>();
 
     // Reporte.usuario (columna id_usuario) -> reportes hechos por el usuario.
     @OneToMany(mappedBy = "usuario")
@@ -162,12 +162,12 @@ public class Usuario {
         this.pedidos = pedidos;
     }
 
-    public List<Reseña> getReseñas() {
-        return reseñas;
+    public List<Resena> getResenas() {
+        return resenas;
     }
 
-    public void setReseñas(List<Reseña> reseñas) {
-        this.reseñas = reseñas;
+    public void setResenas(List<Resena> resenas) {
+        this.resenas = resenas;
     }
 
     public List<Reporte> getReportes() {

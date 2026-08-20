@@ -1,10 +1,10 @@
-package com.example.ReVueltaBack.servicios.Categoria;
+package com.example.ReVueltaBack.servicios.categoria;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.ReVueltaBack.dtos.Categoria.CategoriaRequestDTO;
-import com.example.ReVueltaBack.dtos.Categoria.CategoriaResponseDTO;
+import com.example.ReVueltaBack.dtos.categoria.CategoriaRequestDTO;
+import com.example.ReVueltaBack.dtos.categoria.CategoriaResponseDTO;
 
 public interface IServicioCategoria {
 

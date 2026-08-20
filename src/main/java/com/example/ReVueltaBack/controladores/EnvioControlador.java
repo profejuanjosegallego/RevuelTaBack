@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ReVueltaBack.dtos.Envio.EnvioRequestDTO;
-import com.example.ReVueltaBack.dtos.Envio.EnvioResponseDTO;
-import com.example.ReVueltaBack.servicios.Envio.IServicioEnvio;
+import com.example.ReVueltaBack.dtos.envio.EnvioRequestDTO;
+import com.example.ReVueltaBack.dtos.envio.EnvioResponseDTO;
+import com.example.ReVueltaBack.servicios.envio.IServicioEnvio;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ReVueltaBack.dtos.Campana.CampanaRequestDTO;
-import com.example.ReVueltaBack.dtos.Campana.CampanaResponseDTO;
-import com.example.ReVueltaBack.servicios.Campana.IServicioCampana;
+import com.example.ReVueltaBack.dtos.campana.CampanaRequestDTO;
+import com.example.ReVueltaBack.dtos.campana.CampanaResponseDTO;
+import com.example.ReVueltaBack.servicios.campana.IServicioCampana;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

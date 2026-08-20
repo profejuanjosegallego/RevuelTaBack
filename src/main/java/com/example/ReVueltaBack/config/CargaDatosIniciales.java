@@ -21,7 +21,7 @@ import com.example.ReVueltaBack.modelos.Prenda;
 import com.example.ReVueltaBack.modelos.PuntoAcopio;
 import com.example.ReVueltaBack.modelos.Recompensa;
 import com.example.ReVueltaBack.modelos.Reporte;
-import com.example.ReVueltaBack.modelos.Reseña;
+import com.example.ReVueltaBack.modelos.Resena;
 import com.example.ReVueltaBack.modelos.SeguimientoEnvio;
 import com.example.ReVueltaBack.modelos.Transaccion;
 import com.example.ReVueltaBack.modelos.Transportista;
@@ -178,19 +178,19 @@ public class CargaDatosIniciales implements CommandLineRunner {
         recompensa("Cupon de 20.000", 250, "Descuento de 20.000 pesos en tu proxima compra", 15, "DESCUENTO");
 
         // ---------- Comunidad ----------
-        Reseña reseña = new Reseña();
-        reseña.setTitulo("Excelente vendedora");
-        reseña.setComentario("La prenda llego tal como se describia y el envio fue muy rapido.");
-        reseña.setFecha(LocalDate.now().minusDays(1));
-        reseña.setRecomendado(true);
-        reseña.setEditada(false);
-        reseña.setVisible(true);
-        reseña.setAutor(comprador);
-        reseña.setUsuarioReseñado(vendedora);
-        em.persist(reseña);
+        Resena resena = new Resena();
+        resena.setTitulo("Excelente vendedora");
+        resena.setComentario("La prenda llego tal como se describia y el envio fue muy rapido.");
+        resena.setFecha(LocalDate.now().minusDays(1));
+        resena.setRecomendado(true);
+        resena.setEditada(false);
+        resena.setVisible(true);
+        resena.setAutor(comprador);
+        resena.setUsuarioResenado(vendedora);
+        em.persist(resena);
 
-        calificacion(reseña, 5, "PUNTUALIDAD", "Entrego antes de lo prometido", true, 1);
-        calificacion(reseña, 4, "CALIDAD", "La prenda estaba en muy buen estado", true, 1);
+        calificacion(resena, 5, "PUNTUALIDAD", "Entrego antes de lo prometido", true, 1);
+        calificacion(resena, 4, "CALIDAD", "La prenda estaba en muy buen estado", true, 1);
 
         Reporte reporte = new Reporte();
         reporte.setMotivo("DESCRIPCION_ENGANOSA");
@@ -279,7 +279,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
         i.setEs_Principal(principal);
         i.setOrden(orden);
         i.setFormato(formato);
-        i.setTamaño_KB(tamanoKb);
+        i.setTamano_KB(tamanoKb);
         i.setFecha_subida(LocalDate.now().minusDays(7));
         i.setPrenda(prenda);
         em.persist(i);
@@ -333,7 +333,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
         em.persist(r);
     }
 
-    private void calificacion(Reseña reseña, Integer puntaje, String dimension, String comentario,
+    private void calificacion(Resena resena, Integer puntaje, String dimension, String comentario,
                               Boolean verificada, Integer peso) {
         Calificacion c = new Calificacion();
         c.setPuntaje(puntaje);
@@ -342,7 +342,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
         c.setFecha(LocalDate.now().minusDays(1));
         c.setVerificada(verificada);
         c.setPeso(peso);
-        c.setReseña(reseña);
+        c.setResena(resena);
         em.persist(c);
     }
 }

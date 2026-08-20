@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.validaciones.estadoPrenda;
+package com.example.ReVueltaBack.validaciones.estadoprenda;
 
 import com.example.ReVueltaBack.modelos.EstadoPrenda;
 

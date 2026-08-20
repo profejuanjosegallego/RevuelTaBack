@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.validaciones.PuntoAcopio;
+package com.example.ReVueltaBack.validaciones.puntoacopio;
 import com.example.ReVueltaBack.modelos.PuntoAcopio;
 public interface IValidacionPuntoAcopio {
 

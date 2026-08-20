@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.dtos.Usuario;
+package com.example.ReVueltaBack.dtos.usuario;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

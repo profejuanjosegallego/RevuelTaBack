@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ReVueltaBack.dtos.transaccion.TransaccionRequestDTO;
 import com.example.ReVueltaBack.dtos.transaccion.TransaccionResponseDTO;
-import com.example.ReVueltaBack.servicios.Transaccion.IServicioTransaccion;
+import com.example.ReVueltaBack.servicios.transaccion.IServicioTransaccion;
 
 @RestController
 @RequestMapping("/api/transacciones")

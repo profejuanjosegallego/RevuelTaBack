@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.validaciones.seguimientoEnvio;
+package com.example.ReVueltaBack.validaciones.seguimientoenvio;
 
 import java.time.LocalDateTime;
 

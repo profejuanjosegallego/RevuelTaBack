@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ReVueltaBack.dtos.prenda.PrendaRequestDTO;
 import com.example.ReVueltaBack.dtos.prenda.PrendaResponseDTO;
-import com.example.ReVueltaBack.servicios.prenda.IPrendaServicio;
+import com.example.ReVueltaBack.servicios.prenda.IServicioPrenda;
 
 @RestController
 @RequestMapping("/api/prendas")
 public class PrendaControlador {
-    private final IPrendaServicio servicioPrenda;
+    private final IServicioPrenda servicioPrenda;
 
-    public PrendaControlador(IPrendaServicio servicioPrenda) {
+    public PrendaControlador(IServicioPrenda servicioPrenda) {
         this.servicioPrenda = servicioPrenda;
     }
 

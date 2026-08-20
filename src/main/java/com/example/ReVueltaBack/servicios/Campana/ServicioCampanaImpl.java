@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.servicios.Campana;
+package com.example.ReVueltaBack.servicios.campana;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.ReVueltaBack.dtos.Campana.CampanaRequestDTO;
-import com.example.ReVueltaBack.dtos.Campana.CampanaResponseDTO;
+import com.example.ReVueltaBack.dtos.campana.CampanaRequestDTO;
+import com.example.ReVueltaBack.dtos.campana.CampanaResponseDTO;
 import com.example.ReVueltaBack.modelos.Campana;
 import com.example.ReVueltaBack.repositorios.ICampanaRepositorio;
 import com.example.ReVueltaBack.validaciones.campana.IValidacionCampana;

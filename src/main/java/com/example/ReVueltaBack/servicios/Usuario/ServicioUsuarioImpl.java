@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.servicios.Usuario;
+package com.example.ReVueltaBack.servicios.usuario;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,10 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.ReVueltaBack.dtos.Usuario.UsuarioRequestDTO;
-import com.example.ReVueltaBack.dtos.Usuario.UsuarioResponseDTO;
+import com.example.ReVueltaBack.dtos.usuario.UsuarioRequestDTO;
+import com.example.ReVueltaBack.dtos.usuario.UsuarioResponseDTO;
 import com.example.ReVueltaBack.modelos.Usuario;
-import com.example.ReVueltaBack.repositorios.UsuarioRepository;
+import com.example.ReVueltaBack.repositorios.IUsuarioRepositorio;
 import com.example.ReVueltaBack.validaciones.usuario.IValidacionUsuario;
 
 // HU USR-S01 — Servicio de Usuario.
@@ -28,7 +28,7 @@ public class ServicioUsuarioImpl implements IServicioUsuario {
     // (El validador revisa el HASH, que siempre mide 60 caracteres.)
     private static final int LONGITUD_MINIMA_CONTRASENA = 8;
 
-    private final UsuarioRepository repositorioUsuario;
+    private final IUsuarioRepositorio repositorioUsuario;
     private final IValidacionUsuario validacionUsuario;
 
     // BCrypt: algoritmo estandar para guardar contrasenas. Produce siempre un
@@ -36,7 +36,7 @@ public class ServicioUsuarioImpl implements IServicioUsuario {
     private final PasswordEncoder codificador = new BCryptPasswordEncoder();
 
     // Inyeccion POR CONSTRUCTOR: Spring entrega el repositorio y el validador.
-    public ServicioUsuarioImpl(UsuarioRepository repositorioUsuario, IValidacionUsuario validacionUsuario) {
+    public ServicioUsuarioImpl(IUsuarioRepositorio repositorioUsuario, IValidacionUsuario validacionUsuario) {
         this.repositorioUsuario = repositorioUsuario;
         this.validacionUsuario = validacionUsuario;
     }

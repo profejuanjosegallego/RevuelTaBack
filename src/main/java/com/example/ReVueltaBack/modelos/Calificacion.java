@@ -42,7 +42,7 @@ public class Calificacion {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reseña")
-    private Reseña reseña;
+    private Resena resena;
 
     public UUID getId() {
         return id;
@@ -100,11 +100,11 @@ public class Calificacion {
         this.peso = peso;
     }
 
-    public Reseña getReseña() {
-        return reseña;
+    public Resena getResena() {
+        return resena;
     }
 
-    public void setReseña(Reseña reseña) {
-        this.reseña = reseña;
+    public void setResena(Resena resena) {
+        this.resena = resena;
     }
 }

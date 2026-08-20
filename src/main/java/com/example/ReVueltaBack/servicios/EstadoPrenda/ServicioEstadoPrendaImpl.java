@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.servicios.EstadoPrenda;
+package com.example.ReVueltaBack.servicios.estadoprenda;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.ReVueltaBack.dtos.estadoPrenda.EstadoPrendaRequestDTO;
-import com.example.ReVueltaBack.dtos.estadoPrenda.EstadoPrendaResponseDTO;
+import com.example.ReVueltaBack.dtos.estadoprenda.EstadoPrendaRequestDTO;
+import com.example.ReVueltaBack.dtos.estadoprenda.EstadoPrendaResponseDTO;
 import com.example.ReVueltaBack.modelos.EstadoPrenda;
 import com.example.ReVueltaBack.repositorios.IEstadoPrendaRepositorio;
-import com.example.ReVueltaBack.validaciones.estadoPrenda.IValidacionEstadoPrenda;
+import com.example.ReVueltaBack.validaciones.estadoprenda.IValidacionEstadoPrenda;
 
 @Service
 public class ServicioEstadoPrendaImpl implements IServicioEstadoPrenda {

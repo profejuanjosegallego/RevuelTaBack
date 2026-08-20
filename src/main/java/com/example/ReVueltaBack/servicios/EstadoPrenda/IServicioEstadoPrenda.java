@@ -1,10 +1,10 @@
-package com.example.ReVueltaBack.servicios.EstadoPrenda;
+package com.example.ReVueltaBack.servicios.estadoprenda;
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.ReVueltaBack.dtos.estadoPrenda.EstadoPrendaRequestDTO;
-import com.example.ReVueltaBack.dtos.estadoPrenda.EstadoPrendaResponseDTO;
+import com.example.ReVueltaBack.dtos.estadoprenda.EstadoPrendaRequestDTO;
+import com.example.ReVueltaBack.dtos.estadoprenda.EstadoPrendaResponseDTO;
 
 public interface IServicioEstadoPrenda {
 

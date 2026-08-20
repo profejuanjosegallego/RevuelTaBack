@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.validaciones.PuntoAcopio;
+package com.example.ReVueltaBack.validaciones.puntoacopio;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

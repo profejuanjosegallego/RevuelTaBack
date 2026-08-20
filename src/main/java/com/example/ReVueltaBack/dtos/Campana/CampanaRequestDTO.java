@@ -1,4 +1,4 @@
-package com.example.ReVueltaBack.dtos.Campana;
+package com.example.ReVueltaBack.dtos.campana;
 
 import java.time.LocalDateTime;
 
