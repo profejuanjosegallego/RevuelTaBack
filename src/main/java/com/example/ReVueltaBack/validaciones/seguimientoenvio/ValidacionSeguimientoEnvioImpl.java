@@ -13,7 +13,6 @@ public class ValidacionSeguimientoEnvioImpl implements IValidacionSeguimientoEnv
 
     private static final int LONGITUD_MINIMA_UBICACION = 3;
     private static final int LONGITUD_MAXIMA_UBICACION = 255;
-    private static final LocalDateTime FECHA_ACTUAL = LocalDateTime.now();
 
     @Override
     public void validarDescriptionObligarorio(String descripcion) {
@@ -31,7 +30,10 @@ public class ValidacionSeguimientoEnvioImpl implements IValidacionSeguimientoEnv
 
     @Override
     public void validarFechaHoraNoFutura(LocalDateTime fechaHora) {
-        if (fechaHora == null || fechaHora.isAfter(FECHA_ACTUAL)) {
+        // "Ahora" se calcula en cada llamada. Si se guardara en una constante
+        // static final, quedaria congelado en el instante en que arranco la
+        // aplicacion y cualquier seguimiento posterior seria "futuro".
+        if (fechaHora == null || fechaHora.isAfter(LocalDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha y hora es obligatoria ni una fecha futura");
         }
     }

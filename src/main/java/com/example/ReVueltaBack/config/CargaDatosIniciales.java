@@ -120,7 +120,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
         em.persist(transaccion);
 
         Trueque trueque = new Trueque();
-        trueque.setEstado("PROPUESTO");
+        trueque.setEstado("PENDIENTE");
         trueque.setFecha_propuesta(LocalDate.now().minusDays(1));
         trueque.setMensaje("Te cambio mi camisa de lino por tu jean negro");
         trueque.setValor_estimado(50000.0);
@@ -172,9 +172,9 @@ public class CargaDatosIniciales implements CommandLineRunner {
         em.persist(campana);
 
         cupon("REVUELTA15", "PORCENTAJE", "15", 100, 3, campana);
-        cupon("ENVIOGRATIS", "FIJO", "12000", 50, 0, campana);
+        cupon("ENVIOGRATIS", "ENVIO_GRATIS", "12000", 50, 0, campana);
 
-        recompensa("Bono de envio gratis", 100, "Un envio sin costo dentro del Valle de Aburra", 30, "ENVIO");
+        recompensa("Bono de envio gratis", 100, "Un envio sin costo dentro del Valle de Aburra", 30, "ENVIO_GRATIS");
         recompensa("Cupon de 20.000", 250, "Descuento de 20.000 pesos en tu proxima compra", 15, "DESCUENTO");
 
         // ---------- Comunidad ----------
