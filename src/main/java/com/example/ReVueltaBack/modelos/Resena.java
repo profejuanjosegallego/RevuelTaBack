@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -50,6 +52,9 @@ public class Resena {
     @JoinColumn(name = "id_usuario_reseñado")
     @JsonBackReference("usuario_reseña_recibida")
     private Usuario usuarioResenado;
+
+    @OneToOne(mappedBy = "resena", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Calificacion calificacion;
     
     public Usuario getAutor() {
         return autor;
@@ -123,6 +128,11 @@ public class Resena {
         this.visible = visible;
     }
 
-    
-    
+    public Calificacion getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Calificacion calificacion) {
+        this.calificacion = calificacion;
+    }
 }

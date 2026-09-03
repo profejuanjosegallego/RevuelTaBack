@@ -38,6 +38,13 @@ public class ServicioReporteImpl implements IServicioReporte {
     }
 
     @Override
+    public List<ReporteResponseDTO> listarPorUsuarioReportado(UUID idUsuario) {
+        return reporteRepository.buscarPorUsuarioReportado(idUsuario).stream()
+                .map(ReporteResponseDTO::fromEntity)
+                .toList();
+    }
+
+    @Override
     public ReporteResponseDTO buscarPorId(UUID id) {
         
         return ReporteResponseDTO.fromEntity(reporteRepository.findById(id).orElseThrow((() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Reporte no encontrado"))));

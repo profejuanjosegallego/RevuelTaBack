@@ -37,6 +37,13 @@ public class ServicioPrendaImpl implements IServicioPrenda {
     }
 
     @Override
+    public List<PrendaResponseDTO> listarPorUsuario(UUID idUsuario) {
+        return repositorioPrenda.buscarPrendasPorUsuario(idUsuario).stream()
+                .map(PrendaResponseDTO::fromEntity)
+                .toList();
+    }
+
+    @Override
     public PrendaResponseDTO buscarPorId(UUID id) {
         Prenda prenda = repositorioPrenda.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Prenda no encontrada"));

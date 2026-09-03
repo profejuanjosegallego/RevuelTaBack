@@ -10,6 +10,7 @@ public interface IServicioReporte {
 
      ReporteResponseDTO crear(ReporteRequestDTO dto);
      List<ReporteResponseDTO> listar();
+     List<ReporteResponseDTO> listarPorUsuarioReportado(UUID idUsuario);
      ReporteResponseDTO buscarPorId(UUID id);
      ReporteResponseDTO actualizar(UUID id, ReporteRequestDTO dto);
      void eliminar(UUID id);

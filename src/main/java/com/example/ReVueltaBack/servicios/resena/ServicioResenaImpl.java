@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.ReVueltaBack.dtos.resena.ResenaDetalleResponseDTO;
 import com.example.ReVueltaBack.dtos.resena.ResenaRequestDTO;
 import com.example.ReVueltaBack.dtos.resena.ResenaResponseDTO;
 import com.example.ReVueltaBack.modelos.Resena;
@@ -55,6 +56,13 @@ public class ServicioResenaImpl implements IServicioResena{
     public List<ResenaResponseDTO> listar() {
         return repositorioResena.findAll().stream()
                 .map(ResenaResponseDTO::fromEntity)
+                .toList();
+    }
+
+    @Override
+    public List<ResenaDetalleResponseDTO> listarPorUsuarioResenado(UUID idUsuario) {
+        return repositorioResena.buscarPorUsuarioResenado(idUsuario).stream()
+                .map(ResenaDetalleResponseDTO::fromEntity)
                 .toList();
     }
 

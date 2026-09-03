@@ -24,6 +24,9 @@ public interface IPrendaRepositorio extends JpaRepository<Prenda, UUID> {
     @Query("SELECT p FROM Prenda p WHERE p.usuario = :vendedor")
     List<Prenda> findByVendedor(@Param("vendedor") Usuario vendedor);
 
+    @Query("SELECT p FROM Prenda p JOIN p.usuario u WHERE u.id = :idUsuario")
+    List<Prenda> buscarPrendasPorUsuario(@Param("idUsuario") UUID idUsuario);
+
     @Query("SELECT p FROM Prenda p WHERE LOWER(p.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))")
     List<Prenda> findByTituloContainingIgnoreCase(@Param("titulo") String titulo);
 

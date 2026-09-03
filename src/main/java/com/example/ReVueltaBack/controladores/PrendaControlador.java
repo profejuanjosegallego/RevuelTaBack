@@ -37,6 +37,11 @@ public class PrendaControlador {
         return ResponseEntity.ok(servicioPrenda.listar());
     }
     
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<PrendaResponseDTO>> listarPorUsuario(@PathVariable UUID id){
+        return ResponseEntity.ok(servicioPrenda.listarPorUsuario(id));
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<PrendaResponseDTO> buscarPorId(@PathVariable UUID id){
         return ResponseEntity.ok(servicioPrenda.buscarPorId(id));

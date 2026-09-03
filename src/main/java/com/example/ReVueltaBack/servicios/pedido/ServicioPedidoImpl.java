@@ -44,6 +44,20 @@ public class ServicioPedidoImpl implements IServicioPedido {
     }
 
     @Override
+    public List<PedidoResponseDTO> listarPorUsuario(UUID idUsuario) {
+        return pedidoRepositorio.buscarPedidosPorUsuario(idUsuario).stream()
+                .map(PedidoResponseDTO::fromEntity)
+                .toList();
+    }
+
+    @Override
+    public List<PedidoResponseDTO> listarPorVendedor(UUID idVendedor) {
+        return pedidoRepositorio.buscarPedidosPorVendedor(idVendedor).stream()
+                .map(PedidoResponseDTO::fromEntity)
+                .toList();
+    }
+
+    @Override
     public PedidoResponseDTO buscarPorId(UUID id) {
         Pedido pedido = pedidoRepositorio.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(

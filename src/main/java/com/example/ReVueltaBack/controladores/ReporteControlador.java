@@ -39,6 +39,11 @@ public class ReporteControlador {
     public ResponseEntity<List<ReporteResponseDTO>> Listar() {
         return ResponseEntity.ok(reportesServicio.listar()) ;
     }
+
+    @GetMapping("/usuarioReportado/{id}")
+    public ResponseEntity<List<ReporteResponseDTO>> listarPorUsuarioReportado(@PathVariable UUID id) {
+        return ResponseEntity.ok(reportesServicio.listarPorUsuarioReportado(id));
+    }
     
     @GetMapping("/{id}")
     public ResponseEntity<ReporteResponseDTO> buscarId(@PathVariable UUID id) {

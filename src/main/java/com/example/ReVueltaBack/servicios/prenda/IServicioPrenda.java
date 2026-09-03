@@ -11,6 +11,7 @@ public interface IServicioPrenda {
 
     PrendaResponseDTO crear(PrendaRequestDTO dto);
     List<PrendaResponseDTO> listar();
+    List<PrendaResponseDTO> listarPorUsuario(UUID idUsuario);
     PrendaResponseDTO buscarPorId(UUID id);
     PrendaResponseDTO actualizar(UUID id, PrendaRequestDTO dto);
     void eliminar (UUID id);

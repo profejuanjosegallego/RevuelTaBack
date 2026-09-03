@@ -10,6 +10,7 @@ public interface IServicioCalificacion {
 
     CalificacionResponseDTO crear(CalificacionRequestDTO dto);
     List<CalificacionResponseDTO> listar();
+    List<CalificacionResponseDTO> listarPorUsuario(UUID idUsuario);
     CalificacionResponseDTO buscarPorId(UUID id);
     CalificacionResponseDTO actualizar(UUID id, CalificacionRequestDTO dto);
     void eliminar(UUID id);
