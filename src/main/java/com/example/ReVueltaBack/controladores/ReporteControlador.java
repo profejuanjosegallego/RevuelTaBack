@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ReVueltaBack.dtos.reporte.ReporteRequestDTO;
 import com.example.ReVueltaBack.dtos.reporte.ReporteResponseDTO;
+import com.example.ReVueltaBack.dtos.reporte.ReporteUsuarioReportadoDTO;
 import com.example.ReVueltaBack.servicios.reporte.IServicioReporte;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class ReporteControlador {
     }
 
     @GetMapping("/usuarioReportado/{id}")
-    public ResponseEntity<List<ReporteResponseDTO>> listarPorUsuarioReportado(@PathVariable UUID id) {
+    public ResponseEntity<List<ReporteUsuarioReportadoDTO>> listarPorUsuarioReportado(@PathVariable UUID id) {
         return ResponseEntity.ok(reportesServicio.listarPorUsuarioReportado(id));
     }
     

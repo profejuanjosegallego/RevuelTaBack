@@ -49,6 +49,14 @@ import jakarta.persistence.PersistenceContext;
 @Component
 public class CargaDatosIniciales implements CommandLineRunner {
 
+    private static final String[] ESTADOS_PEDIDO = {
+        "PENDIENTE", "CONFIRMADO", "ENVIADO", "ENTREGADO", "CANCELADO"
+    };
+
+    private static final String[] METODOS_PAGO = {
+        "TARJETA", "TRANSFERENCIA", "EFECTIVO"
+    };
+
     @PersistenceContext
     private EntityManager em;
 
@@ -60,6 +68,12 @@ public class CargaDatosIniciales implements CommandLineRunner {
 
         Long usuariosExistentes = em.createQuery("SELECT COUNT(u) FROM Usuario u", Long.class).getSingleResult();
         if (usuariosExistentes > 0) {
+            em.createQuery("UPDATE ImagenPrenda i SET i.url = :url "
+                    + "WHERE i.url = :rutaRelativa OR i.url LIKE :urlAmazon")
+                .setParameter("url", "https://www.amazon.com/-/es/Camisas-de-Vestir-para-Hombre-Ligero/s?k=Camisas+de+Vestir+para+Hombre&c=ts&ts_id=7141123011")
+                .setParameter("rutaRelativa", "img/camisas.webp")
+                .setParameter("urlAmazon", "https://www.amazon.com/%")
+                .executeUpdate();
             System.out.println("[ReVuelta] La base de datos ya tiene informacion: no se cargan datos de prueba.");
             return;
         }
@@ -85,7 +99,8 @@ public class CargaDatosIniciales implements CommandLineRunner {
             Prenda prendaCreada = prenda("Prenda de prueba " + (i + 1), "Descripcion de la prenda de prueba " + (i + 1),
                 i % 2 == 0 ? "M" : "L", 30000.0 + i * 5000.0, estados.get(i), categorias.get(i), usuarios.get((i + 1) % 20));
             prendas.add(prendaCreada);
-            imagenPrenda("https://ejemplo.com/prendas/prueba-" + (i + 1) + ".jpg", true, 1, "jpg", 100 + i,
+            imagenPrenda("https://www.amazon.com/-/es/Camisas-de-Vestir-para-Hombre-Ligero/s?k=Camisas+de+Vestir+para+Hombre&c=ts&ts_id=7141123011",
+                true, 1, "webp", 100 + i,
                 prendaCreada);
             campanas.add(campana("Campana de prueba " + (i + 1), i));
             puntos.add(puntoAcopio("Punto de acopio " + (i + 1), "Carrera " + (40 + i) + " # 10-20", "Medellin",
@@ -110,6 +125,22 @@ public class CargaDatosIniciales implements CommandLineRunner {
             reporte(usuarios.get(i), prendas.get(i), i);
         }
 
+        StringBuilder consultasPrendasEntregadas = new StringBuilder();
+        for (int i = 0; i < 20; i++) {
+            if ("ENTREGADO".equals(pedidoEstado(i))) {
+                consultasPrendasEntregadas.append("             Publicador: ")
+                    .append(usuarios.get((i + 1) % 20).getCorreo())
+                    .append(" (" ).append(usuarios.get((i + 1) % 20).getId()).append(")\n")
+                    .append("             Comprador : ")
+                    .append(usuarios.get(i).getCorreo())
+                    .append(" (" ).append(usuarios.get(i).getId()).append(")\n")
+                    .append("             Endpoint  : GET /api/prendas/publicador/")
+                    .append(usuarios.get((i + 1) % 20).getId())
+                    .append("/comprador/")
+                    .append(usuarios.get(i).getId()).append("\n\n");
+            }
+        }
+
         System.out.println("""
 
             ================================================================
@@ -119,6 +150,8 @@ public class CargaDatosIniciales implements CommandLineRunner {
                          JDBC URL: jdbc:h2:file:./data/revuelta
                          Usuario : sa   (sin contrasena)
              Login de ejemplo: usuario1@revuelta.test / Revuelta2026
+             Consultas para buscar prendas entregadas:
+            """ + consultasPrendasEntregadas + """
             ================================================================
             """);
     }
@@ -219,14 +252,18 @@ public class CargaDatosIniciales implements CommandLineRunner {
     private Pedido pedido(Usuario usuario, Prenda prenda, int indice) {
         Pedido p = new Pedido();
         p.setFecha(LocalDate.now().minusDays(indice + 1));
-        p.setEstado(indice % 2 == 0 ? "CONFIRMADO" : "ENTREGADO");
+        p.setEstado(ESTADOS_PEDIDO[indice % ESTADOS_PEDIDO.length]);
         p.setTotal(prenda.getPrecio());
-        p.setMetodo_pago(indice % 2 == 0 ? "TARJETA" : "TRANSFERENCIA");
+        p.setMetodo_pago(METODOS_PAGO[indice % METODOS_PAGO.length]);
         p.setDireccion_entrega("Calle " + (10 + indice) + " # 20-30, Medellin");
-        p.setNotas("Pedido de prueba " + (indice + 1));
+        p.setNotas(indice % 3 == 0 ? null : "Pedido de prueba " + (indice + 1));
         p.setUsuario(usuario);
         em.persist(p);
         return p;
+    }
+
+    private String pedidoEstado(int indice) {
+        return ESTADOS_PEDIDO[indice % ESTADOS_PEDIDO.length];
     }
 
     private void detallePedido(Pedido pedido, Prenda prenda, int indice) {

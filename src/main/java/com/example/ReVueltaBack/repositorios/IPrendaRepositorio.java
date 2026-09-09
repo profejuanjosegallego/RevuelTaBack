@@ -32,4 +32,20 @@ public interface IPrendaRepositorio extends JpaRepository<Prenda, UUID> {
 
     @Query("SELECT p FROM Prenda p WHERE p.disponible = true")
     List<Prenda> findByDisponibleTrue();
+
+    @Query("""
+        SELECT DISTINCT pr
+        FROM Prenda pr
+        JOIN pr.usuario uPublicador
+        JOIN pr.detallePedidos dp
+        JOIN dp.pedido pe
+        JOIN pe.usuario uComprador
+        WHERE uPublicador.id = :idPublicador
+          AND uComprador.id = :idComprador
+                    AND UPPER(TRIM(pe.estado)) = 'ENTREGADO'
+        """)
+    List<Prenda> buscarPrendasPorPublicadorYCompradorEntregado(
+        @Param("idPublicador") UUID idPublicador,
+        @Param("idComprador") UUID idComprador
+    );
 }

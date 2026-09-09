@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ReVueltaBack.dtos.prenda.PrendaRequestDTO;
@@ -40,6 +41,20 @@ public class PrendaControlador {
     @GetMapping("/usuario/{id}")
     public ResponseEntity<List<PrendaResponseDTO>> listarPorUsuario(@PathVariable UUID id){
         return ResponseEntity.ok(servicioPrenda.listarPorUsuario(id));
+    }
+
+    @GetMapping("/entregadas")
+    public ResponseEntity<List<PrendaResponseDTO>> listarPorPublicadorYCompradorEntregado(
+            @RequestParam UUID publicador,
+            @RequestParam UUID comprador) {
+        return ResponseEntity.ok(servicioPrenda.listarPorPublicadorYCompradorEntregado(publicador, comprador));
+    }
+
+    @GetMapping("/publicador/{idPublicador}/comprador/{idComprador}")
+    public ResponseEntity<List<PrendaResponseDTO>> listarPorPublicadorYCompradorPath(
+            @PathVariable UUID idPublicador,
+            @PathVariable UUID idComprador) {
+        return ResponseEntity.ok(servicioPrenda.listarPorPublicadorYCompradorEntregado(idPublicador, idComprador));
     }
     
     @GetMapping("/{id}")

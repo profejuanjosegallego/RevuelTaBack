@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.ReVueltaBack.dtos.reporte.ReporteRequestDTO;
 import com.example.ReVueltaBack.dtos.reporte.ReporteResponseDTO;
+import com.example.ReVueltaBack.dtos.reporte.ReporteUsuarioReportadoDTO;
 import com.example.ReVueltaBack.modelos.Reporte;
 import com.example.ReVueltaBack.repositorios.IReporteRepositorio;
 import com.example.ReVueltaBack.validaciones.reporte.IValidacionReporte;
@@ -38,9 +39,9 @@ public class ServicioReporteImpl implements IServicioReporte {
     }
 
     @Override
-    public List<ReporteResponseDTO> listarPorUsuarioReportado(UUID idUsuario) {
+    public List<ReporteUsuarioReportadoDTO> listarPorUsuarioReportado(UUID idUsuario) {
         return reporteRepository.buscarPorUsuarioReportado(idUsuario).stream()
-                .map(ReporteResponseDTO::fromEntity)
+                .map(ReporteUsuarioReportadoDTO::fromEntity)
                 .toList();
     }
 

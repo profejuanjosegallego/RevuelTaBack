@@ -38,7 +38,7 @@ public interface IPedidoRepositorio extends JpaRepository<Pedido, UUID> {
     @Query("SELECT p FROM Pedido p JOIN p.usuario u WHERE u.id = :idUsuario")
     List<Pedido> buscarPedidosPorUsuario(@Param("idUsuario") UUID idUsuario);
 
-    @Query("SELECT DISTINCT p FROM Pedido p JOIN p.detallePedidos d JOIN d.prenda pr JOIN pr.usuario u WHERE u.id = :idUsuario AND LOWER(p.estado) = 'entregado'")
+    @Query("SELECT DISTINCT p FROM Pedido p JOIN p.detallePedidos d JOIN d.prenda pr JOIN pr.usuario u WHERE u.id = :idUsuario AND UPPER(p.estado) = 'ENTREGADO'")
     List<Pedido> buscarPedidosPorVendedor(@Param("idUsuario") UUID idUsuario);
 
 
