@@ -1,5 +1,6 @@
 package com.example.ReVueltaBack.controladores;
 
+import com.example.ReVueltaBack.dtos.resena.ResenaDetalleResponseDTO;
 import com.example.ReVueltaBack.dtos.resena.ResenaRequestDTO;
 import com.example.ReVueltaBack.dtos.resena.ResenaResponseDTO;
 import com.example.ReVueltaBack.servicios.resena.IServicioResena;
@@ -41,6 +42,12 @@ public class ResenaControlador {
     @Operation(summary = "Listar reseñas")
     public ResponseEntity<List<ResenaResponseDTO>>listar(){
         return ResponseEntity.ok(servicioResena.listar());
+    }
+
+    @GetMapping("/usuariosResenado/{id}")
+    @Operation(summary = "Listar reseñas de un usuario reseñado")
+    public ResponseEntity<List<ResenaDetalleResponseDTO>> listarPorUsuarioResenado(@PathVariable UUID id){
+        return ResponseEntity.ok(servicioResena.listarPorUsuarioResenado(id));
     }
 
     @GetMapping("/{id}")

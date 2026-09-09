@@ -10,6 +10,8 @@ public interface IServicioPedido {
 
     PedidoResponseDTO registrar(PedidoRequestDTO datos);
     List<PedidoResponseDTO> listar();
+    List<PedidoResponseDTO> listarPorUsuario(UUID idUsuario);
+    List<PedidoResponseDTO> listarPorVendedor(UUID idVendedor);
     PedidoResponseDTO buscarPorId(UUID id);
     PedidoResponseDTO actualizar(UUID id, PedidoRequestDTO datos);
     void eliminar(UUID id);

@@ -40,6 +40,12 @@ public class CalificacionControlador {
         return ResponseEntity.ok(calificacionesServicio.listar());
     }
 
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<CalificacionResponseDTO>> listarPorUsuario(
+            @PathVariable UUID id) {
+        return ResponseEntity.ok(calificacionesServicio.listarPorUsuario(id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CalificacionResponseDTO> buscarPorId(
             @PathVariable UUID id) {

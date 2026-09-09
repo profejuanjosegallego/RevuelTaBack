@@ -32,6 +32,18 @@ public class PedidoControlador {
         return ResponseEntity.ok(pedidos);
     }
 
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<PedidoResponseDTO>> listarPorUsuario(@PathVariable UUID id) {
+        List<PedidoResponseDTO> pedidos = servicioPedido.listarPorUsuario(id);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/vendedor/{id}")
+    public ResponseEntity<List<PedidoResponseDTO>> listarPorVendedor(@PathVariable UUID id) {
+        List<PedidoResponseDTO> pedidos = servicioPedido.listarPorVendedor(id);
+        return ResponseEntity.ok(pedidos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable UUID id) {
         PedidoResponseDTO pedido = servicioPedido.buscarPorId(id);

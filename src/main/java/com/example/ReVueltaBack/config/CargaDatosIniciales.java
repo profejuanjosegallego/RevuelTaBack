@@ -2,6 +2,8 @@ package com.example.ReVueltaBack.config;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,6 +49,14 @@ import jakarta.persistence.PersistenceContext;
 @Component
 public class CargaDatosIniciales implements CommandLineRunner {
 
+    private static final String[] ESTADOS_PEDIDO = {
+        "PENDIENTE", "CONFIRMADO", "ENVIADO", "ENTREGADO", "CANCELADO"
+    };
+
+    private static final String[] METODOS_PAGO = {
+        "TARJETA", "TRANSFERENCIA", "EFECTIVO"
+    };
+
     @PersistenceContext
     private EntityManager em;
 
@@ -58,150 +68,78 @@ public class CargaDatosIniciales implements CommandLineRunner {
 
         Long usuariosExistentes = em.createQuery("SELECT COUNT(u) FROM Usuario u", Long.class).getSingleResult();
         if (usuariosExistentes > 0) {
+            em.createQuery("UPDATE ImagenPrenda i SET i.url = :url "
+                    + "WHERE i.url = :rutaRelativa OR i.url LIKE :urlAmazon")
+                .setParameter("url", "https://www.amazon.com/-/es/Camisas-de-Vestir-para-Hombre-Ligero/s?k=Camisas+de+Vestir+para+Hombre&c=ts&ts_id=7141123011")
+                .setParameter("rutaRelativa", "img/camisas.webp")
+                .setParameter("urlAmazon", "https://www.amazon.com/%")
+                .executeUpdate();
             System.out.println("[ReVuelta] La base de datos ya tiene informacion: no se cargan datos de prueba.");
             return;
         }
 
-        // ---------- Usuarios (modulo comun de Autenticacion) ----------
-        Usuario docente = usuario("Juan José Gallego Mesa", "juan.gallego@cesde.edu.co", "docente", "#1D4ED8");
-        Usuario vendedora = usuario("Laura Restrepo", "laura.restrepo@correo.com", "estudiante", "#0EA5E9");
-        Usuario comprador = usuario("Carlos Muñoz", "carlos.munoz@correo.com", "estudiante", "#0D9488");
+        List<Usuario> usuarios = new ArrayList<>();
+        List<Categoria> categorias = new ArrayList<>();
+        List<EstadoPrenda> estados = new ArrayList<>();
+        List<Prenda> prendas = new ArrayList<>();
+        List<Campana> campanas = new ArrayList<>();
+        List<PuntoAcopio> puntos = new ArrayList<>();
+        List<Transportista> transportistas = new ArrayList<>();
 
-        // ---------- Catalogo ----------
-        Categoria chaquetas = categoria("Chaquetas", "Chaquetas y abrigos de segunda mano", "chaquetas", "jacket", 1);
-        Categoria jeans = categoria("Jeans", "Pantalones de mezclilla en buen estado", "jeans", "pants", 2);
-        Categoria camisas = categoria("Camisas", "Camisas y blusas para toda ocasion", "camisas", "shirt", 3);
+        for (int i = 1; i <= 20; i++) {
+            usuarios.add(usuario("Usuario de prueba " + i, "usuario" + i + "@revuelta.test",
+                i == 1 ? "docente" : "estudiante", i % 2 == 0 ? "#0D9488" : "#1D4ED8"));
+            categorias.add(categoria("Categoria " + i, "Categoria de prueba " + i, "categoria-" + i,
+                "icono-" + i, i));
+            estados.add(estadoPrenda("Estado " + i, "Estado de prueba " + i, (i - 1) % 5 + 1,
+                i % 2 == 0 ? "#0EA5E9" : "#0D9488", i % 3 == 0, true));
+        }
 
-        EstadoPrenda comoNuevo = estadoPrenda("Como nuevo", "Sin señales de uso", 1, "#0D9488", false, true);
-        EstadoPrenda buenEstado = estadoPrenda("Buen estado", "Uso leve, sin daños", 2, "#0EA5E9", false, true);
-        EstadoPrenda conDetalles = estadoPrenda("Con detalles", "Presenta desgaste visible", 4, "#D97706", true, true);
+        for (int i = 0; i < 20; i++) {
+            Prenda prendaCreada = prenda("Prenda de prueba " + (i + 1), "Descripcion de la prenda de prueba " + (i + 1),
+                i % 2 == 0 ? "M" : "L", 30000.0 + i * 5000.0, estados.get(i), categorias.get(i), usuarios.get((i + 1) % 20));
+            prendas.add(prendaCreada);
+            imagenPrenda("https://www.amazon.com/-/es/Camisas-de-Vestir-para-Hombre-Ligero/s?k=Camisas+de+Vestir+para+Hombre&c=ts&ts_id=7141123011",
+                true, 1, "webp", 100 + i,
+                prendaCreada);
+            campanas.add(campana("Campana de prueba " + (i + 1), i));
+            puntos.add(puntoAcopio("Punto de acopio " + (i + 1), "Carrera " + (40 + i) + " # 10-20", "Medellin",
+                "Lunes a viernes 8:00 - 18:00", 100 + i * 5));
+            transportistas.add(transportista("Transportista de prueba " + (i + 1), i));
+        }
 
-        Prenda chaquetaJean = prenda("Chaqueta de jean clasica", "Chaqueta azul talla M, marca reconocida",
-                "M", 85000.0, comoNuevo, chaquetas, vendedora);
-        Prenda jeanNegro = prenda("Jean negro slim fit", "Jean negro talla 30, poco uso",
-                "30", 60000.0, buenEstado, jeans, vendedora);
-        Prenda camisaLino = prenda("Camisa de lino blanca", "Camisa de lino talla L, ideal para clima calido",
-                "L", 45000.0, conDetalles, camisas, comprador);
+        for (int i = 0; i < 20; i++) {
+            Pedido pedidoCreado = pedido(usuarios.get(i), prendas.get(i), i);
+            detallePedido(pedidoCreado, prendas.get(i), i);
+            transaccion(pedidoCreado, i);
+            em.persist(trueque(prendas.get(i), prendas.get((i + 1) % 20), usuarios.get(i), i));
+            Envio envioCreado = envio(pedidoCreado, transportistas.get(i), puntos.get(i), i);
+            seguimiento(envioCreado, "EN_TRANSITO", "Seguimiento de prueba " + (i + 1), "Medellin",
+                LocalDateTime.now().minusHours(i), 6.20 + i * 0.001, -75.57 - i * 0.001);
+            cupon("PRUEBA" + String.format("%02d", i + 1), "PORCENTAJE", String.valueOf(5 + i),
+                100, i, campanas.get(i));
+            recompensa("Recompensa de prueba " + (i + 1), 50 + i * 10,
+                "Recompensa de prueba para usuarios", 20 + i, i % 2 == 0 ? "DESCUENTO" : "ENVIO_GRATIS");
+            Resena resenaCreada = resena(usuarios.get(i), usuarios.get((i + 1) % 20), i);
+            calificacion(resenaCreada, i % 5 + 1, "CALIDAD", "Calificacion de prueba " + (i + 1), true, 1);
+            reporte(usuarios.get(i), prendas.get(i), i);
+        }
 
-        imagenPrenda("https://ejemplo.com/prendas/chaqueta-jean-1.jpg", true, 1, "jpg", 240, chaquetaJean);
-        imagenPrenda("https://ejemplo.com/prendas/chaqueta-jean-2.jpg", false, 2, "jpg", 180, chaquetaJean);
-        imagenPrenda("https://ejemplo.com/prendas/jean-negro-1.jpg", true, 1, "png", 310, jeanNegro);
-
-        // ---------- Marketplace ----------
-        Pedido pedido = new Pedido();
-        pedido.setFecha(LocalDate.now().minusDays(3));
-        pedido.setEstado("CONFIRMADO");
-        pedido.setTotal(145000.0);
-        pedido.setMetodo_pago("TARJETA");
-        pedido.setDireccion_entrega("Calle 50 # 40-20, Medellin");
-        pedido.setNotas("Entregar en horario de oficina");
-        pedido.setUsuario(comprador);
-        em.persist(pedido);
-
-        DetallePedido detalle = new DetallePedido();
-        detalle.setCantidad(1);
-        detalle.setPrecio_unitario(85000.0);
-        detalle.setDescuento(0.0);
-        detalle.setSubtotal(85000.0);
-        detalle.setEstado_item("CONFIRMADO");
-        detalle.setFecha(LocalDate.now().minusDays(3));
-        detalle.setPedido(pedido);
-        detalle.setPrenda(chaquetaJean);
-        em.persist(detalle);
-
-        Transaccion transaccion = new Transaccion();
-        transaccion.setTipo("PAGO");
-        transaccion.setMonto(145000.0);
-        transaccion.setEstado("APROBADA");
-        transaccion.setReferencia_pago("REF-2026-000001");
-        transaccion.setFecha(LocalDate.now().minusDays(3));
-        transaccion.setComprobante("comprobante-000001.pdf");
-        transaccion.setPedido(pedido);
-        em.persist(transaccion);
-
-        Trueque trueque = new Trueque();
-        trueque.setEstado("PENDIENTE");
-        trueque.setFecha_propuesta(LocalDate.now().minusDays(1));
-        trueque.setMensaje("Te cambio mi camisa de lino por tu jean negro");
-        trueque.setValor_estimado(50000.0);
-        trueque.setAceptado(false);
-        trueque.setPrenda(camisaLino);
-        trueque.setPrendaDeseada(jeanNegro);
-        trueque.setProponente(comprador);
-        em.persist(trueque);
-
-        // ---------- Logistica ----------
-        Transportista transportista = new Transportista();
-        transportista.setNombre("Envios Rapidos SAS");
-        transportista.setTipo_vehiculo("Motocicleta");
-        transportista.setPlaca("ABC12D");
-        transportista.setTelefono("3001234567");
-        transportista.setZona_cobertura("Valle de Aburra");
-        transportista.setDisponible(true);
-        em.persist(transportista);
-
-        PuntoAcopio acopioCentro = puntoAcopio("Acopio Centro", "Carrera 45 # 52-10", "Medellin",
-                "Lunes a viernes 8:00 - 18:00", 200);
-        puntoAcopio("Acopio Sur", "Calle 10 # 30-45", "Envigado", "Lunes a sabado 9:00 - 17:00", 120);
-
-        Envio envio = new Envio();
-        envio.setCodigo_guia("GUIA-000001");
-        envio.setEstado("EN_TRANSITO");
-        envio.setCosto(12000.0);
-        envio.setFecha_despacho(LocalDate.now().minusDays(2));
-        envio.setFecha_entrega_estimada(LocalDate.now().plusDays(1));
-        envio.setPeso_kg(1.2);
-        envio.setPedido(pedido);
-        envio.setTransportista(transportista);
-        envio.setPuntos_de_acopio(acopioCentro);
-        em.persist(envio);
-
-        seguimiento(envio, "RECIBIDO", "Paquete recibido en el punto de acopio", "Acopio Centro",
-                LocalDateTime.now().minusDays(2), 6.2442, -75.5812);
-        seguimiento(envio, "EN_TRANSITO", "En ruta hacia la direccion del comprador", "Medellin - Poblado",
-                LocalDateTime.now().minusHours(5), 6.2088, -75.5673);
-
-        // ---------- Mercadeo ----------
-        Campana campana = new Campana();
-        campana.setNombre_campana("Regreso a clases");
-        campana.setDescripcion_campana("Descuentos en prendas casuales");
-        campana.setFecha_inicio(LocalDateTime.now().minusDays(5));
-        campana.setFecha_final(LocalDateTime.now().plusDays(25));
-        campana.setDescuento_pct(15.0);
-        campana.setActiva(true);
-        em.persist(campana);
-
-        cupon("REVUELTA15", "PORCENTAJE", "15", 100, 3, campana);
-        cupon("ENVIOGRATIS", "ENVIO_GRATIS", "12000", 50, 0, campana);
-
-        recompensa("Bono de envio gratis", 100, "Un envio sin costo dentro del Valle de Aburra", 30, "ENVIO_GRATIS");
-        recompensa("Cupon de 20.000", 250, "Descuento de 20.000 pesos en tu proxima compra", 15, "DESCUENTO");
-
-        // ---------- Comunidad ----------
-        Resena resena = new Resena();
-        resena.setTitulo("Excelente vendedora");
-        resena.setComentario("La prenda llego tal como se describia y el envio fue muy rapido.");
-        resena.setFecha(LocalDate.now().minusDays(1));
-        resena.setRecomendado(true);
-        resena.setEditada(false);
-        resena.setVisible(true);
-        resena.setAutor(comprador);
-        resena.setUsuarioResenado(vendedora);
-        em.persist(resena);
-
-        calificacion(resena, 5, "PUNTUALIDAD", "Entrego antes de lo prometido", true, 1);
-        calificacion(resena, 4, "CALIDAD", "La prenda estaba en muy buen estado", true, 1);
-
-        Reporte reporte = new Reporte();
-        reporte.setMotivo("DESCRIPCION_ENGANOSA");
-        reporte.setDescripcion("La talla publicada no coincide con la prenda recibida");
-        reporte.setEstado("ABIERTO");
-        reporte.setPrioridad("MEDIA");
-        reporte.setFecha(LocalDate.now());
-        reporte.setResuelto(false);
-        reporte.setUsuario(docente);
-        reporte.setPrenda(camisaLino);
-        em.persist(reporte);
+        StringBuilder consultasPrendasEntregadas = new StringBuilder();
+        for (int i = 0; i < 20; i++) {
+            if ("ENTREGADO".equals(pedidoEstado(i))) {
+                consultasPrendasEntregadas.append("             Publicador: ")
+                    .append(usuarios.get((i + 1) % 20).getCorreo())
+                    .append(" (" ).append(usuarios.get((i + 1) % 20).getId()).append(")\n")
+                    .append("             Comprador : ")
+                    .append(usuarios.get(i).getCorreo())
+                    .append(" (" ).append(usuarios.get(i).getId()).append(")\n")
+                    .append("             Endpoint  : GET /api/prendas/publicador/")
+                    .append(usuarios.get((i + 1) % 20).getId())
+                    .append("/comprador/")
+                    .append(usuarios.get(i).getId()).append("\n\n");
+            }
+        }
 
         System.out.println("""
 
@@ -211,7 +149,9 @@ public class CargaDatosIniciales implements CommandLineRunner {
              Consola  -> http://localhost:8080/h2-console
                          JDBC URL: jdbc:h2:file:./data/revuelta
                          Usuario : sa   (sin contrasena)
-             Login de ejemplo: juan.gallego@cesde.edu.co / Revuelta2026
+             Login de ejemplo: usuario1@revuelta.test / Revuelta2026
+             Consultas para buscar prendas entregadas:
+            """ + consultasPrendasEntregadas + """
             ================================================================
             """);
     }
@@ -285,6 +225,101 @@ public class CargaDatosIniciales implements CommandLineRunner {
         em.persist(i);
     }
 
+    private Campana campana(String nombre, int indice) {
+        Campana c = new Campana();
+        c.setNombre_campana(nombre);
+        c.setDescripcion_campana("Descuentos de prueba");
+        c.setFecha_inicio(LocalDateTime.now().minusDays(indice + 1));
+        c.setFecha_final(LocalDateTime.now().plusDays(30));
+        c.setDescuento_pct(5.0 + indice);
+        c.setActiva(true);
+        em.persist(c);
+        return c;
+    }
+
+    private Transportista transportista(String nombre, int indice) {
+        Transportista t = new Transportista();
+        t.setNombre(nombre);
+        t.setTipo_vehiculo(indice % 2 == 0 ? "Motocicleta" : "Automovil");
+        t.setPlaca(String.format("P%02dT%03d", indice / 100, indice + 1));
+        t.setTelefono("300000" + String.format("%04d", indice + 1));
+        t.setZona_cobertura("Valle de Aburra");
+        t.setDisponible(true);
+        em.persist(t);
+        return t;
+    }
+
+    private Pedido pedido(Usuario usuario, Prenda prenda, int indice) {
+        Pedido p = new Pedido();
+        p.setFecha(LocalDate.now().minusDays(indice + 1));
+        p.setEstado(ESTADOS_PEDIDO[indice % ESTADOS_PEDIDO.length]);
+        p.setTotal(prenda.getPrecio());
+        p.setMetodo_pago(METODOS_PAGO[indice % METODOS_PAGO.length]);
+        p.setDireccion_entrega("Calle " + (10 + indice) + " # 20-30, Medellin");
+        p.setNotas(indice % 3 == 0 ? null : "Pedido de prueba " + (indice + 1));
+        p.setUsuario(usuario);
+        em.persist(p);
+        return p;
+    }
+
+    private String pedidoEstado(int indice) {
+        return ESTADOS_PEDIDO[indice % ESTADOS_PEDIDO.length];
+    }
+
+    private void detallePedido(Pedido pedido, Prenda prenda, int indice) {
+        DetallePedido d = new DetallePedido();
+        d.setCantidad(1);
+        d.setPrecio_unitario(prenda.getPrecio());
+        d.setDescuento(0.0);
+        d.setSubtotal(prenda.getPrecio());
+        d.setEstado_item("CONFIRMADO");
+        d.setFecha(pedido.getFecha());
+        d.setPedido(pedido);
+        d.setPrenda(prenda);
+        em.persist(d);
+    }
+
+    private void transaccion(Pedido pedido, int indice) {
+        Transaccion t = new Transaccion();
+        t.setTipo("PAGO");
+        t.setMonto(pedido.getTotal());
+        t.setEstado("APROBADA");
+        t.setReferencia_pago("REF-PRUEBA-" + String.format("%02d", indice + 1));
+        t.setFecha(pedido.getFecha());
+        t.setComprobante("comprobante-prueba-" + (indice + 1) + ".pdf");
+        t.setPedido(pedido);
+        em.persist(t);
+    }
+
+    private Trueque trueque(Prenda ofrecida, Prenda deseada, Usuario proponente, int indice) {
+        Trueque t = new Trueque();
+        t.setEstado(indice % 2 == 0 ? "PENDIENTE" : "ACEPTADO");
+        t.setFecha_propuesta(LocalDate.now().minusDays(indice + 1));
+        t.setFecha_respuesta(indice % 2 == 0 ? null : LocalDate.now().minusDays(indice));
+        t.setMensaje("Propuesta de trueque de prueba " + (indice + 1));
+        t.setValor_estimado(ofrecida.getPrecio());
+        t.setAceptado(indice % 2 != 0);
+        t.setPrenda(ofrecida);
+        t.setPrendaDeseada(deseada);
+        t.setProponente(proponente);
+        return t;
+    }
+
+    private Envio envio(Pedido pedido, Transportista transportista, PuntoAcopio punto, int indice) {
+        Envio e = new Envio();
+        e.setCodigo_guia("GUIA-PRUEBA-" + String.format("%02d", indice + 1));
+        e.setEstado("EN_TRANSITO");
+        e.setCosto(10000.0 + indice * 100.0);
+        e.setFecha_despacho(pedido.getFecha().plusDays(1));
+        e.setFecha_entrega_estimada(LocalDate.now().plusDays(2));
+        e.setPeso_kg(1.0 + indice * 0.1);
+        e.setPedido(pedido);
+        e.setTransportista(transportista);
+        e.setPuntos_de_acopio(punto);
+        em.persist(e);
+        return e;
+    }
+
     private PuntoAcopio puntoAcopio(String nombre, String direccion, String ciudad, String horario, Integer capacidad) {
         PuntoAcopio p = new PuntoAcopio();
         p.setNombre(nombre);
@@ -344,5 +379,32 @@ public class CargaDatosIniciales implements CommandLineRunner {
         c.setPeso(peso);
         c.setResena(resena);
         em.persist(c);
+    }
+
+    private Resena resena(Usuario autor, Usuario resenado, int indice) {
+        Resena r = new Resena();
+        r.setTitulo("Resena de prueba " + (indice + 1));
+        r.setComentario("Comentario de prueba sobre la experiencia de intercambio.");
+        r.setFecha(LocalDate.now().minusDays(indice + 1));
+        r.setRecomendado(indice % 2 == 0);
+        r.setEditada(false);
+        r.setVisible(true);
+        r.setAutor(autor);
+        r.setUsuarioResenado(resenado);
+        em.persist(r);
+        return r;
+    }
+
+    private void reporte(Usuario usuario, Prenda prenda, int indice) {
+        Reporte r = new Reporte();
+        r.setMotivo("DESCRIPCION_ENGANOSA");
+        r.setDescripcion("Reporte de prueba " + (indice + 1));
+        r.setEstado(indice % 2 == 0 ? "ABIERTO" : "CERRADO");
+        r.setPrioridad(indice % 3 == 0 ? "ALTA" : "MEDIA");
+        r.setFecha(LocalDate.now().minusDays(indice));
+        r.setResuelto(indice % 2 != 0);
+        r.setUsuario(usuario);
+        r.setPrenda(prenda);
+        em.persist(r);
     }
 }

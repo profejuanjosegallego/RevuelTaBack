@@ -40,4 +40,12 @@ public interface IReporteRepositorio extends JpaRepository<Reporte, UUID> {
     @Query("SELECT r FROM Reporte r ORDER BY r.fecha DESC")
     List<Reporte> orderPorFechaDesc();
 
+    @Query("""
+        SELECT r
+        FROM Reporte r
+        JOIN r.prenda p
+        JOIN p.usuario u
+        WHERE u.id = :idUsuario
+        """)
+    List<Reporte> buscarPorUsuarioReportado(@Param("idUsuario") UUID idUsuario);
 }

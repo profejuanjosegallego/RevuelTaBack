@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.ReVueltaBack.dtos.reporte.ReporteRequestDTO;
 import com.example.ReVueltaBack.dtos.reporte.ReporteResponseDTO;
+import com.example.ReVueltaBack.dtos.reporte.ReporteUsuarioReportadoDTO;
 import com.example.ReVueltaBack.modelos.Reporte;
 import com.example.ReVueltaBack.repositorios.IReporteRepositorio;
 import com.example.ReVueltaBack.validaciones.reporte.IValidacionReporte;
@@ -35,6 +36,13 @@ public class ServicioReporteImpl implements IServicioReporte {
         
         return reporteRepository.findAll().stream().map(ReporteResponseDTO::fromEntity).toList();
 
+    }
+
+    @Override
+    public List<ReporteUsuarioReportadoDTO> listarPorUsuarioReportado(UUID idUsuario) {
+        return reporteRepository.buscarPorUsuarioReportado(idUsuario).stream()
+                .map(ReporteUsuarioReportadoDTO::fromEntity)
+                .toList();
     }
 
     @Override

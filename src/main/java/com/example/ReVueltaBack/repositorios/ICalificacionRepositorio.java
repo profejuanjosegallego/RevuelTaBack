@@ -25,4 +25,6 @@ public interface ICalificacionRepositorio extends JpaRepository<Calificacion, UU
     @Query("SELECT c FROM Calificacion c WHERE c.resena.id = :resenaId")
     List<Calificacion> buscarPorResenasId(@Param("reseñaId") UUID resenaId);
 
+    @Query("SELECT c FROM Calificacion c JOIN c.resena r WHERE r.usuarioResenado.id = :idUsuario")
+    List<Calificacion> buscarCalificacionesPorUsuario(@Param("idUsuario") UUID idUsuario);
 }

@@ -55,6 +55,14 @@ public class ServicioCalificacionImpl implements IServicioCalificacion {
     }
 
     @Override
+    public List<CalificacionResponseDTO> listarPorUsuario(UUID idUsuario) {
+        return calificacionRepository.buscarCalificacionesPorUsuario(idUsuario)
+                .stream()
+                .map(CalificacionResponseDTO::fromEntity)
+                .toList();
+    }
+
+    @Override
     public CalificacionResponseDTO buscarPorId(UUID id) {
         return CalificacionResponseDTO.fromEntity(buscarOFallar(id));
     }

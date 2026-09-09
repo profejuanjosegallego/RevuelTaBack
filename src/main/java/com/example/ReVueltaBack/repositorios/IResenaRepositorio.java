@@ -27,4 +27,7 @@ public interface IResenaRepositorio extends JpaRepository<Resena, UUID> {
 
     @Query("SELECT r FROM Resena r WHERE r.autor.id = :autorId")
     List<Resena> buscarPorUsuariosId(@Param("autorId") UUID autorId);
+
+    @Query("SELECT r FROM Resena r JOIN r.usuarioResenado u WHERE u.id = :idUsuario")
+    List<Resena> buscarPorUsuarioResenado(@Param("idUsuario") UUID idUsuario);
 }
